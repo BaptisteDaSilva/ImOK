@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="GPS LOCATION"
+        android:text="@string/gps_location"
         android:textSize="20sp" />
 
     <Button
@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/locationControllerGPS"
-        android:text="longitude"
+        android:text="@string/longitude"
         android:textSize="20sp" />
 
     <TextView
@@ -35,9 +35,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/locationControllerGPS"
-        android:layout_toRightOf="@id/longitudeTextGPS"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:text="0.0000"
+        android:layout_toEndOf="@id/longitudeTextGPS"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:text="@string/_0_0000"
         android:textSize="20sp" />
 
     <TextView
@@ -45,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/longitudeTextGPS"
-        android:text="latitude"
+        android:text="@string/latitude"
         android:textSize="20sp" />
 
     <TextView
@@ -53,9 +53,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/longitudeValueGPS"
-        android:layout_toRightOf="@id/longitudeTextGPS"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:text="0.0000"
+        android:layout_toEndOf="@id/longitudeTextGPS"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:text="@string/_0_0000"
         android:textSize="20sp" />
 
     <View
@@ -73,7 +73,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/separator1"
         android:layout_centerHorizontal="true"
-        android:text="NETWORK LOCATION"
+        android:text="@string/network_location"
         android:textSize="20sp" />
 
     <Button
@@ -90,7 +90,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/locationControllerNetwork"
-        android:text="longitude"
+        android:text="@string/longitude"
         android:textSize="20sp" />
 
     <TextView
@@ -98,9 +98,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/locationControllerNetwork"
-        android:layout_toRightOf="@id/longitudeTextNetwork"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:text="0.0000"
+        android:layout_toEndOf="@id/longitudeTextNetwork"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:text="@string/_0_0000"
         android:textSize="20sp" />
 
     <TextView
@@ -108,7 +108,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/longitudeTextNetwork"
-        android:text="latitude"
+        android:text="@string/latitude"
         android:textSize="20sp" />
 
     <TextView
@@ -116,9 +116,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/longitudeValueNetwork"
-        android:layout_toRightOf="@id/longitudeTextNetwork"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:text="0.0000"
+        android:layout_toEndOf="@id/longitudeTextNetwork"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:text="@string/_0_0000"
         android:textSize="20sp" />
 
     <View
@@ -136,7 +136,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/separator2"
         android:layout_centerHorizontal="true"
-        android:text="BEST LOCATION"
+        android:text="@string/best_location"
         android:textSize="20sp" />
 
     <Button
@@ -153,7 +153,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/locationControllerBest"
-        android:text="longitude"
+        android:text="@string/longitude"
         android:textSize="20sp" />
 
     <TextView
@@ -161,9 +161,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/locationControllerBest"
-        android:layout_toRightOf="@id/longitudeTextBest"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:text="0.0000"
+        android:layout_toEndOf="@id/longitudeTextBest"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:text="@string/_0_0000"
         android:textSize="20sp" />
 
     <TextView
@@ -171,7 +171,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/longitudeTextBest"
-        android:text="latitude"
+        android:text="@string/latitude"
         android:textSize="20sp" />
 
     <TextView
@@ -179,9 +179,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/longitudeValueBest"
-        android:layout_toRightOf="@id/longitudeTextBest"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:text="0.0000"
+        android:layout_toEndOf="@id/longitudeTextBest"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:text="@string/_0_0000"
         android:textSize="20sp" />
 
     <View
@@ -199,7 +199,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/separator3"
         android:layout_centerHorizontal="true"
-        android:text="Address"
+        android:text="@string/address"
         android:textSize="20sp" />
 
 </RelativeLayout>

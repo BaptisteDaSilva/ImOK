@@ -2,6 +2,7 @@ package uqac.inf872.projet.imok.injections;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
+import android.support.annotation.NonNull;
 
 import java.util.concurrent.Executor;
 
@@ -18,8 +19,9 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         this.executor = executor;
     }
 
+    @NonNull
     @Override
-    public <T extends ViewModel> T create(Class<T> modelClass) {
+    public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass.isAssignableFrom(PersonneViewModel.class)) {
             return (T) new PersonneViewModel(personneDataSource, executor);
         }

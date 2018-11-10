@@ -1,5 +1,6 @@
 package uqac.inf872.projet.imok;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -13,20 +14,20 @@ abstract class BaseActivity extends AppCompatActivity implements EasyPermissions
     private static final String TAG = "I'm OK";
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         // 2 - Forward results to EasyPermissions
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
     @Override
-    public void onPermissionsGranted(int requestCode, List<String> list) {
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> list) {
         // Some permissions have been granted
         // ...
     }
 
     @Override
-    public void onPermissionsDenied(int requestCode, List<String> perms) {
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
         Log.d(TAG, "onPermissionsDenied:" + requestCode + ":" + perms.size());
 
         // (Optional) Check whether the user denied any permissions and checked "NEVER ASK AGAIN."

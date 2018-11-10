@@ -62,20 +62,11 @@
     <string name="title_activity_camera">CameraActivity</string>
     <string name="Camera">Camera</string>
     <string name="popup_title_permission_fine_location">Permission localisation</string>
+    <string name="latitude">latitude</string>
+    <string name="longitude">longitude</string>
+    <string name="_0_0000">0.0000</string>
     <string name="gps_location">GPS LOCATION</string>
-    <string name="longitude">longitude</string>
-    <string name="_0_0000">0.0000</string>
-    <string name="latitude">latitude</string>
-    <string name="_0_0000">0.0000</string>
     <string name="network_location">NETWORK LOCATION</string>
-    <string name="longitude">longitude</string>
-    <string name="_0_0000">0.0000</string>
-    <string name="latitude">latitude</string>
-    <string name="_0_0000">0.0000</string>
     <string name="best_location">BEST LOCATION</string>
-    <string name="longitude">longitude</string>
-    <string name="_0_0000">0.0000</string>
-    <string name="latitude">latitude</string>
-    <string name="_0_0000">0.0000</string>
     <string name="address">Address</string>
 </resources>

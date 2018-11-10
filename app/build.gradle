@@ -1,5 +1,10 @@
 apply plugin: 'com.android.application'
 
+apply plugin: 'com.google.gms.google-services'
+
+apply plugin: 'io.fabric'
+apply plugin: 'jacoco-android'
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -15,6 +20,9 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            testCoverageEnabled true
         }
     }
     compileOptions {
@@ -69,7 +77,3 @@ dependencies {
     // TESTING
     androidTestImplementation "android.arch.core:core-testing:1.1.0"
 }
-
-apply plugin: 'com.google.gms.google-services'
-
-apply plugin: 'io.fabric'

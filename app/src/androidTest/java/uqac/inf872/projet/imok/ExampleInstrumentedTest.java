@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("uqac.a8inf872.projet.imok", appContext.getPackageName());
+        assertEquals("uqac.inf872.projet.imok", appContext.getPackageName());
     }
 }

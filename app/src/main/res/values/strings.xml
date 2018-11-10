@@ -1,0 +1,65 @@
+<resources>
+    <string name="facebook_app_id" translatable="false">199316630990692</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb199316630990692</string>
+
+
+    <string name="app_name">I\'m OK</string>
+    <string name="title_activity_main">I\'m OK - Menu</string>
+    <string name="title_activity_send_message">Envoyer SMS</string>
+    <string name="title_activity_login">Connexion</string>
+    <string name="title_activity_wi_fi">WiFi</string>
+    <string name="title_activity_bd">BD</string>
+    <string name="title_activity_progress_bar">ProgressBarActivity</string>
+    <string name="title_activity_progress_bar_v2">ProgressBarActivityV2</string>
+    <string name="title_activity_fragment">Fragment Activity</string>
+    <string name="title_activity_detail">Detail Activity</string>
+    <string name="title_activity_notification">Notification Activity</string>
+
+
+    <string name="numero">Numero</string>
+    <string name="message">Message</string>
+    <string name="envoyer">Envoyer</string>
+    <string name="envoyerSMS">Envoyer SMS</string>
+
+
+    <string name="pause">Pause Location Updates</string>
+    <string name="resume">Resume Location Updates</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="login">Connexion</string>
+    <string name="wifi">WiFi</string>
+    <string name="gps">GPS</string>g>
+    <string name="BD">BD</string>
+    <string name="over">Telechargement termnié</string>
+    <string name="canceled">Annuler</string>
+    <string name="btnStartProgressBar">Start</string>
+    <string name="ProgressBar">Progress Bar</string>
+    <string name="ProgressBarAsync">Progress Bar Async</string>
+    <string name="show_sad_detail">Show Sad Detail</string>
+    <string name="show_horrible_detail">Show Horrible Detail</string>
+    <string name="show_happy_detail">Show Happy Detail</string>
+    <string name="i_have_no_details_to_show_you">I have no details to show you...</string>
+    <string name="Fragment">Fragment</string>
+    <string name="btnEnvoyerNotification">Envoyer</string>
+    <string name="channel_name">my_channel_01</string>
+    <string name="channel_description">my_channel_01_desciption</string>
+    <string name="Notification">Notification</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="Maps">Maps</string>
+    <string name="title_activity_telephone">TelephoneActivity</string>
+    <string name="telephoner">Telephoner</string>
+    <string name="title_activity_camera">CameraActivity</string>
+    <string name="Camera">Camera</string>
+    <string name="popup_title_permission_fine_location">Permission localisation</string>
+</resources>

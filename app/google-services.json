@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1018889118781",
+    "firebase_url": "https://i-m-ok.firebaseio.com",
+    "project_id": "i-m-ok",
+    "storage_bucket": "i-m-ok.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1018889118781:android:4a216081e8c0a6bb",
+        "android_client_info": {
+          "package_name": "uqac.inf872.projet.imok"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1018889118781-dkd8ts6mhvo6f67d14htn1p07lr5cdak.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxMXHDzlEZMaToN1ujxiRPUqf90xdfkbs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

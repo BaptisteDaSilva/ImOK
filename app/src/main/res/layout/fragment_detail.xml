@@ -1,0 +1,15 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#BED4D6"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/fragment_detail_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/i_have_no_details_to_show_you"
+        android:textColor="#FFF"
+        android:textSize="20sp" />
+
+</LinearLayout>

@@ -1,0 +1,28 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/fragment_main_button_happy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:tag="10"
+        android:text="@string/show_happy_detail" />
+
+    <Button
+        android:id="@+id/fragment_main_button_sad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:tag="20"
+        android:text="@string/show_sad_detail" />
+
+    <Button
+        android:id="@+id/fragment_main_button_horrible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:tag="30"
+        android:text="@string/show_horrible_detail" />
+
+</LinearLayout>

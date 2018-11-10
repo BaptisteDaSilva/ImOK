@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <Button
+        android:id="@+id/envoyerSMS"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickEnvoyerSMS"
+        android:text="@string/envoyerSMS" />
+
+    <Button
+        android:id="@+id/telephoner"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickTelephoner"
+        android:text="@string/telephoner" />
+
+    <Button
+        android:id="@+id/wifi"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickWifi"
+        android:text="@string/wifi" />
+
+    <Button
+        android:id="@+id/GPS"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickGPS"
+        android:text="@string/gps" />
+
+    <Button
+        android:id="@+id/BD"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickBD"
+        android:text="@string/BD" />
+
+    <Button
+        android:id="@+id/progressBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickProgressBar"
+        android:text="@string/ProgressBar" />
+
+    <Button
+        android:id="@+id/progressBarAsync"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickProgressBarAsync"
+        android:text="@string/ProgressBarAsync" />
+
+    <Button
+        android:id="@+id/fragment"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickFragment"
+        android:text="@string/Fragment" />
+
+    <Button
+        android:id="@+id/notification"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickNotification"
+        android:text="@string/Notification" />
+
+    <Button
+        android:id="@+id/maps"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickMaps"
+        android:text="@string/Maps" />
+
+    <Button
+        android:id="@+id/camera"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickCamera"
+        android:text="@string/Camera" />
+
+</LinearLayout>

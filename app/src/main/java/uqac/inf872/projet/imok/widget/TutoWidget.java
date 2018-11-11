@@ -14,11 +14,13 @@ public class TutoWidget extends AppWidgetProvider {
     // Les tutos que propose notre widget
     private final static Tuto TUTO_ARRAY[] = {
             new Tuto("Développez votre première application Android", "https://openclassrooms.com/fr/courses/4517166-developpez-votre-premiere-application-android"),
+            new Tuto("Développez des applications robustes et fiables", "https://openclassrooms.com/fr/courses/4568526-developpez-des-applications-robustes-et-fiables"),
             new Tuto("Construisez une interface utilisateur flexible et adaptative", "https://openclassrooms.com/fr/courses/4568596-construisez-une-interface-utilisateur-flexible-et-adaptative"),
             new Tuto("Récupérez et affichez des données distantes", "https://openclassrooms.com/fr/courses/4568576-recuperez-et-affichez-des-donnees-distantesl"),
             new Tuto("Créez un backend scalable et performant sur Firebase", "https://openclassrooms.com/fr/courses/4872916-creez-un-backend-scalable-et-performant-sur-firebase"),
             new Tuto("Gérez vos données localement pour avoir une application 100 % hors-ligne", "https://openclassrooms.com/fr/courses/4568746-gerez-vos-donnees-localement-pour-avoir-une-application-100-hors-ligne"),
-            new Tuto("Personnalisez vos applications", "https://openclassrooms.com/fr/courses/4568621-personnalisez-vos-applications")
+            new Tuto("Personnalisez vos applications", "https://openclassrooms.com/fr/courses/4568621-personnalisez-vos-applications"),
+            new Tuto("Initiez-vous à Kotlin", "https://openclassrooms.com/fr/courses/5353106-initiez-vous-a-kotlin")
     };
 
     // Intitulé de l'extra qui contient la direction du défilé

@@ -143,10 +143,10 @@ public class GPSActivity extends AppCompatActivity {
     }
 
     private boolean checkLocation() {
-        if (!isLocationEnabled())
+        if ( !isLocationEnabled() )
             showAlert();
 
-        return isLocationEnabled();
+        return !isLocationEnabled();
     }
 
     private void showAlert() {
@@ -177,14 +177,14 @@ public class GPSActivity extends AppCompatActivity {
     @SuppressLint("MissingPermission")
     @AfterPermissionGranted(RC_FINE_LOCATION_PERMS)
     public void toggleGPSUpdates(View view) {
-        if (!checkLocation())
+        if ( checkLocation() )
             return;
         Button button = (Button) view;
-        if (button.getText().equals(getResources().getString(R.string.pause))) {
+        if ( button.getText().equals(getResources().getString(R.string.pause)) ) {
             locationManager.removeUpdates(locationListenerGPS);
             button.setText(R.string.resume);
         } else {
-            if (!EasyPermissions.hasPermissions(this, PERMS_FINE_LOCATION)) {
+            if ( !EasyPermissions.hasPermissions(this, PERMS_FINE_LOCATION) ) {
                 EasyPermissions.requestPermissions(this, getString(R.string.popup_title_permission_fine_location), RC_FINE_LOCATION_PERMS, PERMS_FINE_LOCATION);
                 return;
             }
@@ -198,10 +198,10 @@ public class GPSActivity extends AppCompatActivity {
     @SuppressLint("MissingPermission")
     @AfterPermissionGranted(RC_FINE_LOCATION_PERMS)
     public void toggleBestUpdates(View view) {
-        if (!checkLocation())
+        if ( checkLocation() )
             return;
         Button button = (Button) view;
-        if (button.getText().equals(getResources().getString(R.string.pause))) {
+        if ( button.getText().equals(getResources().getString(R.string.pause)) ) {
             locationManager.removeUpdates(locationListenerBest);
             button.setText(R.string.resume);
         } else {
@@ -212,8 +212,8 @@ public class GPSActivity extends AppCompatActivity {
             criteria.setCostAllowed(true);
             criteria.setPowerRequirement(Criteria.POWER_LOW);
             String provider = locationManager.getBestProvider(criteria, true);
-            if (provider != null) {
-                if (!EasyPermissions.hasPermissions(this, PERMS_FINE_LOCATION)) {
+            if ( provider != null ) {
+                if ( !EasyPermissions.hasPermissions(this, PERMS_FINE_LOCATION) ) {
                     EasyPermissions.requestPermissions(this, getString(R.string.popup_title_permission_fine_location), RC_FINE_LOCATION_PERMS, PERMS_FINE_LOCATION);
                     return;
                 }
@@ -228,15 +228,15 @@ public class GPSActivity extends AppCompatActivity {
     @SuppressLint("MissingPermission")
     @AfterPermissionGranted(RC_FINE_LOCATION_PERMS)
     public void toggleNetworkUpdates(View view) {
-        if (!checkLocation())
+        if ( checkLocation() )
             return;
         Button button = (Button) view;
-        if (button.getText().equals(getResources().getString(R.string.pause))) {
+        if ( button.getText().equals(getResources().getString(R.string.pause)) ) {
             locationManager.removeUpdates(locationListenerNetwork);
             button.setText(R.string.resume);
         } else {
 
-            if (!EasyPermissions.hasPermissions(this, PERMS_FINE_LOCATION)) {
+            if ( !EasyPermissions.hasPermissions(this, PERMS_FINE_LOCATION) ) {
                 EasyPermissions.requestPermissions(this, getString(R.string.popup_title_permission_fine_location), RC_FINE_LOCATION_PERMS, PERMS_FINE_LOCATION);
                 return;
             }

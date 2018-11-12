@@ -23,10 +23,10 @@ public class TelephoneActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_telephone);
 
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE)
-                != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    android.Manifest.permission.CALL_PHONE)) {
+        if ( ContextCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE)
+                != PackageManager.PERMISSION_GRANTED ) {
+            if ( ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    android.Manifest.permission.CALL_PHONE) ) {
             } else {
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.CALL_PHONE},

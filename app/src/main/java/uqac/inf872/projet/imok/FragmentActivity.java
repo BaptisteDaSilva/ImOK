@@ -37,7 +37,7 @@ public class FragmentActivity extends AppCompatActivity implements MainFragment.
         int buttonTag = Integer.parseInt(view.getTag().toString());
 
         //Check if DetailFragment is visible (Tablet)
-        if (detailFragment != null && detailFragment.isVisible()) {
+        if ( detailFragment != null && detailFragment.isVisible() ) {
             //TABLET : Update directly TextView
             detailFragment.updateTextView(buttonTag);
         } else {
@@ -56,7 +56,7 @@ public class FragmentActivity extends AppCompatActivity implements MainFragment.
 
         mainFragment = (MainFragment) getSupportFragmentManager().findFragmentById(R.id.frame_layout_main);
 
-        if (mainFragment == null) {
+        if ( mainFragment == null ) {
             mainFragment = new MainFragment();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.frame_layout_main, mainFragment)
@@ -67,7 +67,7 @@ public class FragmentActivity extends AppCompatActivity implements MainFragment.
     private void configureAndShowDetailFragment() {
         detailFragment = (DetailFragment) getSupportFragmentManager().findFragmentById(R.id.frame_layout_detail);
 
-        if (detailFragment == null && findViewById(R.id.frame_layout_detail) != null) {
+        if ( detailFragment == null && findViewById(R.id.frame_layout_detail) != null ) {
             detailFragment = new DetailFragment();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.frame_layout_detail, detailFragment)

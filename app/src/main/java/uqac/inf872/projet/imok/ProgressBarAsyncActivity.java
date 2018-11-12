@@ -48,7 +48,7 @@ public class ProgressBarAsyncActivity extends AppCompatActivity {
         // On recupère l'AsyncTask perdu dans le changement de configuration
         mProgress = (ProgressTask) getLastNonConfigurationInstance();
 
-        if (mProgress != null)
+        if ( mProgress != null )
             // On lie l'activité à l'AsyncTask
             mProgress.link(this);
     }
@@ -93,14 +93,14 @@ public class ProgressBarAsyncActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             // Au lancement, on affiche la boîte de dialogue
-            if (mActivity.get() != null)
+            if ( mActivity.get() != null )
                 mActivity.get().showDialog(ID_DIALOG);
         }
 
         @Override
         protected void onPostExecute(Boolean result) {
-            if (mActivity.get() != null) {
-                if (result)
+            if ( mActivity.get() != null ) {
+                if ( result )
                     Toast.makeText(mActivity.get(), "Téléchargement terminé", Toast.LENGTH_SHORT).show();
                 else
                     Toast.makeText(mActivity.get(), "Echec du téléchargement", Toast.LENGTH_SHORT).show();
@@ -130,13 +130,13 @@ public class ProgressBarAsyncActivity extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(Integer... prog) {
             // À chaque avancement du téléchargement, on met à jour la boîte de dialogue
-            if (mActivity.get() != null)
+            if ( mActivity.get() != null )
                 mActivity.get().updateProgress(prog[0]);
         }
 
         @Override
         protected void onCancelled() {
-            if (mActivity.get() != null)
+            if ( mActivity.get() != null )
                 Toast.makeText(mActivity.get(), "Annulation du téléchargement", Toast.LENGTH_SHORT).show();
         }
 
@@ -145,7 +145,7 @@ public class ProgressBarAsyncActivity extends AppCompatActivity {
         }
 
         public int download() {
-            if (mProgression <= MAX_SIZE) {
+            if ( mProgression <= MAX_SIZE ) {
                 mProgression++;
                 return mProgression;
             }

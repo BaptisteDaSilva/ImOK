@@ -19,11 +19,11 @@ public class WiFiActivity extends AppCompatActivity {
         setContentView(R.layout.activity_wi_fi);
 
         WifiManager manager = (WifiManager) this.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        if (manager.isWifiEnabled()) {
+        if ( manager != null && manager.isWifiEnabled() ) {
             WifiInfo wifiInfo = manager.getConnectionInfo();
-            if (wifiInfo != null) {
+            if ( wifiInfo != null ) {
                 NetworkInfo.DetailedState state = WifiInfo.getDetailedStateOf(wifiInfo.getSupplicantState());
-                if (state == NetworkInfo.DetailedState.CONNECTED || state == NetworkInfo.DetailedState.OBTAINING_IPADDR) {
+                if ( state == NetworkInfo.DetailedState.CONNECTED || state == NetworkInfo.DetailedState.OBTAINING_IPADDR ) {
                     TextView wifiName = findViewById(R.id.wifiName);
 
                     wifiName.setText(wifiInfo.toString());

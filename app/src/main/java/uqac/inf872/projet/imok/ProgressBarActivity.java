@@ -60,7 +60,7 @@ public class ProgressBarActivity extends Activity {
                             }
 
                             // Le fichier a été téléchargé
-                            if (mProgression >= MAX_SIZE) {
+                            if ( mProgression >= MAX_SIZE ) {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -84,7 +84,7 @@ public class ProgressBarActivity extends Activity {
 
     @Override
     public Dialog onCreateDialog(int identifiant) {
-        if (mProgressBar == null) {
+        if ( mProgressBar == null ) {
             mProgressBar = new ProgressDialog(this);
             // L'utilisateur peut annuler la boîte de dialogue
             mProgressBar.setCancelable(true);
@@ -107,7 +107,7 @@ public class ProgressBarActivity extends Activity {
     }
 
     public int download() {
-        if (mProgression <= MAX_SIZE) {
+        if ( mProgression <= MAX_SIZE ) {
             mProgression++;
             return mProgression;
         }

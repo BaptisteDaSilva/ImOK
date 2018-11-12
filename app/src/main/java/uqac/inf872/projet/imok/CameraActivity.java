@@ -24,10 +24,10 @@ public class CameraActivity extends BaseActivity implements SurfaceHolder.Callba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    android.Manifest.permission.CAMERA)) {
+        if ( ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED ) {
+            if ( ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    android.Manifest.permission.CAMERA) ) {
             } else {
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.CAMERA},
@@ -54,8 +54,6 @@ public class CameraActivity extends BaseActivity implements SurfaceHolder.Callba
 
     // Se déclenche quand la surface est détruite
     public void surfaceDestroyed(SurfaceHolder holder) {
-        if (mCamera != null)
-            mCamera.stopPreview();
     }
 
     // Se déclenche quand la surface change de dimensions ou de format

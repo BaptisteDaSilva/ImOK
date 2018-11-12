@@ -26,10 +26,10 @@ public class SendMessageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_message);
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
-                != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.SEND_SMS)) {
+        if ( ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
+                != PackageManager.PERMISSION_GRANTED ) {
+            if ( ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.SEND_SMS) ) {
             } else {
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.SEND_SMS},
@@ -52,7 +52,7 @@ public class SendMessageActivity extends AppCompatActivity {
 
         int length = msg.length();
 
-        if (length > MAX_SMS_MESSAGE_LENGTH) {
+        if ( length > MAX_SMS_MESSAGE_LENGTH ) {
             ArrayList<String> messagelist = manager.divideMessage(msg);
 
             manager.sendMultipartTextMessage(num, null, messagelist, null, null);

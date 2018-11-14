@@ -91,12 +91,16 @@ public class MainActivity extends BaseActivity {
         MainActivity.this.startActivity(new Intent(MainActivity.this, MapsActivity.class));
     }
 
-    @AfterPermissionGranted(RC_CAMERA)
     public void onClickCamera(View view) {
         if ( EasyPermissions.hasPermissions(this, PERMS_CAMERA) ) {
-            MainActivity.this.startActivity(new Intent(MainActivity.this, CameraActivity.class));
+            launchCameraActivity();
         } else {
             EasyPermissions.requestPermissions(this, getString(R.string.popup_title_permission_camera), RC_CAMERA, PERMS_CAMERA);
         }
+    }
+
+    @AfterPermissionGranted(RC_CAMERA)
+    private void launchCameraActivity() {
+        MainActivity.this.startActivity(new Intent(MainActivity.this, CameraActivity.class));
     }
 }

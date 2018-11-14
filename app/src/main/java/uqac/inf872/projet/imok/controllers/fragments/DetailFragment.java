@@ -11,6 +11,7 @@ public class DetailFragment extends BaseFragment {
 
     @BindView(R.id.fragment_detail_text_view)
     TextView textView;
+
     @State
     int buttonTag;
 

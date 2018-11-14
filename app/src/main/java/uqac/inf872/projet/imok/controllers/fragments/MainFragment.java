@@ -3,11 +3,22 @@ package uqac.inf872.projet.imok.controllers.fragments;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.Button;
 
+import butterknife.BindView;
 import uqac.inf872.projet.imok.R;
 import uqac.inf872.projet.imok.base.BaseFragment;
 
 public class MainFragment extends BaseFragment implements View.OnClickListener {
+
+    @BindView(R.id.fragment_main_button_happy)
+    Button fragmentMainButtonHappy;
+
+    @BindView(R.id.fragment_main_button_sad)
+    Button fragmentMainButtonSad;
+
+    @BindView(R.id.fragment_main_button_horrible)
+    Button fragmentMainButtonHorrible;
 
     // Declare callback
     private OnButtonClickedListener mCallback;
@@ -24,12 +35,10 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void configureDesign() {
-        View result = getView();
-
         // Set onClickListener to buttons
-        result.findViewById(R.id.fragment_main_button_happy).setOnClickListener(this);
-        result.findViewById(R.id.fragment_main_button_sad).setOnClickListener(this);
-        result.findViewById(R.id.fragment_main_button_horrible).setOnClickListener(this);
+        fragmentMainButtonHappy.setOnClickListener(this);
+        fragmentMainButtonSad.setOnClickListener(this);
+        fragmentMainButtonHorrible.setOnClickListener(this);
     }
 
     @Override

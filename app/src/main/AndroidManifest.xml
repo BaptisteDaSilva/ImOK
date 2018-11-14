@@ -16,9 +16,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ok-icon"
+        android:icon="@drawable/ok_icon"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/ok-icon"
+        android:roundIcon="@drawable/ok_icon"
         android:supportsRtl="true"
         android:theme="@style/ImOK">
         <activity
@@ -83,7 +83,7 @@
 
         <receiver
             android:name=".widget.TutoWidget"
-            android:icon="@drawable/ok-icon"
+            android:icon="@drawable/ok_icon"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

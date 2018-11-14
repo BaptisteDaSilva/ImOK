@@ -84,6 +84,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
 
     //IDLE CONCURRENT
-    implementation 'com.android.support.test.espresso.idling:idling-concurrent:3.0.1'
-    androidTestImplementation 'com.android.support.test.espresso.idling:idling-concurrent:3.0.1'
+    implementation 'com.android.support.test.espresso.idling:idling-concurrent:3.0.2'
+    androidTestImplementation 'com.android.support.test.espresso.idling:idling-concurrent:3.0.2'
 }

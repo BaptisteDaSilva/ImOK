@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 import java.util.concurrent.Executor;
 
 import uqac.inf872.projet.imok.repositories.PersonneDataRepository;
-import uqac.inf872.projet.imok.view.PersonneViewModel;
+import uqac.inf872.projet.imok.viewmodels.PersonneViewModel;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
 
@@ -22,7 +22,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        if (modelClass.isAssignableFrom(PersonneViewModel.class)) {
+        if ( modelClass.isAssignableFrom(PersonneViewModel.class) ) {
             return (T) new PersonneViewModel(personneDataSource, executor);
         }
         throw new IllegalArgumentException("Unknown ViewModel class");

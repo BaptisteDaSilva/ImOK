@@ -16,13 +16,13 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ok-icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher"
+        android:roundIcon="@drawable/ok-icon"
         android:supportsRtl="true"
         android:theme="@style/ImOK">
         <activity
-            android:name=".MainActivity"
+            android:name=".controllers.activities.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/ImOK">
             <intent-filter>
@@ -32,58 +32,58 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SendMessageActivity"
+            android:name=".controllers.activities.SendMessageActivity"
             android:label="@string/title_activity_send_message"
             android:theme="@style/ImOK.NoActionBar" />
         <activity
-            android:name=".WiFiActivity"
+            android:name=".controllers.activities.WiFiActivity"
             android:label="@string/title_activity_wi_fi"
             android:theme="@style/ImOK.NoActionBar" />
         <activity
-            android:name=".GPSActivity"
+            android:name=".controllers.activities.GPSActivity"
             android:label="@string/title_activity_gps"
             android:theme="@style/ImOK.NoActionBar" />
         <activity
-            android:name=".BDActivity"
+            android:name=".controllers.activities.BDActivity"
             android:label="@string/title_activity_bd"
             android:theme="@style/ImOK.NoActionBar" />
         <activity
-            android:name=".ProgressBarActivity"
+            android:name=".controllers.activities.ProgressBarActivity"
             android:label="@string/title_activity_progress_bar"
             android:theme="@style/ImOK.NoActionBar" />
         <activity
-            android:name=".ProgressBarAsyncActivity"
+            android:name=".controllers.activities.ProgressBarAsyncActivity"
             android:label="@string/title_activity_progress_bar_v2"
             android:theme="@style/ImOK.NoActionBar" />
         <activity
-            android:name=".FragmentActivity"
+            android:name=".controllers.activities.FragmentActivity"
             android:label="@string/title_activity_fragment"
             android:theme="@style/ImOK.NoActionBar" />
         <activity
-            android:name=".DetailActivity"
+            android:name=".controllers.activities.DetailActivity"
             android:label="@string/title_activity_detail"
             android:theme="@style/ImOK.NoActionBar" />
         <activity
-            android:name=".NotificationActivity"
+            android:name=".controllers.activities.NotificationActivity"
             android:label="@string/title_activity_notification"
             android:theme="@style/ImOK.NoActionBar" />
         <activity
-            android:name=".MapsActivity"
+            android:name=".controllers.activities.MapsActivity"
             android:label="@string/title_activity_maps"
             android:theme="@style/ImOK.NoActionBar" />
         <activity
-            android:name=".TelephoneActivity"
+            android:name=".controllers.activities.TelephoneActivity"
             android:label="@string/title_activity_telephone"
             android:theme="@style/ImOK.NoActionBar" />
         <activity
-            android:name=".CameraActivity"
+            android:name=".controllers.activities.CameraActivity"
             android:label="@string/title_activity_camera"
             android:screenOrientation="landscape"
             android:theme="@style/ImOK.NoActionBar.Fullscreen" />
 
         <receiver
             android:name=".widget.TutoWidget"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/ok-icon"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

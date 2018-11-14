@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.widget.RemoteViews;
 
 import uqac.inf872.projet.imok.R;
+import uqac.inf872.projet.imok.models.Tuto;
 
 public class TutoWidget extends AppWidgetProvider {
     // Les tutos que propose notre widget
@@ -124,7 +125,7 @@ public class TutoWidget extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         // Si l'action est celle d'ouverture du tutoriel
-        if (ACTION_OPEN_TUTO.equals(intent.getAction())) {
+        if ( ACTION_OPEN_TUTO.equals(intent.getAction()) ) {
             Intent link = new Intent(Intent.ACTION_VIEW);
             link.setData(intent.getData());
             link.addCategory(Intent.CATEGORY_DEFAULT);
@@ -137,15 +138,15 @@ public class TutoWidget extends AppWidgetProvider {
             int tmp = intent.getIntExtra(EXTRA_INDICE, -1);
 
             // S'il y avait bien un indice passé
-            if (tmp != -1) {
+            if ( tmp != -1 ) {
                 // On récupère la direction
                 String extra = intent.getStringExtra(EXTRA_DIRECTION);
                 // Et on calcule l'indice voulu par l'utilisateur
-                if (extra.equals(EXTRA_PREVIOUS)) {
+                if ( extra.equals(EXTRA_PREVIOUS) ) {
                     indice = (tmp - 1) % TUTO_ARRAY.length;
-                    if (indice < 0)
+                    if ( indice < 0 )
                         indice += TUTO_ARRAY.length;
-                } else if (extra.equals(EXTRA_NEXT))
+                } else if ( extra.equals(EXTRA_NEXT) )
                     indice = (tmp + 1) % TUTO_ARRAY.length;
             }
         }

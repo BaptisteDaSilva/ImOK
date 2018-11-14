@@ -5,13 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".controllers.activities.MainActivity">
 
     <uqac.inf872.projet.imok.views.RobotoButton
         android:id="@+id/envoyerSMS"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:onClick="onClickEnvoyerSMS"
         android:text="@string/envoyerSMS"
         app:fontName="Roboto_Medium" />
 

@@ -5,7 +5,7 @@ import android.content.Context;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import uqac.inf872.projet.imok.base.ImOKDatabase;
+import uqac.inf872.projet.imok.database.ImOKDatabase;
 import uqac.inf872.projet.imok.repositories.PersonneDataRepository;
 
 public class Injection {

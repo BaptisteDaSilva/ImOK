@@ -4,7 +4,7 @@ import android.arch.lifecycle.LiveData;
 
 import java.util.List;
 
-import uqac.inf872.projet.imok.base.DAO.PersonneDAO;
+import uqac.inf872.projet.imok.database.DAO.PersonneDAO;
 import uqac.inf872.projet.imok.models.Personne;
 
 public class PersonneDataRepository {

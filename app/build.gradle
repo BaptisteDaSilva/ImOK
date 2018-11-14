@@ -61,7 +61,7 @@ dependencies {
     implementation 'com.facebook.android:facebook-android-sdk:4.38.1'
 
     //EASY PERMISSIONS
-    implementation 'pub.devrel:easypermissions:1.1.1'
+    implementation 'pub.devrel:easypermissions:2.0.0'
 
     // Crashlytic
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.6'
@@ -78,4 +78,12 @@ dependencies {
 
     // TESTING
     androidTestImplementation "android.arch.core:core-testing:1.1.1"
+
+    // ESPRESSO
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+
+    //IDLE CONCURRENT
+    implementation 'com.android.support.test.espresso.idling:idling-concurrent:3.0.1'
+    androidTestImplementation 'com.android.support.test.espresso.idling:idling-concurrent:3.0.1'
 }

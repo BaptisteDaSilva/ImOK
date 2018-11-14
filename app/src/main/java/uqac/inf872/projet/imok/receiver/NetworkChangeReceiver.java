@@ -26,8 +26,8 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
 
         NetworkInfo netInfo = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
 
-        if (ConnectivityManager.TYPE_WIFI == netInfo.getType()) {
-            if (netInfo.isConnected()) {
+        if ( ConnectivityManager.TYPE_WIFI == netInfo.getType() ) {
+            if ( netInfo.isConnected() ) {
                 WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
                 WifiInfo info = wifiManager.getConnectionInfo();
                 String ssid = info.getSSID();
@@ -49,7 +49,7 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
     private void createNotificationChannel(Context context) {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ) {
             CharSequence name = context.getString(R.string.channel_name);
             String description = context.getString(R.string.channel_description);
             int importance = NotificationManager.IMPORTANCE_DEFAULT;

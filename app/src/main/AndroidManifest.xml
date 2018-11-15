@@ -2,19 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="uqac.inf872.projet.imok">
 
-    <uses-permission android:name="android.permission.SEND_SMS" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-
-    <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.CAMERA" />
+    <!--<uses-permission android:name="android.permission.SEND_SMS" />-->
 
     <application
+        android:name="android.support.multidex.MultiDexApplication"
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@drawable/ic_logo"
@@ -58,88 +49,6 @@
             </intent-filter>
         </service>
 
-        <!-- TEST -->
-        <activity
-            android:name=".controllers.activities.TestActivity"
-            android:label="@string/title_activity_test"
-            android:theme="@style/ImOK.NoActionBar" />
-        <activity
-            android:name=".controllers.activities.SendMessageActivity"
-            android:label="@string/title_activity_send_message"
-            android:theme="@style/ImOK.NoActionBar" />
-        <activity
-            android:name=".controllers.activities.WiFiActivity"
-            android:label="@string/title_activity_wi_fi"
-            android:theme="@style/ImOK.NoActionBar" />
-        <activity
-            android:name=".controllers.activities.GPSActivity"
-            android:label="@string/title_activity_gps"
-            android:theme="@style/ImOK.NoActionBar" />
-        <activity
-            android:name=".controllers.activities.BDActivity"
-            android:label="@string/title_activity_bd"
-            android:theme="@style/ImOK.NoActionBar" />
-        <activity
-            android:name=".controllers.activities.ProgressBarActivity"
-            android:label="@string/title_activity_progress_bar"
-            android:theme="@style/ImOK.NoActionBar" />
-        <activity
-            android:name=".controllers.activities.ProgressBarAsyncActivity"
-            android:label="@string/title_activity_progress_bar_v2"
-            android:theme="@style/ImOK.NoActionBar" />
-        <activity
-            android:name=".controllers.activities.FragmentActivity"
-            android:label="@string/title_activity_fragment"
-            android:theme="@style/ImOK.NoActionBar" />
-        <activity
-            android:name=".controllers.activities.DetailActivity"
-            android:label="@string/title_activity_detail"
-            android:theme="@style/ImOK.NoActionBar" />
-        <activity
-            android:name=".controllers.activities.NotificationActivity"
-            android:label="@string/title_activity_notification"
-            android:theme="@style/ImOK.NoActionBar" />
-        <activity
-            android:name=".controllers.activities.MapsActivity"
-            android:label="@string/title_activity_maps"
-            android:theme="@style/ImOK.NoActionBar" />
-        <activity
-            android:name=".controllers.activities.TelephoneActivity"
-            android:label="@string/title_activity_telephone"
-            android:theme="@style/ImOK.NoActionBar" />
-        <activity
-            android:name=".controllers.activities.CameraActivity"
-            android:label="@string/title_activity_camera"
-            android:screenOrientation="landscape"
-            android:theme="@style/ImOK.NoActionBar.Fullscreen" />
-
-        <receiver
-            android:name=".widget.TutoWidget"
-            android:icon="@drawable/ic_logo"
-            android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="uqac.inf872.projet.imok.widget.action.OPEN_TUTO" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/widget_provider_info" />
-        </receiver>
-        <receiver
-            android:name=".receiver.WifiReceiver"
-            android:label="WifiReceiver">
-            <intent-filter>
-                <action android:name="android.net.wifi.STATE_CHANGED" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name=".receiver.NetworkChangeReceiver"
-            android:permission="android.permission.ACCESS_NETWORK_STATE">
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-        </receiver>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

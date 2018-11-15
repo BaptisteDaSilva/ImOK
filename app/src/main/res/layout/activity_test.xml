@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".controllers.activities.TestActivity">
+
+    <uqac.inf872.projet.imok.views.RobotoButton
+        android:id="@+id/envoyerSMS"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/envoyerSMS"
+        app:fontName="Roboto_Medium" />
+
+    <uqac.inf872.projet.imok.views.RobotoButton
+        android:id="@+id/telephoner"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickTelephoner"
+        android:text="@string/telephoner"
+        app:fontName="Roboto_Medium" />
+
+    <uqac.inf872.projet.imok.views.RobotoButton
+        android:id="@+id/wifi"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickWifi"
+        android:text="@string/wifi"
+        app:fontName="Roboto_Medium" />
+
+    <uqac.inf872.projet.imok.views.RobotoButton
+        android:id="@+id/GPS"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickGPS"
+        android:text="@string/gps"
+        app:fontName="Roboto_Medium" />
+
+    <uqac.inf872.projet.imok.views.RobotoButton
+        android:id="@+id/BD"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickBD"
+        android:text="@string/BD"
+        app:fontName="Roboto_Medium" />
+
+    <uqac.inf872.projet.imok.views.RobotoButton
+        android:id="@+id/progressBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickProgressBar"
+        android:text="@string/ProgressBar"
+        app:fontName="Roboto_Medium" />
+
+    <uqac.inf872.projet.imok.views.RobotoButton
+        android:id="@+id/progressBarAsync"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickProgressBarAsync"
+        android:text="@string/ProgressBarAsync"
+        app:fontName="Roboto_Medium" />
+
+    <uqac.inf872.projet.imok.views.RobotoButton
+        android:id="@+id/fragment"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickFragment"
+        android:text="@string/Fragment"
+        app:fontName="Roboto_Medium" />
+
+    <uqac.inf872.projet.imok.views.RobotoButton
+        android:id="@+id/notification"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickNotification"
+        android:text="@string/Notification"
+        app:fontName="Roboto_Medium" />
+
+    <uqac.inf872.projet.imok.views.RobotoButton
+        android:id="@+id/maps"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickMaps"
+        android:text="@string/Maps"
+        app:fontName="Roboto_Medium" />
+
+    <uqac.inf872.projet.imok.views.RobotoButton
+        android:id="@+id/camera"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickCamera"
+        android:text="@string/Camera"
+        app:fontName="Roboto_Medium" />
+
+</LinearLayout>

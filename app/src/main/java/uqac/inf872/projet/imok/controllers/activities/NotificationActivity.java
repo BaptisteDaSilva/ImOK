@@ -35,7 +35,7 @@ public class NotificationActivity extends AppCompatActivity {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
         final NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.twotone_thumb_up_alt_black_18)
+                .setSmallIcon(R.drawable.ic_image_notification)
                 .setContentTitle("Titre de la notification")
                 .setContentText("Cors de la notification")
                 .setStyle(new NotificationCompat.BigTextStyle()

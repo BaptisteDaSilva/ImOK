@@ -16,21 +16,53 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ok_icon"
+        android:fullBackupContent="@xml/backup_descriptor"
+        android:icon="@drawable/ic_logo"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/ok_icon"
+        android:roundIcon="@drawable/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/ImOK">
         <activity
             android:name=".controllers.activities.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/ImOK">
+            android:theme="@style/ImOK.NoTitle"> <!-- DISABLE TOOLBAR IN MAIN ACTIVITY-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
+                <!--<category android:name="android.intent.category.BROWSABLE" />-->
+
+                <!-- Accepts URIs that begin with "i-m-ok://android-app-i-m-ok" -->
+                <data
+                    android:host="i-m-ok"
+                    android:scheme="android-app-i-m-ok" />
+
             </intent-filter>
         </activity>
+        <!-- PROFILE ACTIVITY -->
+        <activity
+            android:name=".controllers.activities.ProfileActivity"
+            android:label="@string/toolbar_title_login_activity"
+            android:parentActivityName=".controllers.activities.MainActivity" />
+
+        <!-- NOTIFICATION SERVICE -->
+        <service
+            android:name=".services.NotificationsService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <!-- TEST -->
+        <activity
+            android:name=".controllers.activities.TestActivity"
+            android:label="@string/title_activity_test"
+            android:theme="@style/ImOK.NoActionBar" />
         <activity
             android:name=".controllers.activities.SendMessageActivity"
             android:label="@string/title_activity_send_message"
@@ -83,7 +115,7 @@
 
         <receiver
             android:name=".widget.TutoWidget"
-            android:icon="@drawable/ok_icon"
+            android:icon="@drawable/ic_logo"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -119,7 +151,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
     </application>
 
 </manifest>

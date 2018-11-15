@@ -1,106 +1,136 @@
 package uqac.inf872.projet.imok.controllers.activities;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
+import android.widget.Button;
 
-import com.google.firebase.perf.metrics.AddTrace;
+import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.ErrorCodes;
+import com.firebase.ui.auth.IdpResponse;
 
-import java.util.List;
+import java.util.Arrays;
 
+import butterknife.BindView;
 import butterknife.OnClick;
-import pub.devrel.easypermissions.AfterPermissionGranted;
-import pub.devrel.easypermissions.EasyPermissions;
 import uqac.inf872.projet.imok.R;
+import uqac.inf872.projet.imok.api.UserHelper;
 import uqac.inf872.projet.imok.base.BaseActivity;
 
 public class MainActivity extends BaseActivity {
 
-    private static final String PERMS_CAMERA = Manifest.permission.CAMERA;
-    private static final int RC_CAMERA = 100;
+    //FOR DATA
+    private static final int RC_SIGN_IN = 123;
+    //FOR DESIGN
+    @BindView(R.id.main_activity_coordinator_layout)
+    CoordinatorLayout coordinatorLayout;
 
-    @Override
-    @AddTrace(name = "test_trace")
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        SensorManager mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        List<Sensor> liste = mSensorManager.getSensorList(Sensor.TYPE_ALL);
-
-        Log.e("I'm OK", "-------------------------------------");
-        Log.e("I'm OK", "--------------- Debut ---------------");
-        Log.e("I'm OK", "-------------------------------------");
-
-        for (Sensor s : liste) {
-            Log.e("I'm OK", s.getName());
-        }
-
-        Log.e("I'm OK", "-------------------------------------");
-        Log.e("I'm OK", "---------------- Fin ----------------");
-        Log.e("I'm OK", "-------------------------------------");
-    }
+    @BindView(R.id.main_activity_button_login)
+    Button buttonLogin;
 
     @Override
     public int getFragmentLayout() {
         return R.layout.activity_main;
     }
 
-    @OnClick(R.id.envoyerSMS)
-    public void onClickEnvoyerSMS(View view) {
-        MainActivity.this.startActivity(new Intent(MainActivity.this, SendMessageActivity.class));
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        this.handleResponseAfterSignIn(requestCode, resultCode, data);
     }
 
-    public void onClickTelephoner(View view) {
-        MainActivity.this.startActivity(new Intent(MainActivity.this, TelephoneActivity.class));
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.updateUIWhenResuming();
     }
 
-    public void onClickWifi(View view) {
-        MainActivity.this.startActivity(new Intent(MainActivity.this, WiFiActivity.class));
-    }
+    // --------------------
+    // ACTIONS
+    // --------------------
 
-    public void onClickGPS(View view) {
-        MainActivity.this.startActivity(new Intent(MainActivity.this, GPSActivity.class));
-    }
-
-    public void onClickBD(View view) {
-        MainActivity.this.startActivity(new Intent(MainActivity.this, BDActivity.class));
-    }
-
-    public void onClickProgressBar(View view) {
-        MainActivity.this.startActivity(new Intent(MainActivity.this, ProgressBarActivity.class));
-    }
-
-    public void onClickProgressBarAsync(View view) {
-        MainActivity.this.startActivity(new Intent(MainActivity.this, ProgressBarAsyncActivity.class));
-    }
-
-    public void onClickFragment(View view) {
-        MainActivity.this.startActivity(new Intent(MainActivity.this, FragmentActivity.class));
-    }
-
-    public void onClickNotification(View view) {
-        MainActivity.this.startActivity(new Intent(MainActivity.this, NotificationActivity.class));
-    }
-
-    public void onClickMaps(View view) {
-        MainActivity.this.startActivity(new Intent(MainActivity.this, MapsActivity.class));
-    }
-
-    public void onClickCamera(View view) {
-        if ( EasyPermissions.hasPermissions(this, PERMS_CAMERA) ) {
-            launchCameraActivity();
+    @OnClick(R.id.main_activity_button_login)
+    public void onClickLoginButton() {
+        if ( this.isCurrentUserLogged() ) {
+            this.startProfileActivity();
         } else {
-            EasyPermissions.requestPermissions(this, getString(R.string.popup_title_permission_camera), RC_CAMERA, PERMS_CAMERA);
+            this.startSignInActivity();
         }
     }
 
-    @AfterPermissionGranted(RC_CAMERA)
-    private void launchCameraActivity() {
-        MainActivity.this.startActivity(new Intent(MainActivity.this, CameraActivity.class));
+    // --------------------
+    // REST REQUEST
+    // --------------------
+
+    private void createUserInFirestore() {
+
+        if ( this.getCurrentUser() != null ) {
+
+            String urlPicture = (this.getCurrentUser().getPhotoUrl() != null) ? this.getCurrentUser().getPhotoUrl().toString() : null;
+            String username = this.getCurrentUser().getDisplayName();
+            String uid = this.getCurrentUser().getUid();
+
+            UserHelper.createUser(uid, username, urlPicture).addOnFailureListener(this.onFailureListener());
+        }
+    }
+
+    // --------------------
+    // NAVIGATION
+    // --------------------
+
+    private void startSignInActivity() {
+        startActivityForResult(
+                AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setTheme(R.style.ImOK_LoginTheme)
+                        .setAvailableProviders(
+                                Arrays.asList(new AuthUI.IdpConfig.EmailBuilder().build(), //EMAIL
+                                        new AuthUI.IdpConfig.GoogleBuilder().build(), //GOOGLE
+                                        new AuthUI.IdpConfig.FacebookBuilder().build())) // FACEBOOK
+                        .setIsSmartLockEnabled(false, true)
+                        .setLogo(R.drawable.ic_logo)
+                        .build(),
+                RC_SIGN_IN);
+    }
+
+    private void startProfileActivity() {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
+    }
+
+    // --------------------
+    // UI
+    // --------------------
+
+    private void showSnackBar(CoordinatorLayout coordinatorLayout, String message) {
+        Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_SHORT).show();
+    }
+
+    private void updateUIWhenResuming() {
+        this.buttonLogin.setText(this.isCurrentUserLogged() ? getString(R.string.button_login_text_logged) : getString(R.string.button_login_text_not_logged));
+    }
+
+    // --------------------
+    // UTILS
+    // --------------------
+
+    private void handleResponseAfterSignIn(int requestCode, int resultCode, Intent data) {
+
+        IdpResponse response = IdpResponse.fromResultIntent(data);
+
+        if ( requestCode == RC_SIGN_IN ) {
+            if ( resultCode == RESULT_OK ) { // SUCCESS
+                this.createUserInFirestore();
+                showSnackBar(this.coordinatorLayout, getString(R.string.connection_succeed));
+            } else { // ERRORS
+                if ( response == null ) {
+                    showSnackBar(this.coordinatorLayout, getString(R.string.error_authentication_canceled));
+                } else if ( response.getError().getErrorCode() == ErrorCodes.NO_NETWORK ) {
+                    showSnackBar(this.coordinatorLayout, getString(R.string.error_no_internet));
+                } else if ( response.getError().getErrorCode() == ErrorCodes.UNKNOWN_ERROR ) {
+                    showSnackBar(this.coordinatorLayout, getString(R.string.error_unknown_error));
+                }
+            }
+        }
     }
 }

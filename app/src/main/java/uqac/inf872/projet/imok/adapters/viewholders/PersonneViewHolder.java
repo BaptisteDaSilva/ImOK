@@ -16,8 +16,10 @@ public class PersonneViewHolder extends RecyclerView.ViewHolder implements View.
 
     @BindView(R.id.id)
     TextView textViewId;
+
     @BindView(R.id.nom)
     TextView textViewNom;
+
     @BindView(R.id.prenom)
     TextView textViewPrenom;
 
@@ -30,7 +32,7 @@ public class PersonneViewHolder extends RecyclerView.ViewHolder implements View.
     }
 
     public void updateWithItem(Personne personne, PersonneAdapter.Listener callback) {
-        this.callbackWeakRef = new WeakReference<PersonneAdapter.Listener>(callback);
+        this.callbackWeakRef = new WeakReference<>(callback);
         this.textViewId.setText(String.valueOf(personne.getId()));
         this.textViewNom.setText(personne.getNom());
         this.textViewPrenom.setText(personne.getPrenom());

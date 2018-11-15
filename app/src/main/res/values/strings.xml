@@ -1,14 +1,16 @@
 <resources>
-    <string name="facebook_app_id" translatable="false">199316630990692</string>
+    <!-- FACEBOOK ID -->
+    <!-- FACEBOOK ID -->
+    <string name="facebook_application_id" translatable="false">199316630990692</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb199316630990692</string>
 
     <!-- FONT ID -->
-    <string name="Roboto_Bold">Roboto-Bold</string>
-    <string name="Roboto_Medium">Roboto-Medium</string>
-    <string name="Roboto_Light">Roboto-Light</string>
-    <string name="Roboto_Thin">Roboto-Thin</string>
+    <string name="Roboto_Bold" translatable="false">Roboto-Bold</string>
+    <string name="Roboto_Medium" translatable="false">Roboto-Medium</string>
+    <string name="Roboto_Light" translatable="false">Roboto-Light</string>
+    <string name="Roboto_Thin" translatable="false">Roboto-Thin</string>
 
-    <string name="app_name">I\'m OK</string>
+    <string name="app_name" translatable="false">I\'m OK</string>
     <string name="title_activity_main">I\'m OK - Menu</string>
     <string name="title_activity_send_message">Envoyer SMS</string>
     <string name="title_activity_login">Connexion</string>
@@ -19,6 +21,45 @@
     <string name="title_activity_fragment">Fragment Activity</string>
     <string name="title_activity_detail">Detail Activity</string>
     <string name="title_activity_notification">Notification Activity</string>
+
+    <string name="main_activity_description">Rassurer rapidement</string>
+
+    <string name="login">Connexion</string>
+    <string name="chat_with_mentor">Discute avec un mentor</string>
+
+    <!-- NOTIFICATION SERVICE -->
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="notification_title">"Vous avez reçu une notification"</string>
+
+    <!-- MAIN ACTIVITY -->
+    <string name="error_not_connected">Vous devez vous connecter !</string>
+    <string name="error_authentication_canceled">Authentification annulée&#8230;</string>
+    <string name="error_no_internet">Aucune connexion internet !</string>
+    <string name="error_unknown_error">Une erreur inconnue s\'est produite&#8230;</string>
+    <string name="connection_succeed">Authentification réussie !</string>
+    <string name="button_login_text_logged">Afficher le profil</string>
+    <string name="button_login_text_not_logged">Connexion</string>
+
+    <!-- LOGIN ACTIVITY -->
+    <string name="toolbar_title_login_activity">Votre Profil</string>
+    <string name="text_input_username">Nom d\'utilisateur</string>
+    <string name="text_view_email">Adresse email :</string>
+    <string name="button_update_account">Mettre à jour le nom d\'utilisateur</string>
+    <string name="button_delete_account">Supprimer mon compte</string>
+    <string name="button_sign_out_account">Déconnexion</string>
+    <string name="info_no_email_found">Auncune adresse email</string>
+    <string name="info_no_username_found">Aucun nom d\'utilisateur</string>
+    <string name="popup_message_confirmation_delete_account">Es-tu sûr(e) de vouloir supprimer ton compte ?</string>
+    <string name="popup_message_choice_yes">Oui !</string>
+    <string name="popup_message_choice_no">Non</string>
+    <string name="check_box_is_mentor">Etes-vous un mentor ?</string>
+
+    <!-- MENTOR_CHAT ACTIVITY -->
+    <string name="toolbar_title_mentor_chat_activity">Chats de discussions</string>
+    <string name="text_input_title_mentor_chat_activity">Composer votre message</string>
+    <string name="button_title_mentor_chat_activity">ENVOYER</string>
+    <string name="text_view_mentor_chat_error">Ce fil de discussion ne contient pour le moment aucun message&#8230;</string>
+    <string name="popup_title_permission_files_access">Cette application a besoin de permission pour fonctionner.</string>
 
 
     <string name="numero">Numero</string>
@@ -42,7 +83,6 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="login">Connexion</string>
     <string name="wifi">WiFi</string>
     <string name="gps">GPS</string>g>
     <string name="BD">BD</string>
@@ -54,13 +94,13 @@
     <string name="show_sad_detail">Show Sad Detail</string>
     <string name="show_horrible_detail">Show Horrible Detail</string>
     <string name="show_happy_detail">Show Happy Detail</string>
-    <string name="i_have_no_details_to_show_you">I have no details to show you...</string>
+    <string name="i_have_no_details_to_show_you">I have no details to show you…</string>
     <string name="Fragment">Fragment</string>
     <string name="btnEnvoyerNotification">Envoyer</string>
     <string name="channel_name">my_channel_01</string>
     <string name="channel_description">my_channel_01_desciption</string>
     <string name="Notification">Notification</string>
-    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps">Map Activity</string>
     <string name="Maps">Maps</string>
     <string name="title_activity_telephone">TelephoneActivity</string>
     <string name="telephoner">Telephoner</string>
@@ -80,4 +120,7 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="popup_title_permission_camera">Permission camera</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="content_description_logo">Logo I\'m OK</string>
+    <string name="content_description_image_profil">Image de profile</string>
 </resources>

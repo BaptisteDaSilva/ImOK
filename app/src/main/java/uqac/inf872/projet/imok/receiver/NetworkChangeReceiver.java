@@ -33,7 +33,7 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
                 String ssid = info.getSSID();
 
                 NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                        .setSmallIcon(R.drawable.twotone_thumb_up_alt_black_18)
+                        .setSmallIcon(R.drawable.ic_image_notification)
                         .setContentTitle("Modification du WIFI")
                         .setContentText("SSID : " + ssid)
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT);

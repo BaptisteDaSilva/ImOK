@@ -82,7 +82,7 @@ dependencies {
     implementation 'pub.devrel:easypermissions:2.0.0'
 
     // Crashlytic
-    implementation ('com.crashlytics.sdk.android:crashlytics:2.9.6@aar') {
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.6@aar') {
         transitive = true
     }
 

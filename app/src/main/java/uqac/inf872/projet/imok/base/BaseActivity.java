@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
@@ -39,7 +41,10 @@ public abstract class BaseActivity extends AppCompatActivity implements EasyPerm
 
     protected void configureToolbar() {
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
+
+        if ( ab != null ) {
+            ab.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     // --------------------
@@ -47,11 +52,8 @@ public abstract class BaseActivity extends AppCompatActivity implements EasyPerm
     // --------------------
 
     protected OnFailureListener onFailureListener() {
-        return new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
+        return e -> {
 //                Toast.makeText(getApplicationContext(), getString(R.string.error_unknown_error), Toast.LENGTH_LONG).show();
-            }
         };
     }
 
@@ -92,5 +94,16 @@ public abstract class BaseActivity extends AppCompatActivity implements EasyPerm
         }
     }
 
+    // --------------------
+    // UTILS
+    // --------------------
 
+    @Nullable
+    protected FirebaseUser getCurrentUser() {
+        return FirebaseAuth.getInstance().getCurrentUser();
+    }
+
+    protected Boolean isCurrentUserLogged() {
+        return (this.getCurrentUser() != null);
+    }
 }

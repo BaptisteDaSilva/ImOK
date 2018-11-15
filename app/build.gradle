@@ -3,9 +3,18 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
 apply plugin: 'io.fabric'
+
 apply plugin: 'jacoco-android'
 
 android {
+    signingConfigs {
+        i_m_ok {
+            keyAlias 'ImOKKey'
+            keyPassword 'Azerty123+'
+            storeFile file('C:/Users/Baptiste/Documents/UQAC/8INF872 - Programmation de plateformes mobiles/key.jks')
+            storePassword 'Azerty123+'
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "uqac.inf872.projet.imok"
@@ -15,91 +24,81 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
+        signingConfig signingConfigs.i_m_ok
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.i_m_ok
         }
         debug {
             testCoverageEnabled true
+            signingConfig signingConfigs.i_m_ok
         }
     }
     compileOptions {
-        targetCompatibility 1.8
-        sourceCompatibility 1.8
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
     }
     sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
+    buildToolsVersion '28.0.3'
+    productFlavors {
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation "com.android.support:customtabs:28.0.0"
+    implementation 'com.android.support:customtabs:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.android.support:support-v4:28.0.0'
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     implementation 'com.google.android.gms:play-services-maps:16.0.0'
-
+    implementation 'com.android.support:multidex:1.0.3'
     // TEST
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
     // Performance
     implementation 'com.google.firebase:firebase-perf:16.2.0'
-
-    // Performance
-    implementation 'com.google.firebase:firebase-perf:16.2.0'
-
     // Firebase
-    implementation "com.google.firebase:firebase-core:16.0.4"
+    implementation 'com.google.firebase:firebase-core:16.0.4'
     implementation 'com.google.firebase:firebase-messaging:17.3.4'
-
     // FirebaseUI
     implementation 'com.firebaseui:firebase-ui-storage:4.2.1'
     implementation 'com.firebaseui:firebase-ui-auth:4.2.1'
     implementation 'com.firebaseui:firebase-ui-firestore:4.2.1'
-
     // IDEPICK
     api 'frankiesardo:icepick:3.2.0'
     compileOnly 'frankiesardo:icepick-processor:3.2.0'
     annotationProcessor 'frankiesardo:icepick-processor:3.2.0'
-
     // BUTERKNIFE
     api 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-
     // GLIDE
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
-
     // FACEBOOK LOGIN SUPPORT
     implementation 'com.facebook.android:facebook-android-sdk:4.38.1'
-
     // EASY PERMISSIONS
     implementation 'pub.devrel:easypermissions:2.0.0'
-
     // Crashlytic
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.6@aar') {
         transitive = true
     }
-
     // ROOM
     implementation 'android.arch.persistence.room:runtime:1.1.1'
     annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
-
     // VIEW MODEL & LIVE DATA
-    implementation "android.arch.lifecycle:extensions:1.1.1"
-
+    implementation 'android.arch.lifecycle:extensions:1.1.1'
     // TESTING
-    androidTestImplementation "android.arch.core:core-testing:1.1.1"
-
+    androidTestImplementation 'android.arch.core:core-testing:1.1.1'
     // ESPRESSO
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
     androidTestImplementation 'androidx.test:runner:1.1.0'
-
     // IDLE CONCURRENT
     implementation 'com.android.support.test.espresso.idling:idling-concurrent:3.0.2'
     androidTestImplementation 'com.android.support.test.espresso.idling:idling-concurrent:3.0.2'

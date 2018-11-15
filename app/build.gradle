@@ -7,14 +7,6 @@ apply plugin: 'io.fabric'
 apply plugin: 'jacoco-android'
 
 android {
-    signingConfigs {
-        i_m_ok {
-            keyAlias 'ImOKKey'
-            keyPassword 'Azerty123+'
-            storeFile file('C:/Users/Baptiste/Documents/UQAC/8INF872 - Programmation de plateformes mobiles/key.jks')
-            storePassword 'Azerty123+'
-        }
-    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "uqac.inf872.projet.imok"

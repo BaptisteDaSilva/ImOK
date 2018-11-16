@@ -1,5 +1,5 @@
 <resources>
-    <declare-styleable name="RobotoButton">
+    <declare-styleable name="Roboto">
         <attr name="fontName" format="enum">
             <enum name="Roboto_Bold" value="1" />
             <enum name="Roboto_Light" value="2" />

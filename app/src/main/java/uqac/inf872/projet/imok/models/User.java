@@ -10,7 +10,6 @@ public class User {
 
     private String uid;
     private String username;
-    private Boolean isMentor;
     @Nullable
     private String urlPicture;
 
@@ -21,7 +20,6 @@ public class User {
         this.uid = uid;
         this.username = username;
         this.urlPicture = urlPicture;
-        this.isMentor = false;
     }
 
     // --- GETTERS ---
@@ -49,13 +47,5 @@ public class User {
 
     public void setUrlPicture(@Nullable String urlPicture) {
         this.urlPicture = urlPicture;
-    }
-
-    public Boolean getIsMentor() {
-        return isMentor;
-    }
-
-    public void setIsMentor(Boolean mentor) {
-        isMentor = mentor;
     }
 }

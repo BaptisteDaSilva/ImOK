@@ -58,6 +58,15 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    @OnClick(R.id.main_activity_button_menu)
+    public void onClickMenuButton() {
+        if ( this.isCurrentUserLogged() ) {
+            this.startMenuActivity();
+        } else {
+            showSnackBar(this.coordinatorLayout, getString(R.string.error_not_connected));
+        }
+    }
+
     // --------------------
     // REST REQUEST
     // --------------------
@@ -95,6 +104,11 @@ public class MainActivity extends BaseActivity {
 
     private void startProfileActivity() {
         Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
+    }
+
+    private void startMenuActivity() {
+        Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
     }
 

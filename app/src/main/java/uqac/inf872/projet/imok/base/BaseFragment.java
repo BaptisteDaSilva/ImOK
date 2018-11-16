@@ -10,9 +10,13 @@ import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
 import icepick.Icepick;
+import io.reactivex.disposables.Disposable;
 import uqac.inf872.projet.imok.BuildConfig;
 
 public abstract class BaseFragment extends Fragment {
+
+    // FOR DATA
+    protected Disposable disposable;
 
     // FOR TESTING
     @VisibleForTesting
@@ -55,6 +59,16 @@ public abstract class BaseFragment extends Fragment {
         super.onSaveInstanceState(outState);
         // 6 - Handling Bundle Save
         Icepick.saveInstanceState(this, outState);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.disposeWhenDestroy();
+    }
+
+    private void disposeWhenDestroy() {
+        if ( this.disposable != null && !this.disposable.isDisposed() ) this.disposable.dispose();
     }
 
     @VisibleForTesting

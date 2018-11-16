@@ -61,6 +61,20 @@
                 android:textSize="@dimen/default_text_size"
                 app:fontName="Roboto_Medium" />
 
+            <!-- BUTTON MENU -->
+            <uqac.inf872.projet.imok.views.RobotoButton
+                android:id="@+id/main_activity_button_menu"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_large_margin"
+                android:background="@drawable/button_radius_primary_color"
+                android:padding="@dimen/default_large_margin"
+                android:text="@string/menu"
+                android:textColor="#fff"
+                android:textSize="@dimen/default_text_size"
+                app:fontName="Roboto_Medium" />
+
         </LinearLayout>
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

@@ -1,14 +1,10 @@
 package uqac.inf872.projet.imok.database;
 
-import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
-import uqac.inf872.projet.imok.database.DAO.PersonneDAO;
-import uqac.inf872.projet.imok.models.Personne;
-
-@Database(entities = {Personne.class}, version = 1, exportSchema = false)
+//@Database(entities = {Personne.class}, version = 1, exportSchema = false)
 public abstract class ImOKDatabase extends RoomDatabase {
 
     // --- SINGLETON ---
@@ -31,5 +27,5 @@ public abstract class ImOKDatabase extends RoomDatabase {
     // ---
 
     // --- DAO ---
-    public abstract PersonneDAO personneDao();
+//    public abstract PersonneDAO personneDao();
 }

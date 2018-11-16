@@ -17,17 +17,14 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
-        signingConfig signingConfigs.i_m_ok
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.i_m_ok
         }
         debug {
             testCoverageEnabled true
-            signingConfig signingConfigs.i_m_ok
         }
     }
     compileOptions {

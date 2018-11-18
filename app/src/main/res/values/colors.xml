@@ -5,25 +5,11 @@
     <color name="colorAccent">#ff9e40</color>
     <color name="colorAccentDark">#ba7028</color>
 
-    <color name="colorSecondary">#82b1ff</color>
-    <color name="colorLightSecondary">#b6e3ff</color>
-    <color name="secondaryDarkColor">#4d82cb</color>
-
     <color name="colorError">#FF5252</color>
 
     <color name="primaryTextColor">#000000</color>
     <color name="secondaryTextColor">#000000</color>
 
-    <color name="black_overlay">#66000000</color>
-
-
-    <!-- BACKGROUND -->
-    <color name="background_light">#fafafa</color>
-    <color name="background_gray">#eeeeee</color>
-
-    <!-- TEXTVIEW -->
-    <color name="text_normal_dark">#8a000000</color>
-
     <!-- BUTTON -->
-    <color name="button_favorite">#82b1ff</color>
+    <color name="button_favorite">@color/colorPrimaryDark</color>
 </resources>

@@ -7,10 +7,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import uqac.inf872.projet.imok.models.User;
 
-/**
- * Created by Philippe on 30/01/2018.
- */
-
 public class UserHelper {
 
     private static final String COLLECTION_NAME = "users";
@@ -24,9 +20,9 @@ public class UserHelper {
     // --- CREATE ---
 
     public static Task<Void> createUser(String uid, String username, String urlPicture) {
-        // 1 - Create Obj
         User userToCreate = new User(uid, username, urlPicture);
 
+//        return UserHelper.getUsersCollection().document().set(userToCreate); // Génère la clé
         return UserHelper.getUsersCollection().document(uid).set(userToCreate);
     }
 
@@ -47,5 +43,4 @@ public class UserHelper {
     public static Task<Void> deleteUser(String uid) {
         return UserHelper.getUsersCollection().document(uid).delete();
     }
-
 }

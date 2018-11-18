@@ -56,7 +56,7 @@ public class NotificationsService extends FirebaseMessagingService {
         // Build a Notification object
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, channelId)
-                        .setSmallIcon(R.drawable.ic_image_notification)
+                        .setSmallIcon(R.drawable.ic_ok)
                         .setContentTitle(getString(R.string.app_name) + " - " + titre)
                         .setContentText(getString(R.string.notification_title))
                         .setAutoCancel(true)
@@ -69,7 +69,7 @@ public class NotificationsService extends FirebaseMessagingService {
 
         // Support Version >= Android 8
         if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ) {
-            CharSequence channelName = "Message provenant de Firebase";
+            CharSequence channelName = "RecipientList provenant de Firebase";
             int importance = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel mChannel = new NotificationChannel(channelId, channelName, importance);
             notificationManager.createNotificationChannel(mChannel);

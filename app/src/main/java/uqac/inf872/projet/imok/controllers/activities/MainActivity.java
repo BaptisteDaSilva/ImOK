@@ -108,7 +108,38 @@ public class MainActivity extends BaseActivity {
     }
 
     private void startMenuActivity() {
-        Intent intent = new Intent(this, MenuActivity.class);
+        // TODO supprimer
+
+//        String uid = this.getCurrentUser().getUid();
+//
+//        ArrayList<String> array = new ArrayList<>();
+//        array.add("1");
+//
+//        OKCardHelper.createOKCard("Test",
+//                "https://www.tuxboard.com/photos/2014/11/infographie-metiers-avocat-720x437.jpg",
+//                "1", array, uid);
+//
+//        OKCardHelper.createOKCard("Test 2",
+//                "https://www.tuxboard.com/photos/2014/11/infographie-metiers-espion.jpg",
+//                "1", array, uid);
+//
+//        OKCardHelper.createOKCard("Test 3",
+//                "https://www.tuxboard.com/photos/2014/11/infographie-metiers-dev.jpg",
+//                "1", array, uid);
+//
+//                OKCardHelper.createOKCard("Test 3",
+//                "https://www.tuxboard.com/photos/2014/11/infographie-metiers-dev.jpg",
+//                "1", array, uid);
+//
+//        PositionHelper.createPositionWifi("Maison", "SSID", uid);
+//        PositionHelper.createPositionGPS("Maison", 10.0, 10.0, 30, uid);
+//
+//        ArrayList<String> array2 = new ArrayList<>();
+//        array2.add("07828117769");
+//
+//        RecipientListHelper.createRecipientList("Amis", array2, uid);
+
+        Intent intent = new Intent(this, MenuViewPagerActivity.class);
         startActivity(intent);
     }
 

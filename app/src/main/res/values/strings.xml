@@ -1,8 +1,6 @@
 <resources>
     <!-- FACEBOOK ID -->
-    <!-- FACEBOOK ID -->
     <string name="facebook_application_id" translatable="false">199316630990692</string>
-    <string name="fb_login_protocol_scheme" translatable="false">fb199316630990692</string>
 
     <!-- FONT ID -->
     <string name="Roboto_Bold" translatable="false">Roboto-Bold</string>
@@ -15,7 +13,7 @@
     <string name="main_activity_description">Rassurer rapidement</string>
 
     <string name="login">Connexion</string>
-    <string name="chat_with_mentor">Discute avec un mentor</string>
+    <string name="menu">Menu</string>
 
     <!-- NOTIFICATION SERVICE -->
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
@@ -42,14 +40,8 @@
     <string name="popup_message_confirmation_delete_account">Es-tu sûr(e) de vouloir supprimer ton compte ?</string>
     <string name="popup_message_choice_yes">Oui !</string>
     <string name="popup_message_choice_no">Non</string>
-    <string name="check_box_is_mentor">Etes-vous un mentor ?</string>
 
     <!-- MENTOR_CHAT ACTIVITY -->
-    <string name="toolbar_title_mentor_chat_activity">Chats de discussions</string>
-    <string name="text_input_title_mentor_chat_activity">Composer votre message</string>
-    <string name="button_title_mentor_chat_activity">ENVOYER</string>
-    <string name="text_view_mentor_chat_error">Ce fil de discussion ne contient pour le moment aucun message&#8230;</string>
-    <string name="popup_title_permission_files_access">Cette application a besoin de permission pour fonctionner.</string>
 
     <string name="content_description_logo">Logo I\'m OK</string>
     <string name="content_description_image_profil">Image de profile</string>
@@ -59,16 +51,75 @@
     <string name="animation_main_to_detail" translatable="false">AnimationMainToDetail</string>
 
     <!-- BOTTOM NAVIGATION VIEW -->
-    <string name="bottom_navigation_menu_landscape">Landscape</string>
-    <string name="bottom_navigation_menu_logos">Logo</string>
-    <string name="bottom_navigation_menu_android">Android</string>
 
     <!-- DETAIL SCREEN -->
-    <string name="fragment_detail_button_share">Share</string>
-    <string name="detail_fragment_snackbar_message">This feature is currently not available. Please check back later ...</string>
-    <string name="detail_fragment_stats_views">%1$s views</string>
-    <string name="detail_fragment_stats_likes">%1$s likes</string>
-    <string name="detail_fragment_stats_comments">%1$s comments</string>
-    <string name="activity_detail_title">Detail</string>
-    <string name="menu">Menu</string>
+    <string name="detail_fragment_snackbar_message">This feature is currently not available. Please check back later …</string>
+    <string name="toolbar_title_activity_menu">@string/app_name</string>
+    <string name="toolbar_title_activity_settings">Settings</string>
+    <string name="settings">Paramètres</string>
+
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_social_recommendations">Enable social recommendations</string>
+    <string name="pref_description_social_recommendations">Recommendations for people to contact
+        based on your message history
+    </string>
+
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_default_display_name">John Smith</string>
+
+    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+    <string-array name="pref_example_list_titles">
+        <item>Always</item>
+        <item>When possible</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_example_list_values">
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_data_sync">Data &amp; sync</string>
+
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+        <item>-1</item>
+    </string-array>
+
+    <string name="pref_title_system_sync_settings">System sync settings</string>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Notifications</string>
+
+    <string name="pref_title_new_message_notifications">New message notifications</string>
+
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+
+    <string name="pref_title_vibrate">Vibrate</string>
+    <string name="fragment_menu_ok_card_item_image_desciption">Image OKCard</string>
+    <string name="fragment_menu_recipient_list_item_image_list">Logo image liste</string>
+    <string name="toolbar_title_activity_ok_card">OK Card</string>
+    <string name="toolbar_title_activity_recipient_list">Liste destinataire</string>
+    <string name="toolbar_title_activity_position">Localisation</string>
+
 </resources>

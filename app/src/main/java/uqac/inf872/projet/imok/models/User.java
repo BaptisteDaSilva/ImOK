@@ -2,10 +2,6 @@ package uqac.inf872.projet.imok.models;
 
 import android.support.annotation.Nullable;
 
-/**
- * Created by Philippe on 30/01/2018.
- */
-
 public class User {
 
     private String uid;
@@ -25,10 +21,6 @@ public class User {
     // --- GETTERS ---
     public String getUid() {
         return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
     }
 
     public String getUsername() {

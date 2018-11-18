@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="ImOK" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="ImOK" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -11,24 +11,9 @@
         <item name="android:textColorSecondary">@color/secondaryTextColor</item>
     </style>
 
-    <style name="ImOK.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="ImOK.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="ImOK.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <style name="ImOK.NoActionBar.Fullscreen">
-        <item name="android:windowFullscreen">true</item>
-    </style>
-
     <!-- STYLE FOR MAIN ACTIVITY -->
     <style name="ImOK.NoTitle">
         <item name="windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
-        <item name="actionBarTheme">@null</item>
     </style>
 
     <!-- STYLE SIGN-IN ACTIVITY -->
@@ -55,19 +40,16 @@
     <!-- | STYLES | -->
 
     <!-- TEXT VIEW -->
-    <style name="ImOKText" parent="@style/TextAppearance.AppCompat">
-        <item name="android:padding">@dimen/padding_normal</item>
-        <item name="android:textColor">@color/text_normal_dark</item>
+
+    <!-- TOOLBAR THEME -->
+    <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <!-- Color of the title text in the Toolbar -->
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
-    <style name="ImOKText.Title">
-        <item name="android:textSize">@dimen/text_title</item>
-    </style>
-
-    <!-- BUTTON -->
-    <style name="ImOKButton" parent="Widget.AppCompat.Button.Colored">
-        <item name="android:textColor">@color/background_light</item>
-        <item name="colorButtonNormal">@color/colorAccent</item>
+    <!-- TOOLBAR TITLE THEME -->
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
 </resources>

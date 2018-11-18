@@ -1,9 +1,12 @@
 package uqac.inf872.projet.imok.controllers.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -53,6 +56,13 @@ public class ProfileActivity extends BaseActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu and add it to the Toolbar
+        getMenuInflater().inflate(R.menu.toolbar_menu_settings, menu);
+        return true;
+    }
+
+    @Override
     public int getFragmentLayout() {
         return R.layout.activity_profile;
     }
@@ -78,6 +88,18 @@ public class ProfileActivity extends BaseActivity {
                 .setPositiveButton(R.string.popup_message_choice_yes, (dialogInterface, i) -> deleteUserFromFirebase())
                 .setNegativeButton(R.string.popup_message_choice_no, null)
                 .show();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //3 - Handle actions on menu items
+        if ( item.getItemId() == R.id.menu_activity_settings ) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     // --------------------

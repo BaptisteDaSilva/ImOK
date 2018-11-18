@@ -7,7 +7,9 @@ import android.support.annotation.Nullable;
 import android.support.multidex.MultiDex;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,6 +20,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
+import uqac.inf872.projet.imok.R;
 
 public abstract class BaseActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks {
 
@@ -35,15 +38,21 @@ public abstract class BaseActivity extends AppCompatActivity implements EasyPerm
         ButterKnife.bind(this); //Configure Butterknife
     }
 
-    public abstract int getFragmentLayout();
+    protected abstract int getFragmentLayout();
 
     // --------------------
     // UI
     // --------------------
 
     protected void configureToolbar() {
-        ActionBar ab = getSupportActionBar();
+        // Get the toolbar (Serialise)
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        // Set the toolbar
+        setSupportActionBar(toolbar);
 
+        // Get a support ActionBar corresponding to this toolbar
+        ActionBar ab = getSupportActionBar();
+        // Enable the Up button
         if ( ab != null ) {
             ab.setDisplayHomeAsUpEnabled(true);
         }
@@ -54,19 +63,21 @@ public abstract class BaseActivity extends AppCompatActivity implements EasyPerm
     // --------------------
 
     protected OnFailureListener onFailureListener() {
-        return e -> {
-//                Toast.makeText(getApplicationContext(), getString(R.string.error_unknown_error), Toast.LENGTH_LONG).show();
-        };
+        return e -> Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
     }
 
     // --------------------
     // UTILS
     // --------------------
 
-//    @Nullable
-//    protected FirebaseUser getCurrentUser(){ return FirebaseAuth.getInstance().getCurrentUser(); }
-//
-//    protected Boolean isCurrentUserLogged(){ return (this.getCurrentUser() != null); }
+    @Nullable
+    protected FirebaseUser getCurrentUser() {
+        return FirebaseAuth.getInstance().getCurrentUser();
+    }
+
+    protected Boolean isCurrentUserLogged() {
+        return (this.getCurrentUser() != null);
+    }
 
     // --------------------
     // PERMISSIONS
@@ -94,19 +105,6 @@ public abstract class BaseActivity extends AppCompatActivity implements EasyPerm
         if ( EasyPermissions.somePermissionPermanentlyDenied(this, perms) ) {
             new AppSettingsDialog.Builder(this).build().show();
         }
-    }
-
-    // --------------------
-    // UTILS
-    // --------------------
-
-    @Nullable
-    protected FirebaseUser getCurrentUser() {
-        return FirebaseAuth.getInstance().getCurrentUser();
-    }
-
-    protected Boolean isCurrentUserLogged() {
-        return (this.getCurrentUser() != null);
     }
 
     // --------------------

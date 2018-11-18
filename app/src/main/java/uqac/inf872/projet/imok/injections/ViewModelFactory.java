@@ -2,40 +2,47 @@ package uqac.inf872.projet.imok.injections;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
+import android.support.annotation.NonNull;
 
-import uqac.inf872.projet.imok.repositories.CommentRepository;
-import uqac.inf872.projet.imok.repositories.ProjectRepository;
-import uqac.inf872.projet.imok.viewmodels.CommentsViewModel;
-import uqac.inf872.projet.imok.viewmodels.ProjectDetailViewModel;
-import uqac.inf872.projet.imok.viewmodels.ProjectViewModel;
+import uqac.inf872.projet.imok.repositories.OKCardRepository;
+import uqac.inf872.projet.imok.repositories.PositionRepository;
+import uqac.inf872.projet.imok.repositories.RecipientListRepository;
+import uqac.inf872.projet.imok.viewmodels.OKCardViewModel;
+import uqac.inf872.projet.imok.viewmodels.PositionViewModel;
+import uqac.inf872.projet.imok.viewmodels.RecipientListViewModel;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
 
-    private final ProjectRepository projectRepository;
-    private final CommentRepository commentRepository;
+    private final OKCardRepository okCardRepository;
+    private final PositionRepository positionRepository;
+    private final RecipientListRepository recipientListRepository;
+
 //    private final Executor executor;
 
-    ViewModelFactory(ProjectRepository projectRepository, CommentRepository commentRepository) {
-        this.projectRepository = projectRepository;
-        this.commentRepository = commentRepository;
+    ViewModelFactory(OKCardRepository okCardRepository, PositionRepository positionRepository, RecipientListRepository recipientListRepository) {
+        this.okCardRepository = okCardRepository;
+        this.positionRepository = positionRepository;
+        this.recipientListRepository = recipientListRepository;
     }
 
-//    ViewModelFactory(ItemDataRepository itemDataSource, UserDataRepository userDataSource, Executor executor) {
-//        this.itemDataSource = itemDataSource;
-//        this.userDataSource = userDataSource;
+//    ViewModelFactory(OKCardRepository okCardRepository, PositionRepository positionRepository, RecipientListRepository recipientListRepository, Executor executor) {
+//        this.okCardRepository = okCardRepository;
+//        this.positionRepository = positionRepository;
+//        this.recipientListRepository = recipientListRepository;
 //        this.executor = executor;
 //    }
 
+    @NonNull
     @Override
-    public <T extends ViewModel> T create(Class<T> modelClass) {
-        if ( modelClass.isAssignableFrom(ProjectViewModel.class) ) {
-            return (T) new ProjectViewModel(projectRepository);
+    public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+        if ( modelClass.isAssignableFrom(OKCardViewModel.class) ) {
+            return (T) new OKCardViewModel(okCardRepository);
         }
-        if ( modelClass.isAssignableFrom(ProjectDetailViewModel.class) ) {
-            return (T) new ProjectDetailViewModel(projectRepository);
+        if ( modelClass.isAssignableFrom(PositionViewModel.class) ) {
+            return (T) new PositionViewModel(positionRepository);
         }
-        if ( modelClass.isAssignableFrom(CommentsViewModel.class) ) {
-            return (T) new CommentsViewModel(commentRepository);
+        if ( modelClass.isAssignableFrom(RecipientListViewModel.class) ) {
+            return (T) new RecipientListViewModel(recipientListRepository);
         }
 
 //        if (modelClass.isAssignableFrom(ItemViewModel.class)) {

@@ -1,6 +1,7 @@
 package uqac.inf872.projet.imok.base;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 import android.support.test.espresso.idling.CountingIdlingResource;
 import android.support.v4.app.Fragment;
@@ -20,11 +21,9 @@ public abstract class BaseFragment extends Fragment {
 
     // FOR TESTING
     @VisibleForTesting
-    protected CountingIdlingResource espressoTestIdlingResource;
+    private CountingIdlingResource espressoTestIdlingResource;
 
     // 1 - Force developer implement those methods
-    protected abstract BaseFragment newInstance();
-
     protected abstract int getFragmentLayout();
 
     protected abstract void configureDesign();
@@ -32,7 +31,7 @@ public abstract class BaseFragment extends Fragment {
     protected abstract void updateDesign();
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // 2 - Get layout identifier from abstract method
         View view = inflater.inflate(getFragmentLayout(), container, false);
         // 3 - Binding Views
@@ -55,7 +54,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         // 6 - Handling Bundle Save
         Icepick.saveInstanceState(this, outState);

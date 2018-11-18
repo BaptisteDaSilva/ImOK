@@ -2,8 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="uqac.inf872.projet.imok">
 
-    <!--<uses-permission android:name="android.permission.SEND_SMS" />-->
+    <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- <uses-permission android:name="android.permission.SEND_SMS" /> -->
     <application
         android:name="android.support.multidex.MultiDexApplication"
         android:allowBackup="true"
@@ -16,7 +17,7 @@
         <activity
             android:name=".controllers.activities.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/ImOK.NoTitle"> <!-- DISABLE TOOLBAR IN MAIN ACTIVITY-->
+            android:theme="@style/ImOK.NoTitle"> <!-- DISABLE TOOLBAR IN MAIN ACTIVITY -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,14 +25,14 @@
 
                 <action android:name="android.intent.action.VIEW" />
 
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
-                <!--<category android:name="android.intent.category.BROWSABLE" />-->
+                <!-- <category android:name="android.intent.category.DEFAULT" /> -->
+                <!-- <category android:name="android.intent.category.BROWSABLE" /> -->
+
 
                 <!-- Accepts URIs that begin with "i-m-ok://android-app-i-m-ok" -->
                 <data
                     android:host="i-m-ok"
                     android:scheme="android-app-i-m-ok" />
-
             </intent-filter>
         </activity>
         <!-- PROFILE ACTIVITY -->
@@ -39,23 +40,31 @@
             android:name=".controllers.activities.ProfileActivity"
             android:label="@string/toolbar_title_login_activity"
             android:parentActivityName=".controllers.activities.MainActivity" />
-        <!-- Menu ACTIVITY -->
+        <!-- SETTINGS ACTIVITY -->
         <activity
-            android:name=".controllers.activities.MenuActivity"
-            android:parentActivityName=".controllers.activities.MainActivity"
-            android:theme="@style/ImOK">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <!-- DETAIL ACTIVITY -->
+            android:name=".controllers.activities.SettingsActivity"
+            android:label="@string/toolbar_title_activity_settings"
+            android:parentActivityName=".controllers.activities.ProfileActivity" />
+        <!-- MENU ACTIVITY -->
         <activity
-            android:name=".controllers.activities.DetailActivity"
-            android:label="@string/activity_detail_title"
-            android:parentActivityName=".controllers.activities.MenuActivity"
+            android:name=".controllers.activities.MenuViewPagerActivity"
+            android:label="@string/toolbar_title_activity_menu"
             android:theme="@style/ImOK" />
+        <!-- OKCARD ACTIVITY -->
+        <activity
+            android:name=".controllers.activities.OKCardActivity"
+            android:label="@string/toolbar_title_activity_ok_card"
+            android:parentActivityName=".controllers.activities.MenuViewPagerActivity" />
+        <!-- RECIPIENTLIST ACTIVITY -->
+        <activity
+            android:name=".controllers.activities.RecipientListActivity"
+            android:label="@string/toolbar_title_activity_recipient_list"
+            android:parentActivityName=".controllers.activities.MenuViewPagerActivity" />
+        <!-- POSITION ACTIVITY -->
+        <activity
+            android:name=".controllers.activities.PositionActivity"
+            android:label="@string/toolbar_title_activity_position"
+            android:parentActivityName=".controllers.activities.MenuViewPagerActivity" />
 
         <!-- NOTIFICATION SERVICE -->
         <service

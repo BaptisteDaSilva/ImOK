@@ -48,12 +48,23 @@ public class ProfileActivity extends BaseActivity {
     @BindView(R.id.profile_activity_progress_bar)
     ProgressBar progressBar;
 
+//    private User currentUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         this.configureToolbar();
         this.updateUIWhenCreating();
     }
+
+//    @Override
+//    protected void setDataBinding(ViewDataBinding mDataBinding) {
+//        UserHelper.getUser(this.getCurrentUser().getUid()).addOnSuccessListener(documentSnapshot -> {
+//            currentUser = documentSnapshot.toObject(User.class);
+//            ((ActivityProfileBinding) mDataBinding).setUser(currentUser);
+//        });
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -162,6 +173,7 @@ public class ProfileActivity extends BaseActivity {
             // 5 - Get additional data from Firestore
             UserHelper.getUser(this.getCurrentUser().getUid()).addOnSuccessListener(documentSnapshot -> {
                 User currentUser = documentSnapshot.toObject(User.class);
+
                 String username = TextUtils.isEmpty(currentUser != null ? currentUser.getUsername() : null) ? getString(R.string.info_no_username_found) : currentUser.getUsername();
                 textInputEditTextUsername.setText(username);
             });

@@ -8,8 +8,7 @@ import uqac.inf872.projet.imok.controllers.fragments.PositionFragment;
 
 public class PositionActivity extends BaseActivity {
 
-    public static final String BUNDLE_KEY_POSITION_ID = "BUNDLE_KEY_OKCARD_ID";
-    public static final String BUNDLE_KEY_POSITION_IMAGE_URL = "BUNDLE_KEY_OKCARD_IMAGE_URL";
+    public static final String BUNDLE_KEY_POSITION_ID = "BUNDLE_KEY_POSITION_ID";
 
     // FOR DATA
     private PositionFragment positionFragment;
@@ -21,6 +20,11 @@ public class PositionActivity extends BaseActivity {
         this.configureAndShowDetailFragment();
     }
 
+//    @Override
+//    protected void setDataBinding(ViewDataBinding mDataBinding) {
+//
+//    }
+
     @Override
     public int getFragmentLayout() {
         return R.layout.activity_position;
@@ -31,7 +35,6 @@ public class PositionActivity extends BaseActivity {
     // -------------------
 
     private void configureAndShowDetailFragment() {
-// TODO chnager
         positionFragment = (PositionFragment) getSupportFragmentManager().findFragmentById(R.id.activity_position_frame_layout);
 
         if ( positionFragment == null ) {

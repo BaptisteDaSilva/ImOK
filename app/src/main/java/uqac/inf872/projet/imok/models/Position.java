@@ -81,4 +81,10 @@ public class Position {
     public String getUserID() {
         return userID;
     }
+
+    @android.support.annotation.NonNull
+    @Override
+    public String toString() {
+        return this.getName();
+    }
 }

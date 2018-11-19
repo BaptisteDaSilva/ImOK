@@ -32,9 +32,9 @@ public class PositionViewHolder extends RecyclerView.ViewHolder {
     public void updateWithPosition(Position position, RequestManager glide) {
 
         if ( position.isWifi() ) {
-            glide.asDrawable().load(R.drawable.ic_location_white_large).into(imageView);
-        } else {
             glide.asDrawable().load(R.drawable.ic_wifi_white_large).into(imageView);
+        } else {
+            glide.asDrawable().load(R.drawable.ic_location_white_large).into(imageView);
         }
 
         textView.setText(position.getName());

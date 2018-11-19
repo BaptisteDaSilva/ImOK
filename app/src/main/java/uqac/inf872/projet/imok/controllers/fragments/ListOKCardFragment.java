@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -72,9 +71,7 @@ public class ListOKCardFragment extends BaseFragment {
 
     @Override
     protected void configureDesign() {
-        floatingActionButton.setOnClickListener(view -> Snackbar.make(view, "OKCard fragment", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show());
-
+        floatingActionButton.setOnClickListener(view -> createNew());
     }
 
     @Override
@@ -98,6 +95,11 @@ public class ListOKCardFragment extends BaseFragment {
     // -------------------
     // NAVIGATION
     // -------------------
+
+    private void createNew() {
+        Intent intent = new Intent(getActivity(), OKCardActivity.class);
+        startActivity(intent);
+    }
 
     private void navigateToDetail(OKCard okCard, View viewClicked) {
         Intent intent = new Intent(getActivity(), OKCardActivity.class);

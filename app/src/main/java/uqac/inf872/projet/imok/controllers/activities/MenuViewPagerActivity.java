@@ -13,8 +13,11 @@ import uqac.inf872.projet.imok.controllers.fragments.ListRecipientsListFragment;
 
 public class MenuViewPagerActivity extends BaseActivity {
 
+    public static final String BUNDLE_KEY_MENU_ID = "BUNDLE_KEY_MENU_ID";
+
     //    private static final String[] TITLE = new String[] {"OK Card", "Destinataire", "Position"};
     private static final int[] TITLE_ICON = new int[]{R.drawable.ic_ok, R.drawable.ic_list_alt_white, R.drawable.ic_location_white};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +46,24 @@ public class MenuViewPagerActivity extends BaseActivity {
         tabs.getTabAt(0).setIcon(TITLE_ICON[0]);
         tabs.getTabAt(1).setIcon(TITLE_ICON[1]);
         tabs.getTabAt(2).setIcon(TITLE_ICON[2]);
+
+        Bundle bundle = getIntent().getExtras();
+
+        if ( bundle != null ) {
+            int idMenu = bundle.getInt(MenuViewPagerActivity.BUNDLE_KEY_MENU_ID);
+
+            TabLayout.Tab tab = tabs.getTabAt(idMenu);
+            tab.select();
+        }
+
+        // TODO https://developer.android.com/training/implementing-navigation/temporal
     }
+
+
+//    @Override
+//    protected void setDataBinding(ViewDataBinding mDataBinding) {
+//
+//    }
 
     @Override
     protected int getFragmentLayout() {

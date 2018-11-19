@@ -26,6 +26,8 @@ public abstract class BaseActivity extends AppCompatActivity implements EasyPerm
 
     private static final String TAG = "I'm OK";
 
+//    ViewDataBinding mDataBinding;
+
     // --------------------
     // LIFE CYCLE
     // --------------------
@@ -34,9 +36,12 @@ public abstract class BaseActivity extends AppCompatActivity implements EasyPerm
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(this.getFragmentLayout());
-
         ButterKnife.bind(this); //Configure Butterknife
+
+//        mDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_profile);
     }
+
+//    protected abstract void  setDataBinding(ViewDataBinding mDataBinding);
 
     protected abstract int getFragmentLayout();
 

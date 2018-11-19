@@ -1,28 +1,24 @@
 package uqac.inf872.projet.imok.controllers.fragments;
 
-import android.graphics.Color;
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.EditText;
 
-import com.bumptech.glide.Glide;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import uqac.inf872.projet.imok.R;
+import uqac.inf872.projet.imok.api.RecipientListHelper;
 import uqac.inf872.projet.imok.base.BaseFragment;
+import uqac.inf872.projet.imok.controllers.activities.MenuViewPagerActivity;
 import uqac.inf872.projet.imok.controllers.activities.RecipientListActivity;
+import uqac.inf872.projet.imok.models.RecipientList;
+import uqac.inf872.projet.imok.views.RobotoButton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,25 +26,17 @@ import uqac.inf872.projet.imok.controllers.activities.RecipientListActivity;
 public class RecipientListFragment extends BaseFragment {
 
     // FOR DESIGN
-    @BindView(R.id.fragment_detail_image)
-    ImageView imageProject;
+    @BindView(R.id.recipient_list_name)
+    EditText editTextName;
 
-    @BindView(R.id.fragment_detail_title)
-    TextView titleProject;
+    @BindView(R.id.recipient_list_destinataires)
+    EditText editTextDestinataires;
 
-    @BindView(R.id.fragment_detail_description)
-    TextView descriptionProject;
-
-    @BindView(R.id.fragment_detail_share)
-    Button shareButton;
-
-    @BindView(R.id.fragment_detail_root_view)
-    CoordinatorLayout rootView;
-
-    @BindView(R.id.fragment_detail_fab)
-    FloatingActionButton fabButton;
+    @BindView(R.id.recipient_list_btn_delete)
+    RobotoButton btnDelete;
 
     // FOR DATA
+    private RecipientList currentRecipientList;
 
     // -------------------
     // CONFIGURATION
@@ -66,91 +54,104 @@ public class RecipientListFragment extends BaseFragment {
 
     @Override
     protected void updateDesign() {
-        this.updateDesignWhenStarting();
+        if ( this.getRecipientListIdFromBundle() != null ) {
+            this.updateDesignWhenStarting();
+        } else {
+            btnDelete.setVisibility(View.GONE);
+        }
     }
 
     // -------------------
     // ACTIONS
     // -------------------
 
-    @OnClick(R.id.fragment_detail_share)
-    public void onClickShareButton(View view) {
-        this.showMessage();
+    @OnClick(R.id.recipient_list_btn_cancel)
+    public void onClickCancel(View view) {
+        openMenu();
     }
 
-    // -------------------
-    // DATA
-    // -------------------
+    @OnClick(R.id.recipient_list_btn_save)
+    public void onClickSave(View view) {
+
+        if ( currentRecipientList != null ) {
+            currentRecipientList.setName(editTextName.getText().toString());
+            currentRecipientList.setRecipients(
+                    new ArrayList<>(Arrays.asList(editTextDestinataires.getText().toString().split("\n"))));
+
+            RecipientListHelper.updateRecipientList(currentRecipientList)
+                    .addOnFailureListener(this.onFailureListener())
+                    .addOnSuccessListener(aVoid -> openMenu());
+        } else {
+
+            String name = editTextName.getText().toString();
+            ArrayList<String> destinataires = new ArrayList<>(Arrays.asList(editTextDestinataires.getText().toString().split("\n")));
+
+            // TODO changer
+            String userID = "0jRbKkRNsoPKHRks5SXCwOfxvuE3";
+
+            RecipientListHelper.createRecipientList(name, destinataires, userID)
+                    .addOnFailureListener(this.onFailureListener())
+                    .addOnSuccessListener(aVoid -> openMenu());
+        }
+    }
+
+    @OnClick(R.id.recipient_list_btn_delete)
+    public void onClickDelete(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+
+        builder.setTitle("Confirmation");
+        builder.setMessage("Voulez-vous supprimer la liste de destinataire ?");
+        builder.setCancelable(false);
+
+        builder.setPositiveButton("OUI", (dialog, id) ->
+        {
+            RecipientListHelper.deleteRecipientList(currentRecipientList.getIdList());
+            openMenu();
+        });
+        builder.setNegativeButton("NON", (dialog, id) -> dialog.cancel());
+
+        builder.create().show();
+    }
 
     // -------------------
     // UI
     // -------------------
 
     private void updateDesignWhenStarting() {
-        Glide.with(this).load(this.getImageURLFromBundle()).into(this.imageProject);
-        this.animateViews();
-    }
 
-    private void showMessage() {
-        Snackbar snackbar = Snackbar.make(rootView, R.string.detail_fragment_snackbar_message, Snackbar.LENGTH_SHORT);
-        View sbView = snackbar.getView();
-        TextView textView = sbView.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.WHITE);
-        snackbar.show();
-    }
+        RecipientListHelper.getRecipientList(this.getRecipientListIdFromBundle())
+                .addOnSuccessListener(documentSnapshot ->
+                {
+                    currentRecipientList = documentSnapshot.toObject(RecipientList.class);
 
-    private void animateViews() {
-        this.alphaViewAnimation(this.titleProject, 200);
-        this.scaleViewAnimation(this.fabButton, 500);
-        this.alphaViewAnimation(this.descriptionProject, 400);
-        this.fromBottomAnimation(this.shareButton, 800);
-    }
+                    editTextName.setText(currentRecipientList.getName());
 
+                    StringBuilder sb = new StringBuilder();
 
-    private void scaleViewAnimation(View view, int startDelay) {
-        // Reset view
-        view.setScaleX(0);
-        view.setScaleY(0);
-        // Animate view
-        view.animate()
-                .scaleX(1f)
-                .scaleY(1f)
-                .setInterpolator(new FastOutSlowInInterpolator())
-                .setStartDelay(startDelay)
-                .setDuration(500)
-                .start();
-    }
+                    for (String s : currentRecipientList.getRecipients()) {
+                        sb.append(s).append("\n");
+                    }
 
-    private void alphaViewAnimation(View view, int startDelay) {
-        Animation animation = new AlphaAnimation(0.0f, 1.0f);
-        animation.setDuration(1000);
-        animation.setStartOffset(startDelay);
-        view.startAnimation(animation);
-    }
-
-    private void fromBottomAnimation(View view, int startDelay) {
-        Animation animation = new TranslateAnimation(
-                Animation.RELATIVE_TO_PARENT, 0.0f,
-                Animation.RELATIVE_TO_PARENT, 0.0f,
-                Animation.RELATIVE_TO_PARENT, +1.0f,
-                Animation.RELATIVE_TO_PARENT, 0.0f);
-        animation.setDuration(1000);
-        animation.setInterpolator(new AccelerateInterpolator());
-        animation.setStartOffset(startDelay);
-        view.startAnimation(animation);
+                    editTextDestinataires.setText(sb.toString());
+                });
     }
 
     // -------------------
     // UTILS
     // -------------------
 
-    private Integer getProjectIdFromBundle() {
-        Bundle bundle = getActivity().getIntent().getExtras();
-        return bundle.getInt(RecipientListActivity.BUNDLE_KEY_RECIPIENT_LIST_ID);
+    private void openMenu() {
+        Intent intent = new Intent(this.getContext(), MenuViewPagerActivity.class);
+
+        Bundle bundle = new Bundle();
+        bundle.putInt(MenuViewPagerActivity.BUNDLE_KEY_MENU_ID, 1);
+        intent.putExtras(bundle);
+
+        startActivity(intent);
     }
 
-    private String getImageURLFromBundle() {
+    private String getRecipientListIdFromBundle() {
         Bundle bundle = getActivity().getIntent().getExtras();
-        return bundle.getString(RecipientListActivity.BUNDLE_KEY_RECIPIENT_LIST_IMAGE_URL);
+        return bundle.getString(RecipientListActivity.BUNDLE_KEY_RECIPIENT_LIST_ID);
     }
 }

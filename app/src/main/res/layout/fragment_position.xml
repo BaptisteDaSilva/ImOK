@@ -1,72 +1,77 @@
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_detail_root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".controllers.activities.PositionActivity">
 
     <LinearLayout
+        android:id="@+id/position_btn"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal">
 
-        <!-- Importation de notre Toolbar -->
-        <include
-            layout="@layout/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <ImageView
-            android:id="@+id/fragment_detail_image"
+        <uqac.inf872.projet.imok.views.RobotoButton
+            android:id="@+id/psoition_btn_cancel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:scaleType="centerCrop"
-            android:transitionName="@string/animation_main_to_detail" />
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:text="@string/cancel"
+            android:textColor="@android:color/white"
+            app:fontName="Roboto_Medium" />
 
-        <LinearLayout
+        <uqac.inf872.projet.imok.views.RobotoButton
+            android:id="@+id/position_btn_save"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:orientation="vertical">
-
-            <uqac.inf872.projet.imok.views.RobotoTextView
-                android:id="@+id/fragment_detail_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:fontName="Roboto_Medium" />
-
-            <uqac.inf872.projet.imok.views.RobotoTextView
-                android:id="@+id/fragment_detail_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:maxLines="3"
-                app:fontName="Roboto_Medium" />
-
-            <Button
-                android:id="@+id/fragment_detail_share"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_weight="1" />
-
-        </LinearLayout>
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:text="@string/save"
+            android:textColor="@android:color/white"
+            app:fontName="Roboto_Medium" />
 
     </LinearLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fragment_detail_fab"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:clickable="true"
-        app:backgroundTint="@color/button_favorite"
-        app:layout_anchor="@id/fragment_detail_image"
-        app:layout_anchorGravity="bottom|right|end" />
+        android:layout_below="@+id/position_btn"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical">
 
+        <ImageView
+            android:id="@+id/position_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="20dp"
+            android:background="@android:color/black"
+            android:contentDescription="@string/position_image_description" />
 
-</android.support.design.widget.CoordinatorLayout>
+        <EditText
+            android:id="@+id/position_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textShortMessage" />
+    </LinearLayout>
+
+    <uqac.inf872.projet.imok.views.RobotoButton
+        android:id="@+id/position_btn_delete"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="end"
+        android:background="@color/colorError"
+        android:text="@string/delete"
+        android:textColor="@android:color/white"
+        app:fontName="Roboto_Medium" />
+
+</RelativeLayout>

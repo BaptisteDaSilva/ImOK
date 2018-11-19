@@ -6,7 +6,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import uqac.inf872.projet.imok.models.RecipientList;
 
@@ -43,8 +45,14 @@ public class RecipientListHelper {
 
     // --- UPDATE ---
 
-    public static Task<Void> updateRecipientListname(String idRecipientList, String name) {
-        return RecipientListHelper.getRecipientListsCollection().document(idRecipientList).update("name", name);
+    public static Task<Void> updateRecipientList(RecipientList recipientList) {
+
+        Map<String, Object> recpientListPropertie = new HashMap<>();
+
+        recpientListPropertie.put("name", recipientList.getName());
+        recpientListPropertie.put("recipients", recipientList.getRecipients());
+
+        return RecipientListHelper.getRecipientListsCollection().document(recipientList.getIdList()).update(recpientListPropertie);
     }
 
     // --- DELETE ---

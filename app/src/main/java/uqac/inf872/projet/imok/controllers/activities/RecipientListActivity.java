@@ -9,7 +9,6 @@ import uqac.inf872.projet.imok.controllers.fragments.RecipientListFragment;
 public class RecipientListActivity extends BaseActivity {
 
     public static final String BUNDLE_KEY_RECIPIENT_LIST_ID = "BUNDLE_KEY_RECIPIENT_LIST_ID";
-    public static final String BUNDLE_KEY_RECIPIENT_LIST_IMAGE_URL = "BUNDLE_KEY_RECIPIENT_LIST_IMAGE_URL";
 
     // FOR DATA
     private RecipientListFragment recipientListFragment;
@@ -20,6 +19,11 @@ public class RecipientListActivity extends BaseActivity {
         this.configureToolbar();
         this.configureAndShowDetailFragment();
     }
+
+//    @Override
+//    protected void setDataBinding(ViewDataBinding mDataBinding) {
+//
+//    }
 
     @Override
     public int getFragmentLayout() {

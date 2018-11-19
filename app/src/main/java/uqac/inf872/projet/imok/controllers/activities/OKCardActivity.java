@@ -21,6 +21,11 @@ public class OKCardActivity extends BaseActivity {
         this.configureAndShowDetailFragment();
     }
 
+//    @Override
+//    protected void setDataBinding(ViewDataBinding mDataBinding) {
+//
+//    }
+
     @Override
     public int getFragmentLayout() {
         return R.layout.activity_ok_card;

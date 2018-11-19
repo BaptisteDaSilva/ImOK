@@ -6,6 +6,7 @@ public class OKCard {
 
     private String idCard;
     private String name;
+    private String message;
     private String urlPicture;
     private String idListe;
     private List<String> idTrigger;
@@ -14,9 +15,10 @@ public class OKCard {
     public OKCard() {
     }
 
-    public OKCard(String idCard, String name, String urlPicture, String idListe, List<String> idTrigger, String userID) {
+    public OKCard(String idCard, String name, String message, String urlPicture, String idListe, List<String> idTrigger, String userID) {
         this.idCard = idCard;
         this.name = name;
+        this.message = message;
         this.urlPicture = urlPicture;
         this.idListe = idListe;
         this.idTrigger = idTrigger;
@@ -33,6 +35,14 @@ public class OKCard {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public String getUrlPicture() {
@@ -61,5 +71,11 @@ public class OKCard {
 
     public String getUserID() {
         return userID;
+    }
+
+    @android.support.annotation.NonNull
+    @Override
+    public String toString() {
+        return this.getName();
     }
 }

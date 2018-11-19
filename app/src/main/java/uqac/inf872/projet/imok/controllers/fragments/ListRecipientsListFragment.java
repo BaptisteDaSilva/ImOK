@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -71,9 +70,7 @@ public class ListRecipientsListFragment extends BaseFragment {
 
     @Override
     protected void configureDesign() {
-        floatingActionButton.setOnClickListener(view -> Snackbar.make(view, "Recipient list fragment", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show());
-
+        floatingActionButton.setOnClickListener(view -> createNew());
     }
 
     @Override
@@ -97,6 +94,11 @@ public class ListRecipientsListFragment extends BaseFragment {
     // -------------------
     // NAVIGATION
     // -------------------
+
+    private void createNew() {
+        Intent intent = new Intent(getActivity(), RecipientListActivity.class);
+        startActivity(intent);
+    }
 
     private void navigateToDetail(RecipientList recipientList, View viewClicked) {
         Intent intent = new Intent(getActivity(), RecipientListActivity.class);

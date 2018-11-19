@@ -1,6 +1,4 @@
-# ImOK
-
-__Projet android UQAC__
+# I'm OK
 
 -------------------
 

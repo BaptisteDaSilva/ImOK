@@ -8,10 +8,6 @@ import android.util.AttributeSet;
 
 import uqac.inf872.projet.imok.R;
 
-/**
- * Created by Philippe on 03/04/2018.
- */
-
 public class RobotoTextView extends AppCompatTextView {
 
     public RobotoTextView(Context context, AttributeSet attrs) {

@@ -4,6 +4,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.Query;
 
 import java.util.HashMap;
@@ -11,10 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import uqac.inf872.projet.imok.models.OKCard;
-
-/**
- * Created by Philippe on 30/01/2018.
- */
+import uqac.inf872.projet.imok.utils.Utils;
 
 public class OKCardHelper {
 
@@ -23,7 +21,13 @@ public class OKCardHelper {
     // --- COLLECTION REFERENCE ---
 
     private static CollectionReference getOKCardsCollection() {
-        return FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .setTimestampsInSnapshotsEnabled(true)
+                .build();
+        firestore.setFirestoreSettings(settings);
+
+        return firestore.collection(COLLECTION_NAME);
     }
 
     // --- CREATE ---
@@ -40,7 +44,7 @@ public class OKCardHelper {
     // --- GET ---
 
     public static Query getOKCard() {
-        return OKCardHelper.getOKCardsCollection().orderBy("name");
+        return OKCardHelper.getOKCardsCollection().whereEqualTo("userID", Utils.getCurrentUser().getUid()).orderBy("name");
     }
 
     public static Task<DocumentSnapshot> getOKCard(String idCard) {

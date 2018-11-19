@@ -1,15 +1,15 @@
 # I'm OK
 
- ## Membre du groupe
+## Membre du groupe
 
- * Benjamin MAZOYER
- * Baptiste RIBEIRO DA SILVA
- * Antoine VANDEWEGHE
+* Benjamin MAZOYER
+* Baptiste RIBEIRO DA SILVA
+* Antoine VANDEWEGHE
 
 -----------------
 
- ## Versions
+## Versions
 
- * compileSdkVersion 28
- * minSdkVersion 17
- * targetSdkVersion 28
+* compileSdkVersion 28
+* minSdkVersion 17
+* targetSdkVersion 28

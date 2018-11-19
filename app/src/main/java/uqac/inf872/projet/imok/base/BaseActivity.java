@@ -9,11 +9,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
@@ -21,12 +16,11 @@ import butterknife.ButterKnife;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 import uqac.inf872.projet.imok.R;
+import uqac.inf872.projet.imok.utils.Utils;
 
 public abstract class BaseActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks {
 
-    private static final String TAG = "I'm OK";
-
-//    ViewDataBinding mDataBinding;
+    //    ViewDataBinding mDataBinding;
 
     // --------------------
     // LIFE CYCLE
@@ -64,27 +58,6 @@ public abstract class BaseActivity extends AppCompatActivity implements EasyPerm
     }
 
     // --------------------
-    // ERROR HANDLER
-    // --------------------
-
-    protected OnFailureListener onFailureListener() {
-        return e -> Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-    }
-
-    // --------------------
-    // UTILS
-    // --------------------
-
-    @Nullable
-    protected FirebaseUser getCurrentUser() {
-        return FirebaseAuth.getInstance().getCurrentUser();
-    }
-
-    protected Boolean isCurrentUserLogged() {
-        return (this.getCurrentUser() != null);
-    }
-
-    // --------------------
     // PERMISSIONS
     // --------------------
 
@@ -103,7 +76,7 @@ public abstract class BaseActivity extends AppCompatActivity implements EasyPerm
 
     @Override
     public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
-        Log.d(TAG, "onPermissionsDenied:" + requestCode + ":" + perms.size());
+        Log.d(Utils.TAG, "onPermissionsDenied:" + requestCode + ":" + perms.size());
 
         // (Optional) Check whether the user denied any permissions and checked "NEVER ASK AGAIN."
         // This will display a dialog directing them to enable the permission in app settings.

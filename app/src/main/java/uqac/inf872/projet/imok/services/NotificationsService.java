@@ -15,10 +15,6 @@ import com.google.firebase.messaging.RemoteMessage;
 import uqac.inf872.projet.imok.R;
 import uqac.inf872.projet.imok.controllers.activities.MainActivity;
 
-/**
- * Created by Philippe on 05/02/2018.
- */
-
 public class NotificationsService extends FirebaseMessagingService {
 
     private final int NOTIFICATION_ID = 007;
@@ -47,7 +43,7 @@ public class NotificationsService extends FirebaseMessagingService {
 
         // Create a Style for the Notification
         NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
-        inboxStyle.setBigContentTitle(getString(R.string.notification_title));
+        inboxStyle.setBigContentTitle(titre);
         inboxStyle.addLine(message);
 
         // Create a Channel (Android 8)
@@ -57,7 +53,7 @@ public class NotificationsService extends FirebaseMessagingService {
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, channelId)
                         .setSmallIcon(R.drawable.ic_ok)
-                        .setContentTitle(getString(R.string.app_name) + " - " + titre)
+                        .setContentTitle(getString(R.string.app_name))
                         .setContentText(getString(R.string.notification_title))
                         .setAutoCancel(true)
                         .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))

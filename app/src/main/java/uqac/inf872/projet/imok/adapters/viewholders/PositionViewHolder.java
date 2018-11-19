@@ -28,7 +28,6 @@ public class PositionViewHolder extends RecyclerView.ViewHolder {
 
     // ---
 
-    // TODO gerer
     public void updateWithPosition(Position position, RequestManager glide) {
 
         if ( position.isWifi() ) {

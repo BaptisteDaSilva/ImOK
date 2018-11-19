@@ -4,13 +4,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import uqac.inf872.projet.imok.models.RecipientList;
+import uqac.inf872.projet.imok.utils.Utils;
 
 public class RecipientListHelper {
 
@@ -19,7 +22,13 @@ public class RecipientListHelper {
     // --- COLLECTION REFERENCE ---
 
     private static CollectionReference getRecipientListsCollection() {
-        return FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .setTimestampsInSnapshotsEnabled(true)
+                .build();
+        firestore.setFirestoreSettings(settings);
+
+        return firestore.collection(COLLECTION_NAME);
     }
 
     // --- CREATE ---
@@ -36,7 +45,7 @@ public class RecipientListHelper {
     // --- GET ---
 
     public static Query getRecipientList() {
-        return RecipientListHelper.getRecipientListsCollection().orderBy("name");
+        return RecipientListHelper.getRecipientListsCollection().whereEqualTo("userID", Utils.getCurrentUser().getUid()).orderBy("name");
     }
 
     public static Task<DocumentSnapshot> getRecipientList(String idRecipientList) {
@@ -59,5 +68,9 @@ public class RecipientListHelper {
 
     public static Task<Void> deleteRecipientList(String idRecipientList) {
         return RecipientListHelper.getRecipientListsCollection().document(idRecipientList).delete();
+    }
+
+    public static Task<QuerySnapshot> getOKCardWithThisRecipientList(String id) {
+        return OKCardHelper.getOKCard().whereEqualTo("idListe", id).get();
     }
 }

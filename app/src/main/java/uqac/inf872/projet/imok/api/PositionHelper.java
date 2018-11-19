@@ -4,13 +4,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import uqac.inf872.projet.imok.models.Position;
+import uqac.inf872.projet.imok.utils.Utils;
 
 public class PositionHelper {
 
@@ -19,7 +22,13 @@ public class PositionHelper {
     // --- COLLECTION REFERENCE ---
 
     private static CollectionReference getPositionCollection() {
-        return FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .setTimestampsInSnapshotsEnabled(true)
+                .build();
+        firestore.setFirestoreSettings(settings);
+
+        return firestore.collection(COLLECTION_NAME);
     }
 
     // --- CREATE ---
@@ -45,15 +54,15 @@ public class PositionHelper {
     // --- GET ---
 
     public static Query getPosition() {
-        return PositionHelper.getPositionCollection().orderBy("name");
+        return PositionHelper.getPositionCollection().whereEqualTo("userID", Utils.getCurrentUser().getUid()).orderBy("name");
     }
 
     public static Query getPositionGPS() {
-        return PositionHelper.getPositionCollection().whereArrayContains("wifi", false).orderBy("name");
+        return PositionHelper.getPositionCollection().whereEqualTo("wifi", false).orderBy("name");
     }
 
     public static Query getPositionWifi() {
-        return PositionHelper.getPositionCollection().whereArrayContains("wifi", true).orderBy("name");
+        return PositionHelper.getPositionCollection().whereEqualTo("wifi", true).orderBy("name");
     }
 
     public static Task<DocumentSnapshot> getPosition(String id) {
@@ -76,5 +85,11 @@ public class PositionHelper {
 
     public static Task<Void> deletePosition(String id) {
         return PositionHelper.getPositionCollection().document(id).delete();
+    }
+
+    // UTILS
+
+    public static Task<QuerySnapshot> getOKCardWithThisTrigger(String id) {
+        return OKCardHelper.getOKCard().whereArrayContains("idTrigger", id).get();
     }
 }

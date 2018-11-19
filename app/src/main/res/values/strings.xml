@@ -16,7 +16,7 @@
     <string name="menu">Menu</string>
 
     <!-- NOTIFICATION SERVICE -->
-    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="default_notification_channel_id" translatable="false">i_mok_default_channel</string>
     <string name="notification_title">"Vous avez reçu une notification"</string>
 
     <!-- MAIN ACTIVITY -->
@@ -123,11 +123,12 @@
     <string name="cancel">Annuler</string>
     <string name="save">Enregistrer</string>
     <string name="ok_card_image_description">Image de l\'OKCard</string>
-    <string name="trigger">Déclencheur</string>
     <string name="gps">GPS</string>
     <string name="wifi">WIFI</string>
     <string name="send">Envoyer</string>
     <string name="delete">Supprimer</string>
     <string name="position_image_description">Image gps ou wifi</string>
+    <string name="yes">OUI</string>
+    <string name="no">NON</string>
 
 </resources>

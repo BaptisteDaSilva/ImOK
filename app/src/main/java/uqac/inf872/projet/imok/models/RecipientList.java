@@ -2,10 +2,6 @@ package uqac.inf872.projet.imok.models;
 
 import java.util.List;
 
-/**
- * Created by Philippe on 30/01/2018.
- */
-
 public class RecipientList {
 
     private String idList;

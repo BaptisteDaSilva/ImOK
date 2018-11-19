@@ -1,7 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_detail_root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -60,51 +59,50 @@
             android:layout_height="wrap_content"
             android:inputType="textShortMessage" />
 
-        <EditText
-            android:id="@+id/ok_card_message"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:inputType="textMultiLine" />
+            android:layout_height="match_parent">
 
-        <Spinner
-            android:id="@+id/ok_card_recipient_list"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:drawable/btn_dropdown"
-            android:spinnerMode="dropdown" />
+            <EditText
+                android:id="@+id/ok_card_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:maxLength="@integer/max_lentgh_message" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:divider="?android:dividerHorizontal"
-            android:dividerPadding="10dp"
-            android:text="@string/trigger" />
+            <Spinner
+                android:id="@+id/ok_card_recipient_list"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dropdown" />
 
-        <Switch
-            android:id="@+id/ok_card_switch_gps"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/gps" />
+            <Switch
+                android:id="@+id/ok_card_switch_gps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/gps" />
 
-        <Spinner
-            android:id="@+id/ok_card_list_gps"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:drawable/btn_dropdown"
-            android:spinnerMode="dropdown" />
+            <Spinner
+                android:id="@+id/ok_card_list_gps"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dropdown" />
 
-        <Switch
-            android:id="@+id/ok_card_switch_wifi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/wifi" />
+            <Switch
+                android:id="@+id/ok_card_switch_wifi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/wifi" />
 
-        <Spinner
-            android:id="@+id/ok_card_list_wifi"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:drawable/btn_dropdown"
-            android:spinnerMode="dropdown" />
+            <Spinner
+                android:id="@+id/ok_card_list_wifi"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dropdown" />
+        </ScrollView>
     </LinearLayout>
 
     <LinearLayout

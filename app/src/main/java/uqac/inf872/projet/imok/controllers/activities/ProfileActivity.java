@@ -23,10 +23,7 @@ import uqac.inf872.projet.imok.R;
 import uqac.inf872.projet.imok.api.UserHelper;
 import uqac.inf872.projet.imok.base.BaseActivity;
 import uqac.inf872.projet.imok.models.User;
-
-/**
- * Created by Philippe on 25/01/2018.
- */
+import uqac.inf872.projet.imok.utils.Utils;
 
 public class ProfileActivity extends BaseActivity {
 
@@ -124,10 +121,10 @@ public class ProfileActivity extends BaseActivity {
     }
 
     private void deleteUserFromFirebase() {
-        if ( this.getCurrentUser() != null ) {
+        if ( Utils.getCurrentUser() != null ) {
 
             //4 - We also delete user from firestore storage
-            UserHelper.deleteUser(this.getCurrentUser().getUid()).addOnFailureListener(this.onFailureListener());
+            UserHelper.deleteUser(Utils.getCurrentUser().getUid()).addOnFailureListener(Utils.onFailureListener(getApplicationContext()));
 
             AuthUI.getInstance()
                     .delete(this)
@@ -141,9 +138,9 @@ public class ProfileActivity extends BaseActivity {
         this.progressBar.setVisibility(View.VISIBLE);
         String username = this.textInputEditTextUsername.getText().toString();
 
-        if ( this.getCurrentUser() != null ) {
+        if ( Utils.getCurrentUser() != null ) {
             if ( !username.isEmpty() && !username.equals(getString(R.string.info_no_username_found)) ) {
-                UserHelper.updateUsername(username, this.getCurrentUser().getUid()).addOnFailureListener(this.onFailureListener()).addOnSuccessListener(this.updateUIAfterRESTRequestsCompleted(UPDATE_USERNAME));
+                UserHelper.updateUsername(username, Utils.getCurrentUser().getUid()).addOnFailureListener(Utils.onFailureListener(getApplicationContext())).addOnSuccessListener(this.updateUIAfterRESTRequestsCompleted(UPDATE_USERNAME));
             }
         }
     }
@@ -154,24 +151,24 @@ public class ProfileActivity extends BaseActivity {
 
     private void updateUIWhenCreating() {
 
-        if ( this.getCurrentUser() != null ) {
+        if ( Utils.getCurrentUser() != null ) {
 
             //Get picture URL from Firebase
-            if ( this.getCurrentUser().getPhotoUrl() != null ) {
+            if ( Utils.getCurrentUser().getPhotoUrl() != null ) {
                 Glide.with(this)
-                        .load(this.getCurrentUser().getPhotoUrl())
+                        .load(Utils.getCurrentUser().getPhotoUrl())
                         .apply(RequestOptions.circleCropTransform())
                         .into(imageViewProfile);
             }
 
             //Get email & username from Firebase
-            String email = TextUtils.isEmpty(this.getCurrentUser().getEmail()) ? getString(R.string.info_no_email_found) : this.getCurrentUser().getEmail();
+            String email = TextUtils.isEmpty(Utils.getCurrentUser().getEmail()) ? getString(R.string.info_no_email_found) : Utils.getCurrentUser().getEmail();
 
             //Update views with data
             this.textViewEmail.setText(email);
 
             // 5 - Get additional data from Firestore
-            UserHelper.getUser(this.getCurrentUser().getUid()).addOnSuccessListener(documentSnapshot -> {
+            UserHelper.getUser(Utils.getCurrentUser().getUid()).addOnSuccessListener(documentSnapshot -> {
                 User currentUser = documentSnapshot.toObject(User.class);
 
                 String username = TextUtils.isEmpty(currentUser != null ? currentUser.getUsername() : null) ? getString(R.string.info_no_username_found) : currentUser.getUsername();

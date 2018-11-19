@@ -18,6 +18,7 @@ import uqac.inf872.projet.imok.base.BaseFragment;
 import uqac.inf872.projet.imok.controllers.activities.MenuViewPagerActivity;
 import uqac.inf872.projet.imok.controllers.activities.PositionActivity;
 import uqac.inf872.projet.imok.models.Position;
+import uqac.inf872.projet.imok.utils.Utils;
 import uqac.inf872.projet.imok.views.RobotoButton;
 
 /**
@@ -56,8 +57,6 @@ public class PositionFragment extends BaseFragment {
     protected void updateDesign() {
         if ( this.getPositionIdFromBundle() != null ) {
             this.updateDesignWhenStarting();
-        } else {
-            btnDelete.setVisibility(View.GONE);
         }
     }
 
@@ -84,7 +83,7 @@ public class PositionFragment extends BaseFragment {
 //        }
 
             PositionHelper.updatePosition(currentPosition)
-                    .addOnFailureListener(this.onFailureListener())
+                    .addOnFailureListener(Utils.onFailureListener(view.getContext()))
                     .addOnSuccessListener(aVoid -> openMenu());
         } else {
 
@@ -99,15 +98,15 @@ public class PositionFragment extends BaseFragment {
             double latitude = 0.0;
             int rayon = 30;
 
-            String userID = "";
+            String userID = Utils.getCurrentUser().getUid();
 
             if ( isWifi ) {
                 PositionHelper.createPositionWifi(name, SSID, userID)
-                        .addOnFailureListener(this.onFailureListener())
+                        .addOnFailureListener(Utils.onFailureListener(view.getContext()))
                         .addOnSuccessListener(aVoid -> openMenu());
             } else {
                 PositionHelper.createPositionGPS(name, longitude, latitude, rayon, userID)
-                        .addOnFailureListener(this.onFailureListener())
+                        .addOnFailureListener(Utils.onFailureListener(view.getContext()))
                         .addOnSuccessListener(aVoid -> openMenu());
             }
         }
@@ -137,6 +136,13 @@ public class PositionFragment extends BaseFragment {
     // -------------------
 
     private void updateDesignWhenStarting() {
+
+        PositionHelper.getOKCardWithThisTrigger(this.getPositionIdFromBundle())
+                .addOnCompleteListener(command -> {
+                    if ( command.getResult().isEmpty() ) {
+                        btnDelete.setVisibility(View.VISIBLE);
+                    }
+                });
 
         PositionHelper.getPosition(this.getPositionIdFromBundle())
                 .addOnSuccessListener(documentSnapshot ->

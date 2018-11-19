@@ -4,6 +4,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
 
 import uqac.inf872.projet.imok.models.User;
 
@@ -14,7 +15,13 @@ public class UserHelper {
     // --- COLLECTION REFERENCE ---
 
     private static CollectionReference getUsersCollection() {
-        return FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .setTimestampsInSnapshotsEnabled(true)
+                .build();
+        firestore.setFirestoreSettings(settings);
+
+        return firestore.collection(COLLECTION_NAME);
     }
 
     // --- CREATE ---

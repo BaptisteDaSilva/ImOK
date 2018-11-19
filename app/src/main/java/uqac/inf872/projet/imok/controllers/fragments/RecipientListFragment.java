@@ -18,6 +18,7 @@ import uqac.inf872.projet.imok.base.BaseFragment;
 import uqac.inf872.projet.imok.controllers.activities.MenuViewPagerActivity;
 import uqac.inf872.projet.imok.controllers.activities.RecipientListActivity;
 import uqac.inf872.projet.imok.models.RecipientList;
+import uqac.inf872.projet.imok.utils.Utils;
 import uqac.inf872.projet.imok.views.RobotoButton;
 
 /**
@@ -56,8 +57,6 @@ public class RecipientListFragment extends BaseFragment {
     protected void updateDesign() {
         if ( this.getRecipientListIdFromBundle() != null ) {
             this.updateDesignWhenStarting();
-        } else {
-            btnDelete.setVisibility(View.GONE);
         }
     }
 
@@ -79,18 +78,17 @@ public class RecipientListFragment extends BaseFragment {
                     new ArrayList<>(Arrays.asList(editTextDestinataires.getText().toString().split("\n"))));
 
             RecipientListHelper.updateRecipientList(currentRecipientList)
-                    .addOnFailureListener(this.onFailureListener())
+                    .addOnFailureListener(Utils.onFailureListener(view.getContext()))
                     .addOnSuccessListener(aVoid -> openMenu());
         } else {
 
             String name = editTextName.getText().toString();
             ArrayList<String> destinataires = new ArrayList<>(Arrays.asList(editTextDestinataires.getText().toString().split("\n")));
 
-            // TODO changer
-            String userID = "0jRbKkRNsoPKHRks5SXCwOfxvuE3";
+            String userID = Utils.getCurrentUser().getUid();
 
             RecipientListHelper.createRecipientList(name, destinataires, userID)
-                    .addOnFailureListener(this.onFailureListener())
+                    .addOnFailureListener(Utils.onFailureListener(view.getContext()))
                     .addOnSuccessListener(aVoid -> openMenu());
         }
     }
@@ -118,6 +116,13 @@ public class RecipientListFragment extends BaseFragment {
     // -------------------
 
     private void updateDesignWhenStarting() {
+
+        RecipientListHelper.getOKCardWithThisRecipientList(this.getRecipientListIdFromBundle())
+                .addOnCompleteListener(command -> {
+                    if ( command.getResult().isEmpty() ) {
+                        btnDelete.setVisibility(View.VISIBLE);
+                    }
+                });
 
         RecipientListHelper.getRecipientList(this.getRecipientListIdFromBundle())
                 .addOnSuccessListener(documentSnapshot ->

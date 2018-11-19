@@ -1,6 +1,6 @@
 # ImOK
 
-###__Projet android UQAC__
+__Projet android UQAC__
 
 -------------------
 

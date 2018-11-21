@@ -78,4 +78,10 @@ public class OKCard {
     public String toString() {
         return this.getName();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof OKCard && ((OKCard) obj).getIdCard() == this.getIdCard();
+
+    }
 }

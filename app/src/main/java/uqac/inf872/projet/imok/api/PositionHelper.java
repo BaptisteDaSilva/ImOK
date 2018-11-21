@@ -1,6 +1,7 @@
 package uqac.inf872.projet.imok.api;
 
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -54,15 +55,35 @@ public class PositionHelper {
     // --- GET ---
 
     public static Query getPosition() {
-        return PositionHelper.getPositionCollection().whereEqualTo("userID", Utils.getCurrentUser().getUid()).orderBy("name");
+        FirebaseUser user = Utils.getCurrentUser();
+
+        Query query = null;
+
+        if ( user != null ) {
+            query = PositionHelper.getPositionCollection().whereEqualTo("userID", user.getUid()).orderBy("name");
+        }
+
+        return query;
     }
 
     public static Query getPositionGPS() {
-        return PositionHelper.getPositionCollection().whereEqualTo("wifi", false).orderBy("name");
+        Query query = getPosition();
+
+        if ( query != null ) {
+            query = query.whereEqualTo("wifi", false);
+        }
+
+        return query;
     }
 
     public static Query getPositionWifi() {
-        return PositionHelper.getPositionCollection().whereEqualTo("wifi", true).orderBy("name");
+        Query query = getPosition();
+
+        if ( query != null ) {
+            query = query.whereEqualTo("wifi", true);
+        }
+
+        return query;
     }
 
     public static Task<DocumentSnapshot> getPosition(String id) {

@@ -1,6 +1,7 @@
 package uqac.inf872.projet.imok.utils;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -27,6 +28,7 @@ public class Utils {
     // UTILS
     // --------------------
 
+    @Nullable
     public static FirebaseUser getCurrentUser() {
         return FirebaseAuth.getInstance().getCurrentUser();
     }

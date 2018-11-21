@@ -1,6 +1,7 @@
 package uqac.inf872.projet.imok.api;
 
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -45,7 +46,15 @@ public class RecipientListHelper {
     // --- GET ---
 
     public static Query getRecipientList() {
-        return RecipientListHelper.getRecipientListsCollection().whereEqualTo("userID", Utils.getCurrentUser().getUid()).orderBy("name");
+        FirebaseUser user = Utils.getCurrentUser();
+
+        Query query = null;
+
+        if ( user != null ) {
+            query = RecipientListHelper.getRecipientListsCollection().whereEqualTo("userID", user.getUid()).orderBy("name");
+        }
+
+        return query;
     }
 
     public static Task<DocumentSnapshot> getRecipientList(String idRecipientList) {

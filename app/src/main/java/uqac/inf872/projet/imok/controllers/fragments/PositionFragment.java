@@ -139,7 +139,7 @@ public class PositionFragment extends BaseFragment {
 
         PositionHelper.getOKCardWithThisTrigger(this.getPositionIdFromBundle())
                 .addOnCompleteListener(command -> {
-                    if ( command.getResult().isEmpty() ) {
+                    if ( command.getResult() == null || command.getResult().isEmpty() ) {
                         btnDelete.setVisibility(View.VISIBLE);
                     }
                 });
@@ -149,13 +149,15 @@ public class PositionFragment extends BaseFragment {
                 {
                     currentPosition = documentSnapshot.toObject(Position.class);
 
-                    if ( currentPosition.isWifi() ) {
-                        Glide.with(this).asDrawable().load(R.drawable.ic_wifi_white_large).into(imageView);
-                    } else {
-                        Glide.with(this).asDrawable().load(R.drawable.ic_location_white_large).into(imageView);
-                    }
+                    if ( currentPosition != null ) {
+                        if ( currentPosition.isWifi() ) {
+                            Glide.with(this).asDrawable().load(R.drawable.ic_wifi_white_large).into(imageView);
+                        } else {
+                            Glide.with(this).asDrawable().load(R.drawable.ic_location_white_large).into(imageView);
+                        }
 
-                    editTextName.setText(currentPosition.getName());
+                        editTextName.setText(currentPosition.getName());
+                    }
                 });
     }
 

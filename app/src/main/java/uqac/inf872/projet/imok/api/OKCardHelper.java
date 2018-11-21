@@ -1,6 +1,7 @@
 package uqac.inf872.projet.imok.api;
 
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import uqac.inf872.projet.imok.models.OKCard;
+import uqac.inf872.projet.imok.receiver.widget.OKCardWidget;
 import uqac.inf872.projet.imok.utils.Utils;
 
 public class OKCardHelper {
@@ -38,13 +40,23 @@ public class OKCardHelper {
         // 1 - Create Obj
         OKCard OKCardToCreate = new OKCard(id, name, message, urlPicture, idListe, idTrigger, userID);
 
+        OKCardWidget.addOKCard(OKCardToCreate);
+
         return OKCardHelper.getOKCardsCollection().document(id).set(OKCardToCreate);
     }
 
     // --- GET ---
 
     public static Query getOKCard() {
-        return OKCardHelper.getOKCardsCollection().whereEqualTo("userID", Utils.getCurrentUser().getUid()).orderBy("name");
+        FirebaseUser user = Utils.getCurrentUser();
+
+        Query query = null;
+
+        if ( user != null ) {
+            query = OKCardHelper.getOKCardsCollection().whereEqualTo("userID", user.getUid()).orderBy("name");
+        }
+
+        return query;
     }
 
     public static Task<DocumentSnapshot> getOKCard(String idCard) {
@@ -68,7 +80,10 @@ public class OKCardHelper {
 
     // --- DELETE ---
 
-    public static Task<Void> deleteOKCard(String idCard) {
-        return OKCardHelper.getOKCardsCollection().document(idCard).delete();
+    public static Task<Void> deleteOKCard(OKCard okCard) {
+
+        OKCardWidget.deleteOKCard(okCard);
+
+        return OKCardHelper.getOKCardsCollection().document(okCard.getIdCard()).delete();
     }
 }

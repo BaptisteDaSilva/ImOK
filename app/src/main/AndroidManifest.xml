@@ -44,7 +44,7 @@
         <!-- SETTINGS ACTIVITY -->
         <activity
             android:name=".controllers.activities.SettingsActivity"
-            android:label="@string/toolbar_title_activity_settings"
+            android:label="@string/title_activity_settings"
             android:parentActivityName=".controllers.activities.ProfileActivity" />
         <!-- MENU ACTIVITY -->
         <activity
@@ -75,6 +75,23 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <!-- WIDGET -->
+        <receiver
+            android:name=".receiver.widget.OKCardWidget"
+            android:icon="@drawable/ic_logo"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="uqac.inf872.projet.imok.widget.action.ACTION_OPEN_OKCARD" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_provider_info" />
+        </receiver>
+
+        <!-- WIDGET -->
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

@@ -16,6 +16,7 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
@@ -91,59 +92,71 @@ public class OKCardFragment extends BaseFragment {
 
     @Override
     protected void updateDesign() {
-        RecipientListHelper.getRecipientList().get().addOnCompleteListener(task -> {
-            if ( task.isSuccessful() ) {
-                ArrayList<RecipientList> list = new ArrayList<>();
+        Query queryRecipientList = RecipientListHelper.getRecipientList();
 
-                for (QueryDocumentSnapshot document : task.getResult()) {
-                    list.add(document.toObject(RecipientList.class));
+        if ( queryRecipientList != null ) {
+            queryRecipientList.get().addOnCompleteListener(task -> {
+                if ( task.isSuccessful() ) {
+                    ArrayList<RecipientList> list = new ArrayList<>();
+
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        list.add(document.toObject(RecipientList.class));
+                    }
+
+                    ArrayAdapter<RecipientList> adapter =
+                            new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, list);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                    spinnerRecipientList.setAdapter(adapter);
+                } else {
+                    Utils.onFailureListener(getContext(), task.getException());
                 }
+            });
+        }
 
-                ArrayAdapter<RecipientList> adapter =
-                        new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, list);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Query queryPositionGPS = PositionHelper.getPositionGPS();
 
-                spinnerRecipientList.setAdapter(adapter);
-            } else {
-                Utils.onFailureListener(getContext(), task.getException());
-            }
-        });
+        if ( queryPositionGPS != null ) {
+            queryPositionGPS.get().addOnCompleteListener(task -> {
+                if ( task.isSuccessful() ) {
+                    ArrayList<Position> list = new ArrayList<>();
 
-        PositionHelper.getPositionGPS().get().addOnCompleteListener(task -> {
-            if ( task.isSuccessful() ) {
-                ArrayList<Position> list = new ArrayList<>();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        list.add(document.toObject(Position.class));
+                    }
 
-                for (QueryDocumentSnapshot document : task.getResult()) {
-                    list.add(document.toObject(Position.class));
+                    ArrayAdapter<Position> adapter =
+                            new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, list);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                    spinnerGPS.setAdapter(adapter);
+                } else {
+                    Utils.onFailureListener(getContext(), task.getException());
                 }
+            });
+        }
 
-                ArrayAdapter<Position> adapter =
-                        new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, list);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Query queryPositionWifi = PositionHelper.getPositionWifi();
 
-                spinnerGPS.setAdapter(adapter);
-            } else {
-                Utils.onFailureListener(getContext(), task.getException());
-            }
-        });
+        if ( queryPositionWifi != null ) {
+            queryPositionWifi.get().addOnCompleteListener(task -> {
+                if ( task.isSuccessful() ) {
+                    ArrayList<Position> list = new ArrayList<>();
 
-        PositionHelper.getPositionWifi().get().addOnCompleteListener(task -> {
-            if ( task.isSuccessful() ) {
-                ArrayList<Position> list = new ArrayList<>();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        list.add(document.toObject(Position.class));
+                    }
 
-                for (QueryDocumentSnapshot document : task.getResult()) {
-                    list.add(document.toObject(Position.class));
+                    ArrayAdapter<Position> adapter =
+                            new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, list);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                    spinnerWifi.setAdapter(adapter);
+                } else {
+                    Utils.onFailureListener(getContext(), task.getException());
                 }
-
-                ArrayAdapter<Position> adapter =
-                        new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, list);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-                spinnerWifi.setAdapter(adapter);
-            } else {
-                Utils.onFailureListener(getContext(), task.getException());
-            }
-        });
+            });
+        }
 
         if ( this.getOKCardIdFromBundle() != null ) {
             this.updateDesignWhenStarting();
@@ -237,7 +250,7 @@ public class OKCardFragment extends BaseFragment {
 
         builder.setPositiveButton(R.string.yes, (dialog, id) ->
         {
-            OKCardHelper.deleteOKCard(currentOKCard.getIdCard());
+            OKCardHelper.deleteOKCard(currentOKCard);
             openMenu();
         });
         builder.setNegativeButton(R.string.no, (dialog, id) -> dialog.cancel());

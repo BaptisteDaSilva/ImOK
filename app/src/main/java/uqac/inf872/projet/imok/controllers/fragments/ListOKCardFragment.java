@@ -105,7 +105,7 @@ public class ListOKCardFragment extends BaseFragment {
         Intent intent = new Intent(getActivity(), OKCardActivity.class);
 
         Bundle bundle = new Bundle();
-        bundle.putString(OKCardActivity.BUNDLE_KEY_OK_CARD_ID, okCard.getIdCard());
+        bundle.putString(OKCardActivity.BUNDLE_KEY_OK_CARD_ID, okCard.getId());
         bundle.putString(OKCardActivity.BUNDLE_KEY_OK_CARD_IMAGE_URL, okCard.getUrlPicture());
         intent.putExtras(bundle);
 

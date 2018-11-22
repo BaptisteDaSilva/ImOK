@@ -217,7 +217,7 @@ public class OKCardFragment extends BaseFragment {
             currentOKCard.setName(name);
             currentOKCard.setMessage(message);
 //            currentOKCard.setUrlPicture(urlPicture); // TODO gerer
-            currentOKCard.setIdListe(recipientList.getIdList());
+            currentOKCard.setIdListe(recipientList.getId());
             currentOKCard.setIdTrigger(triggers);
 
 
@@ -225,7 +225,7 @@ public class OKCardFragment extends BaseFragment {
                     .addOnFailureListener(Utils.onFailureListener(view.getContext()))
                     .addOnSuccessListener(aVoid -> openMenu());
         } else {
-            OKCardHelper.createOKCard(name, message, urlPicture, recipientList.getIdList(), triggers, Utils.getCurrentUser().getUid())
+            OKCardHelper.createOKCard(name, message, urlPicture, recipientList.getId(), triggers, Utils.getCurrentUser().getUid())
                     .addOnFailureListener(Utils.onFailureListener(view.getContext()))
                     .addOnSuccessListener(aVoid -> openMenu());
         }
@@ -250,7 +250,7 @@ public class OKCardFragment extends BaseFragment {
 
         builder.setPositiveButton(R.string.yes, (dialog, id) ->
         {
-            OKCardHelper.deleteOKCard(currentOKCard);
+            OKCardHelper.deleteOKCard(currentOKCard.getId());
             openMenu();
         });
         builder.setNegativeButton(R.string.no, (dialog, id) -> dialog.cancel());
@@ -283,7 +283,7 @@ public class OKCardFragment extends BaseFragment {
     private void updateDesignWhenStarting() {
         Glide.with(this).load(this.getImageURLFromBundle()).into(this.imageView);
 
-        OKCardHelper.getOKCard(this.getOKCardIdFromBundle())
+        OKCardHelper.getOKCard(this.getOKCardIdFromBundle()).get()
                 .addOnSuccessListener(documentSnapshotOKCard ->
                 {
                     currentOKCard = documentSnapshotOKCard.toObject(OKCard.class);
@@ -299,7 +299,7 @@ public class OKCardFragment extends BaseFragment {
                                 for (int pos = 0; pos < spinnerRecipientList.getAdapter().getCount(); pos++) {
                                     RecipientList rl = (RecipientList) spinnerRecipientList.getAdapter().getItem(pos);
 
-                                    if ( rl.getIdList().equals(recipientList.getIdList()) ) {
+                                    if ( rl.getId().equals(recipientList.getId()) ) {
                                         spinnerRecipientList.setSelection(pos);
                                         return;
                                     }
@@ -308,9 +308,9 @@ public class OKCardFragment extends BaseFragment {
 
                     for (String idPosition : this.currentOKCard.getIdTrigger()) {
                         PositionHelper.getPosition(idPosition)
-                                .addOnSuccessListener(documentSnapshotRecipient ->
+                                .addOnSuccessListener(documentSnapshotPosition ->
                                 {
-                                    Position position = documentSnapshotRecipient.toObject(Position.class);
+                                    Position position = documentSnapshotPosition.toObject(Position.class);
 
                                     if ( position.isWifi() ) {
                                         for (int pos = 0; pos < spinnerWifi.getAdapter().getCount(); pos++) {
@@ -377,7 +377,7 @@ public class OKCardFragment extends BaseFragment {
 
         SmsManager manager = SmsManager.getDefault();
 
-        RecipientListHelper.getRecipientList(recipientList.getIdList()).addOnSuccessListener(documentSnapshot ->
+        RecipientListHelper.getRecipientList(recipientList.getId()).addOnSuccessListener(documentSnapshot ->
         {
             RecipientList currentRecipientList = documentSnapshot.toObject(RecipientList.class);
 

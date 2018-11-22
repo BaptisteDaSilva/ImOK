@@ -76,5 +76,7 @@
     <string name="widget_btn_right">Flèche vers la droite</string>
     <string name="logo_GPS">Logo GPS</string>
     <string name="logo_WIFI">Logo WIFI</string>
+    <string name="create_new_ok_card">Créer une OKCard</string>
+    <string name="widget_error_no_ok_card">Vous n\'avez pas d\'OKCard de créer !!!</string>
 
 </resources>

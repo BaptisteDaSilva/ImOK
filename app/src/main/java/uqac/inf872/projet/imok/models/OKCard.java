@@ -2,9 +2,8 @@ package uqac.inf872.projet.imok.models;
 
 import java.util.List;
 
-public class OKCard {
+public class OKCard extends Model {
 
-    private String idCard;
     private String name;
     private String message;
     private String urlPicture;
@@ -13,20 +12,18 @@ public class OKCard {
     private String userID;
 
     public OKCard() {
+        super();
     }
 
     public OKCard(String idCard, String name, String message, String urlPicture, String idListe, List<String> idTrigger, String userID) {
-        this.idCard = idCard;
+        super(idCard);
+
         this.name = name;
         this.message = message;
         this.urlPicture = urlPicture;
         this.idListe = idListe;
         this.idTrigger = idTrigger;
         this.userID = userID;
-    }
-
-    public String getIdCard() {
-        return idCard;
     }
 
     public String getName() {
@@ -81,7 +78,7 @@ public class OKCard {
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof OKCard && ((OKCard) obj).getIdCard() == this.getIdCard();
+        return obj instanceof OKCard && ((OKCard) obj).getId() == this.getId();
 
     }
 }

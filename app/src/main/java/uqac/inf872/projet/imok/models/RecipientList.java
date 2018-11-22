@@ -2,9 +2,8 @@ package uqac.inf872.projet.imok.models;
 
 import java.util.List;
 
-public class RecipientList {
+public class RecipientList extends Model {
 
-    private String idList;
     private String name;
     private List<String> recipients;
     private String userID;
@@ -13,14 +12,11 @@ public class RecipientList {
     }
 
     public RecipientList(String idList, String name, List<String> recipients, String userID) {
-        this.idList = idList;
+        super(idList);
+
         this.name = name;
         this.recipients = recipients;
         this.userID = userID;
-    }
-
-    public String getIdList() {
-        return idList;
     }
 
     public String getName() {

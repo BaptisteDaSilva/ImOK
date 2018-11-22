@@ -103,7 +103,7 @@ public class RecipientListFragment extends BaseFragment {
 
         builder.setPositiveButton("OUI", (dialog, id) ->
         {
-            RecipientListHelper.deleteRecipientList(currentRecipientList.getIdList());
+            RecipientListHelper.deleteRecipientList(currentRecipientList.getId());
             openMenu();
         });
         builder.setNegativeButton("NON", (dialog, id) -> dialog.cancel());

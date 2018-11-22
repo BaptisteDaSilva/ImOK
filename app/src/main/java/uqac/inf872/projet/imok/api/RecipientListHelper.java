@@ -70,7 +70,7 @@ public class RecipientListHelper {
         recpientListPropertie.put("name", recipientList.getName());
         recpientListPropertie.put("recipients", recipientList.getRecipients());
 
-        return RecipientListHelper.getRecipientListsCollection().document(recipientList.getIdList()).update(recpientListPropertie);
+        return RecipientListHelper.getRecipientListsCollection().document(recipientList.getId()).update(recpientListPropertie);
     }
 
     // --- DELETE ---

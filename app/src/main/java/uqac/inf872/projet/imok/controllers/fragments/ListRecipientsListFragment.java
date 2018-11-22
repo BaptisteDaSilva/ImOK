@@ -104,7 +104,7 @@ public class ListRecipientsListFragment extends BaseFragment {
         Intent intent = new Intent(getActivity(), RecipientListActivity.class);
 
         Bundle bundle = new Bundle();
-        bundle.putString(RecipientListActivity.BUNDLE_KEY_RECIPIENT_LIST_ID, recipientList.getIdList());
+        bundle.putString(RecipientListActivity.BUNDLE_KEY_RECIPIENT_LIST_ID, recipientList.getId());
         intent.putExtras(bundle);
 
         // Animations

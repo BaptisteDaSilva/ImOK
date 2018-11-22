@@ -3,9 +3,8 @@ package uqac.inf872.projet.imok.models;
 
 import com.google.firebase.firestore.GeoPoint;
 
-public class Position {
+public class Position extends Model {
 
-    private String id;
     private String name;
     private boolean wifi;
     private GeoPoint coordonnes;
@@ -18,7 +17,8 @@ public class Position {
     }
 
     public Position(String idGPS, String name, GeoPoint coordonnes, int rayon, String userID) {
-        this.id = idGPS;
+        super(idGPS);
+
         this.name = name;
         this.userID = userID;
 
@@ -29,17 +29,14 @@ public class Position {
     }
 
     public Position(String idWifi, String name, String ssid, String userID) {
-        this.id = idWifi;
+        super(idWifi);
+
         this.name = name;
         this.userID = userID;
 
         wifi = true;
 
         this.ssid = ssid;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public String getName() {

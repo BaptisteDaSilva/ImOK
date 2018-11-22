@@ -17,6 +17,8 @@ import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import uqac.inf872.projet.imok.R;
 import uqac.inf872.projet.imok.api.OKCardHelper;
@@ -27,6 +29,8 @@ import uqac.inf872.projet.imok.models.OKCard;
 import uqac.inf872.projet.imok.models.Position;
 import uqac.inf872.projet.imok.models.RecipientList;
 import uqac.inf872.projet.imok.utils.Utils;
+
+import static android.os.SystemClock.sleep;
 
 public class OKCardWidget extends AppWidgetProvider {
 
@@ -52,26 +56,30 @@ public class OKCardWidget extends AppWidgetProvider {
     private static RecipientList recipientList;
 
     private static ArrayList<Position> positions = new ArrayList<>();
+
     private static ListenerRegistration registration;
-    // Indice actuel dans le tableau des tutos
+
+    static Task taskRecipientList;
+    static Task taskPosition;
+    static Task taskPosition2;
+    private static Executor setDataExecutor = Executors.newSingleThreadExecutor();
+    // Indice actuel dans le tableau
     private int indice = 0;
 
-    private static void setData(Context context, int indice) {
+    private static void setData(int indice) {
+        taskRecipientList = null;
+        taskPosition = null;
+        taskPosition2 = null;
 
-        Log.e(Utils.TAG, "setData - " + indice);
-
-        OKCardHelper.getOKCard(idOKCard.get(indice)).get().addOnSuccessListener(documentSnapshot ->
+        OKCardHelper.getOKCard(idOKCard.get(indice)).get().addOnSuccessListener(setDataExecutor, documentSnapshot ->
         {
-            Log.e(Utils.TAG, "setData - OK");
-
             okCard = documentSnapshot.toObject(OKCard.class);
 
-            Task taskRecipientList = RecipientListHelper.getRecipientList(okCard.getIdListe())
-                    .addOnSuccessListener(documentSnapshotRecipient ->
+            taskRecipientList = RecipientListHelper.getRecipientList(okCard.getIdListe())
+                    .addOnSuccessListener(setDataExecutor, documentSnapshotRecipient ->
                             recipientList = documentSnapshotRecipient.toObject(RecipientList.class));
 
             positions.clear();
-            Task[] taskPosition = new Task[2];
 
             String idPosition;
 
@@ -79,54 +87,66 @@ public class OKCardWidget extends AppWidgetProvider {
                 case 2:
                     idPosition = okCard.getIdTrigger().get(1);
 
-                    taskPosition[1] = PositionHelper.getPosition(idPosition)
-                            .addOnSuccessListener(documentSnapshotRecipient ->
+                    taskPosition2 = PositionHelper.getPosition(idPosition)
+                            .addOnSuccessListener(setDataExecutor, documentSnapshotRecipient ->
                                     positions.add(documentSnapshotRecipient.toObject(Position.class)));
                 case 1:
                     idPosition = okCard.getIdTrigger().get(0);
 
-                    taskPosition[0] = PositionHelper.getPosition(idPosition)
-                            .addOnSuccessListener(documentSnapshotRecipient ->
+                    taskPosition = PositionHelper.getPosition(idPosition)
+                            .addOnSuccessListener(setDataExecutor, documentSnapshotRecipient ->
                                     positions.add(documentSnapshotRecipient.toObject(Position.class)));
-                    break;
             }
+        }).addOnFailureListener(e -> Log.e(Utils.TAG, "setData - " + indice + " - " + e.getMessage()));
 
-            Log.e(Utils.TAG, "setData - wait for update");
+        while (taskRecipientList == null || !taskRecipientList.isComplete()) {
+            sleep(100);
+        }
 
-            while (!taskRecipientList.isComplete()) ;
-
-            if ( taskPosition[0] != null ) {
-                while (!taskPosition[0].isComplete()) ;
-
-                if ( taskPosition[1] != null ) {
-                    while (!taskPosition[1].isComplete()) ;
+        switch (okCard.getIdTrigger().size()) {
+            case 2:
+                while (taskPosition2 == null || !taskPosition2.isComplete()) {
+                    sleep(100);
                 }
-            }
-
-            Log.e(Utils.TAG, "setData - launch update");
-
-            RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
-
-//            setOKCard(views);
-//            setRecipientList(views);
-//            setPositions(views);
-
-            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-            appWidgetManager.updateAppWidget(new ComponentName(context.getPackageName(), OKCardWidget.class.getName()), views);
-        });
+            case 1:
+                while (taskPosition == null || !taskPosition.isComplete()) {
+                    sleep(100);
+                }
+                break;
+        }
     }
 
     private static void initData(Context context) {
         idOKCard = new ArrayList<>();
 
-        Log.e(Utils.TAG, "initData");
+        okCard = null;
+        recipientList = null;
+        positions = new ArrayList<>();
+
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        ComponentName componentName = new ComponentName(context.getPackageName(), OKCardWidget.class.getName());
 
         Query query = OKCardHelper.getOKCard();
 
-        Log.e(Utils.TAG, "query = " + query);
-
         if ( query != null ) {
-            query.get().addOnSuccessListener(querySnapshot -> setData(context, 0));
+            query.get().addOnSuccessListener(querySnapshot ->
+            {
+                setData(0);
+
+                Intent nextIntent = new Intent(context, OKCardWidget.class);
+
+                int[] appWidgetIds = appWidgetManager.getAppWidgetIds(componentName);
+
+                nextIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+                nextIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+                nextIntent.putExtra(EXTRA_DIRECTION, EXTRA_NEXT);
+                nextIntent.putExtra(EXTRA_INDICE, 0);
+
+                Uri data = Uri.withAppendedPath(Uri.parse("WIDGET://widget/id/"), String.valueOf(R.id.widget_btn_left));
+                nextIntent.setData(data);
+
+                context.sendBroadcast(nextIntent);
+            });
 
             registration = query.addSnapshotListener((value, e) -> {
                 if ( e != null ) {
@@ -135,8 +155,6 @@ public class OKCardWidget extends AppWidgetProvider {
                 }
 
                 for (DocumentChange dc : value.getDocumentChanges()) {
-                    Log.e(Utils.TAG, "DocumentChange - " + dc.getType());
-
                     switch (dc.getType()) {
                         case ADDED:
                             idOKCard.add(dc.getDocument().getId());
@@ -150,8 +168,7 @@ public class OKCardWidget extends AppWidgetProvider {
 
                             views.setTextViewText(R.id.widget_ok_card_message, okCard.getMessage());
 
-                            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-                            appWidgetManager.updateAppWidget(new ComponentName(context.getPackageName(), OKCardWidget.class.getName()), views);
+                            appWidgetManager.updateAppWidget(componentName, views);
 
                             break;
                         case REMOVED:
@@ -159,10 +176,20 @@ public class OKCardWidget extends AppWidgetProvider {
                             break;
                     }
                 }
-
-                Log.e(Utils.TAG, "idOKCard.size() = " + idOKCard.size());
             });
         }
+    }
+
+    @Override
+    public void onEnabled(Context context) {
+        super.onEnabled(context);
+
+        initData(context);
+    }
+
+    @Override
+    public void onDisabled(Context context) {
+        super.onDisabled(context);
     }
 
     private static void setOKCard(RemoteViews views) {
@@ -170,7 +197,6 @@ public class OKCardWidget extends AppWidgetProvider {
         // On met les bon texte
         views.setTextViewText(R.id.widget_ok_card_name, okCard.getName());
 //                views.setImageViewUri(R.id.widget_ok_card_image, okCard.getUrlPicture()); // TODO gérer
-        views.setViewVisibility(R.id.widget_ok_card_message, View.VISIBLE);
         views.setTextViewText(R.id.widget_ok_card_message, okCard.getMessage());
     }
 
@@ -181,8 +207,6 @@ public class OKCardWidget extends AppWidgetProvider {
             sb.append(s).append("\n");
         }
 
-        views.setViewVisibility(R.id.widget_ok_card_recipient_list_name, View.VISIBLE);
-        views.setViewVisibility(R.id.widget_ok_card_recipient_list, View.VISIBLE);
         views.setTextViewText(R.id.widget_ok_card_recipient_list_name, recipientList.getName());
         views.setTextViewText(R.id.widget_ok_card_recipient_list, sb.toString());
     }
@@ -204,57 +228,17 @@ public class OKCardWidget extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        super.onUpdate(context, appWidgetManager, appWidgetIds);
-
-        Log.e(Utils.TAG, "onUpdate()");
-
         for (int appWidgetId : appWidgetIds) {
-
-            Log.e(Utils.TAG, "okCardID = " + (okCard == null ? "" : okCard.getName()));
-
             // On récupère le RemoteViews qui correspond à l'AppWidget
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
 
-            if ( okCard == null ) {
-                views.setTextViewText(R.id.widget_ok_card_name, context.getString(R.string.app_name));
-
-                views.setImageViewResource(R.id.widget_ok_card_image, R.drawable.ic_logo);
-
-                views.setViewVisibility(R.id.widget_ok_card_message, View.GONE);
-
-                views.setViewVisibility(R.id.widget_ok_card_recipient_list_name, View.GONE);
-                views.setViewVisibility(R.id.widget_ok_card_recipient_list, View.GONE);
-
-                views.setViewVisibility(R.id.widget_ok_card_wifi, View.GONE);
-                views.setViewVisibility(R.id.widget_ok_card_gps, View.GONE);
-
-                views.setViewVisibility(R.id.widget_ok_card_send, View.GONE);
-
-                views.setViewVisibility(R.id.widget_ok_card_message_empty, View.VISIBLE);
-
-                views.setViewVisibility(R.id.widget_ok_card_create, View.VISIBLE);
-
-                // La section suivante est destinée à l'ouverture d'une OKCard
-                // L'intent ouvre cette classe même…
-                Intent linkIntent = new Intent(context, OKCardWidget.class);
-
-                // Action l'action ACTION_OPEN_OKCARD
-                linkIntent.setAction(ACTION_OPEN_OKCARD);
-
-                // On ajoute l'intent dans un PendingIntent
-                PendingIntent linkPending = PendingIntent.getBroadcast(context, 2, linkIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-                views.setOnClickPendingIntent(R.id.widget_ok_card_create, linkPending);
-
-            } else {
-                views.setViewVisibility(R.id.widget_ok_card_message_empty, View.GONE);
-
-                views.setViewVisibility(R.id.widget_ok_card_create, View.GONE);
+            if ( !idOKCard.isEmpty() && okCard != null ) {
+                views.setViewVisibility(R.id.widget_ok_card_error, View.GONE);
+                views.setViewVisibility(R.id.widget_ok_card, View.VISIBLE);
 
                 setOKCard(views);
                 setRecipientList(views);
                 setPositions(views);
-
-                views.setViewVisibility(R.id.widget_ok_card_send, View.VISIBLE);
 
                 // La section suivante est destinée à l'ouverture d'une OKCard
                 // L'intent ouvre cette classe même…
@@ -270,6 +254,20 @@ public class OKCardWidget extends AppWidgetProvider {
                 PendingIntent linkPending = PendingIntent.getBroadcast(context, 2, linkIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                 views.setOnClickPendingIntent(R.id.widget_ok_card_name, linkPending);
                 views.setOnClickPendingIntent(R.id.widget_ok_card_image, linkPending);
+            } else {
+                views.setViewVisibility(R.id.widget_ok_card, View.GONE);
+                views.setViewVisibility(R.id.widget_ok_card_error, View.VISIBLE);
+
+                // La section suivante est destinée à l'ouverture d'une OKCard
+                // L'intent ouvre cette classe même…
+                Intent linkIntent = new Intent(context, OKCardWidget.class);
+
+                // Action l'action ACTION_OPEN_OKCARD
+                linkIntent.setAction(ACTION_OPEN_OKCARD);
+
+                // On ajoute l'intent dans un PendingIntent
+                PendingIntent linkPending = PendingIntent.getBroadcast(context, 2, linkIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                views.setOnClickPendingIntent(R.id.widget_ok_card_create, linkPending);
             }
 
             //********************************************************
@@ -320,6 +318,8 @@ public class OKCardWidget extends AppWidgetProvider {
             // Et il faut mettre à jour toutes les vues
             appWidgetManager.updateAppWidget(appWidgetId, views);
         }
+
+        super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
 
     @Override
@@ -334,12 +334,6 @@ public class OKCardWidget extends AppWidgetProvider {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.e(Utils.TAG, "onReceive");
-
-        if ( registration == null ) {
-            initData(context);
-        }
-
         // Si l'action est celle d'ouverture de carte
         if ( ACTION_OPEN_OKCARD.equals(intent.getAction()) ) {
             Intent intentOKCardActivity = new Intent(context.getApplicationContext(), OKCardActivity.class);
@@ -370,11 +364,7 @@ public class OKCardWidget extends AppWidgetProvider {
                     }
                 }
 
-                setData(context, indice);
-            } else {
-                okCard = null;
-                recipientList = null;
-                positions.clear();
+                setData(indice);
             }
         }
 

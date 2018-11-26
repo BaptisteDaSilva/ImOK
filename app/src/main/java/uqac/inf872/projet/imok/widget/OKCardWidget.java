@@ -1,5 +1,6 @@
 package uqac.inf872.projet.imok.widget;
 
+import android.Manifest;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import pub.devrel.easypermissions.EasyPermissions;
 import uqac.inf872.projet.imok.R;
 import uqac.inf872.projet.imok.api.OKCardHelper;
 import uqac.inf872.projet.imok.api.PositionHelper;
@@ -33,6 +35,8 @@ import uqac.inf872.projet.imok.utils.Utils;
 import static android.os.SystemClock.sleep;
 
 public class OKCardWidget extends AppWidgetProvider {
+
+    private static final String PERMS_SEND_SMS = Manifest.permission.SEND_SMS;
 
     // Intitulé de l'extra qui contient la direction du défilé
     private final static String EXTRA_DIRECTION = "extraDirection";
@@ -437,12 +441,7 @@ public class OKCardWidget extends AppWidgetProvider {
 
         } else if ( ACTION_SEND.equals(intent.getAction()) ) {
 
-            // TODO écrire
-            Toast.makeText(context, "Message send à écrire", Toast.LENGTH_SHORT).show();
-
-//            Intent intentOKCardActivity = new Intent(context.getApplicationContext(), OKCardActivity.class);
-//            intentOKCardActivity.putExtras(intent.getExtras());
-//            context.startActivity(intentOKCardActivity);
+            sendMessage(context, intent.getExtras().getString(OKCardActivity.BUNDLE_KEY_OK_CARD_ID));
 
         } else if ( ACTION_REFRESH.equals(intent.getAction()) ) {
 
@@ -479,5 +478,27 @@ public class OKCardWidget extends AppWidgetProvider {
 
         // On revient au traitement naturel du Receiver, qui va lancer onUpdate s'il y a demande de mise à jour
         super.onReceive(context, intent);
+    }
+
+    private void sendMessage(Context context, String idOKCard) {
+        if ( EasyPermissions.hasPermissions(context, PERMS_SEND_SMS) ) {
+            OKCardHelper.getOKCard(idOKCard).get()
+                    .addOnSuccessListener(documentSnapshotOKCard ->
+                    {
+                        OKCard currentOKCard = documentSnapshotOKCard.toObject(OKCard.class);
+
+                        RecipientListHelper.getRecipientList(currentOKCard.getIdListe())
+                                .addOnSuccessListener(documentSnapshotRecipient ->
+                                {
+                                    RecipientList recipientList = documentSnapshotRecipient.toObject(RecipientList.class);
+
+                                    Utils.sendMessage(recipientList.getRecipients(), currentOKCard.getMessage());
+                                });
+                    });
+
+            Toast.makeText(context, "Message envoyé", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(context, "PERMS_SEND_SMS", Toast.LENGTH_LONG).show();
+        }
     }
 }

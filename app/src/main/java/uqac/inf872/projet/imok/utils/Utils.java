@@ -3,11 +3,14 @@ package uqac.inf872.projet.imok.utils;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.telephony.SmsManager;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.List;
 
 import uqac.inf872.projet.imok.controllers.activities.MenuViewPagerActivity;
 
@@ -19,6 +22,16 @@ public class Utils {
         Intent intent = new Intent(context, MenuViewPagerActivity.class);
         intent.putExtra(MenuViewPagerActivity.BUNDLE_KEY_MENU_ID, menu.id);
         context.startActivity(intent);
+    }
+
+    public static void sendMessage(List<String> listNum, String msg) {
+
+        SmsManager manager = SmsManager.getDefault();
+
+        for (String num : listNum) {
+
+            manager.sendTextMessage(num, null, msg, null, null); // piSend, piDelivered);
+        }
     }
 
     // --------------------

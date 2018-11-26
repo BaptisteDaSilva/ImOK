@@ -3,7 +3,6 @@ package uqac.inf872.projet.imok.controllers.fragments;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.os.Bundle;
-import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
@@ -363,16 +362,11 @@ public class OKCardFragment extends BaseFragment {
 
         RecipientList recipientList = (RecipientList) spinnerRecipientList.getSelectedItem();
 
-        SmsManager manager = SmsManager.getDefault();
-
         RecipientListHelper.getRecipientList(recipientList.getId()).addOnSuccessListener(documentSnapshot ->
         {
             RecipientList currentRecipientList = documentSnapshot.toObject(RecipientList.class);
 
-            for (String num : currentRecipientList.getRecipients()) {
-
-                manager.sendTextMessage(num, null, msg, null, null); // piSend, piDelivered);
-            }
+            Utils.sendMessage(currentRecipientList.getRecipients(), msg);
         });
 
         Toast.makeText(this.getActivity(), "Message envoyé", Toast.LENGTH_SHORT).show();

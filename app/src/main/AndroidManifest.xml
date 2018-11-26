@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="uqac.inf872.projet.imok">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -80,6 +81,30 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <!-- NOTIFICATION WIFI CHANGGE -->
+        <receiver
+            android:name=".receiver.WifiReceiver"
+            android:enabled="true"
+            android:exported="false">
+
+            <intent-filter>
+                <!--protected-broadcast: Special broadcast that only the system can send-->
+                <!--Corresponds to: android.net.wifi.WifiManager.NETWORK_STATE_CHANGED_ACTION-->
+                <action android:name="android.net.wifi.STATE_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <!-- NOTIFICATION POSITION ALERT -->
+        <receiver
+            android:name=".receiver.ProximityAlertReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="uqac.inf872.projet.imok.receiver.ProximityAlert" />
+            </intent-filter>
+
+        </receiver>
 
         <!-- WIDGET -->
         <receiver

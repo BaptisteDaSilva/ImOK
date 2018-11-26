@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".controllers.activities.PositionActivity">
+    tools:context=".controllers.activities.PositionWIFIActivity">
 
     <LinearLayout
         android:id="@+id/position_btn"
@@ -46,28 +46,45 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/position_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:id="@+id/position_wifi_image"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_gravity="center_horizontal"
-            android:layout_margin="20dp"
-            android:background="@android:color/black"
-            android:contentDescription="@string/position_image_description" />
+            android:layout_margin="10dp"
+            android:contentDescription="@string/position_image_wifi_description"
+            android:src="@drawable/ic_wifi_white_large"
+            android:tint="@color/colorAccent" />
 
         <EditText
-            android:id="@+id/position_name"
+            android:id="@+id/position_wifi_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textShortMessage" />
+
+        <!--<Spinner-->
+        <!--android:id="@+id/position_wifi_list"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@android:drawable/btn_dropdown"-->
+        <!--android:spinnerMode="dropdown" />-->
+
+        <ListView
+            android:id="@+id/position_wifi_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:choiceMode="multipleChoice"
+            android:clickable="true"
+            android:divider="@color/colorAccentDark"
+            android:dividerHeight="0.5dp"
+            android:focusable="true" />
     </LinearLayout>
 
     <uqac.inf872.projet.imok.views.RobotoButton
-        android:id="@+id/position_btn_delete"
+        android:id="@+id/position_wifi_btn_delete"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_gravity="end"
         android:background="@color/colorError"
         android:startOffset="500"
         android:text="@string/delete"

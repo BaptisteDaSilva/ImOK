@@ -1,7 +1,6 @@
 package uqac.inf872.projet.imok.controllers.fragments;
 
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
@@ -15,7 +14,6 @@ import butterknife.OnClick;
 import uqac.inf872.projet.imok.R;
 import uqac.inf872.projet.imok.api.RecipientListHelper;
 import uqac.inf872.projet.imok.base.BaseFragment;
-import uqac.inf872.projet.imok.controllers.activities.MenuViewPagerActivity;
 import uqac.inf872.projet.imok.controllers.activities.RecipientListActivity;
 import uqac.inf872.projet.imok.models.RecipientList;
 import uqac.inf872.projet.imok.utils.Utils;
@@ -66,7 +64,7 @@ public class RecipientListFragment extends BaseFragment {
 
     @OnClick(R.id.recipient_list_btn_cancel)
     public void onClickCancel(View view) {
-        openMenu();
+        Utils.openMenu(this.getContext(), Utils.Menu.RecipientList);
     }
 
     @OnClick(R.id.recipient_list_btn_save)
@@ -78,8 +76,7 @@ public class RecipientListFragment extends BaseFragment {
                     new ArrayList<>(Arrays.asList(editTextDestinataires.getText().toString().split("\n"))));
 
             RecipientListHelper.updateRecipientList(currentRecipientList)
-                    .addOnFailureListener(Utils.onFailureListener(view.getContext()))
-                    .addOnSuccessListener(aVoid -> openMenu());
+                    .addOnFailureListener(Utils.onFailureListener(view.getContext()));
         } else {
 
             String name = editTextName.getText().toString();
@@ -88,9 +85,10 @@ public class RecipientListFragment extends BaseFragment {
             String userID = Utils.getCurrentUser().getUid();
 
             RecipientListHelper.createRecipientList(name, destinataires, userID)
-                    .addOnFailureListener(Utils.onFailureListener(view.getContext()))
-                    .addOnSuccessListener(aVoid -> openMenu());
+                    .addOnFailureListener(Utils.onFailureListener(view.getContext()));
         }
+
+        Utils.openMenu(this.getContext(), Utils.Menu.RecipientList);
     }
 
     @OnClick(R.id.recipient_list_btn_delete)
@@ -104,7 +102,7 @@ public class RecipientListFragment extends BaseFragment {
         builder.setPositiveButton("OUI", (dialog, id) ->
         {
             RecipientListHelper.deleteRecipientList(currentRecipientList.getId());
-            openMenu();
+            Utils.openMenu(this.getContext(), Utils.Menu.RecipientList);
         });
         builder.setNegativeButton("NON", (dialog, id) -> dialog.cancel());
 
@@ -144,16 +142,6 @@ public class RecipientListFragment extends BaseFragment {
     // -------------------
     // UTILS
     // -------------------
-
-    private void openMenu() {
-        Intent intent = new Intent(this.getContext(), MenuViewPagerActivity.class);
-
-        Bundle bundle = new Bundle();
-        bundle.putInt(MenuViewPagerActivity.BUNDLE_KEY_MENU_ID, 1);
-        intent.putExtras(bundle);
-
-        startActivity(intent);
-    }
 
     private String getRecipientListIdFromBundle() {
         Bundle bundle = getActivity().getIntent().getExtras();

@@ -3,7 +3,6 @@ package uqac.inf872.projet.imok.controllers.fragments;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -21,7 +20,8 @@ import uqac.inf872.projet.imok.R;
 import uqac.inf872.projet.imok.adapters.PositionAdapter;
 import uqac.inf872.projet.imok.api.PositionHelper;
 import uqac.inf872.projet.imok.base.BaseFragment;
-import uqac.inf872.projet.imok.controllers.activities.PositionActivity;
+import uqac.inf872.projet.imok.controllers.activities.PositionGPSActivity;
+import uqac.inf872.projet.imok.controllers.activities.PositionWIFIActivity;
 import uqac.inf872.projet.imok.models.Position;
 import uqac.inf872.projet.imok.utils.ItemClickSupport;
 
@@ -71,7 +71,13 @@ public class ListPositionFragment extends BaseFragment {
 
     @Override
     protected void configureDesign() {
-        floatingActionButton.setOnClickListener(view -> createNew());
+        floatingActionButton.setOnClickListener(view ->
+                showChoiceTypePositionDialog());
+    }
+
+    private void showChoiceTypePositionDialog() {
+        ChoiceTypePositionDialog choiceTypePositionDialog = new ChoiceTypePositionDialog();
+        choiceTypePositionDialog.show(getFragmentManager(), "fragment_choice_type_position_dialog");
     }
 
     @Override
@@ -96,17 +102,16 @@ public class ListPositionFragment extends BaseFragment {
     // NAVIGATION
     // -------------------
 
-    private void createNew() {
-        Intent intent = new Intent(getActivity(), PositionActivity.class);
-        startActivity(intent);
-    }
-
     private void navigateToDetail(Position position, View viewClicked) {
-        Intent intent = new Intent(getActivity(), PositionActivity.class);
+        Intent intent;
 
-        Bundle bundle = new Bundle();
-        bundle.putString(PositionActivity.BUNDLE_KEY_POSITION_ID, position.getId());
-        intent.putExtras(bundle);
+        if ( position.isWifi() ) {
+            intent = new Intent(getActivity(), PositionWIFIActivity.class);
+            intent.putExtra(PositionWIFIActivity.BUNDLE_KEY_POSITION_WIFI_ID, position.getId());
+        } else {
+            intent = new Intent(getActivity(), PositionGPSActivity.class);
+            intent.putExtra(PositionGPSActivity.BUNDLE_KEY_POSITION_GPS_ID, position.getId());
+        }
 
         // Animations
         if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {

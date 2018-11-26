@@ -7,9 +7,9 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentChange;
@@ -46,27 +46,30 @@ public class OKCardWidget extends AppWidgetProvider {
     // Intitulé de l'extra qui contient l'indice actuel dans le tableau des tutos
     private final static String EXTRA_INDICE = "extraIndice";
 
-    // Action qui indique qu'on essaie d'ouvrir un tuto sur internet
+    // Action qui indique qu'on essaie d'ouvrir ou de créer une OKCard
+    private final static String ACTION_CREATE_OKCARD = "uqac.inf872.projet.imok.receiver.widget.action.ACTION_CREATE_OKCARD";
     private final static String ACTION_OPEN_OKCARD = "uqac.inf872.projet.imok.receiver.widget.action.ACTION_OPEN_OKCARD";
-
-    private static ArrayList<String> idOKCard = new ArrayList<>();
-
-    private static OKCard okCard;
-
-    private static RecipientList recipientList;
-
-    private static ArrayList<Position> positions = new ArrayList<>();
-
-    private static ListenerRegistration registration;
-
+    private final static String ACTION_SEND = "uqac.inf872.projet.imok.receiver.widget.action.ACTION_SEND";
+    private final static String ACTION_REFRESH = "uqac.inf872.projet.imok.receiver.widget.action.ACTION_REFRESH";
     static Task taskRecipientList;
     static Task taskPosition;
     static Task taskPosition2;
+    private static ArrayList<String> idOKCard = new ArrayList<>();
+    private static OKCard okCard;
+    private static RecipientList recipientList;
+    private static ArrayList<Position> positions = new ArrayList<>();
+    private static ListenerRegistration registrationOKCard;
+    private static ListenerRegistration registrationRecipientList;
+    private static ListenerRegistration registrationPosition;
     private static Executor setDataExecutor = Executors.newSingleThreadExecutor();
-    // Indice actuel dans le tableau
-    private int indice = 0;
+    private static Executor initExecutor = Executors.newSingleThreadExecutor();
 
-    private static void setData(int indice) {
+    // Indice actuel dans le tableau
+    private static int indice = 0;
+
+    private static boolean initOK;
+
+    private static void setData(Context context) {
         taskRecipientList = null;
         taskPosition = null;
         taskPosition2 = null;
@@ -97,7 +100,7 @@ public class OKCardWidget extends AppWidgetProvider {
                             .addOnSuccessListener(setDataExecutor, documentSnapshotRecipient ->
                                     positions.add(documentSnapshotRecipient.toObject(Position.class)));
             }
-        }).addOnFailureListener(e -> Log.e(Utils.TAG, "setData - " + indice + " - " + e.getMessage()));
+        }).addOnFailureListener(e -> Utils.onFailureListener(context, e));
 
         while (taskRecipientList == null || !taskRecipientList.isComplete()) {
             sleep(100);
@@ -117,79 +120,143 @@ public class OKCardWidget extends AppWidgetProvider {
     }
 
     private static void initData(Context context) {
-        idOKCard = new ArrayList<>();
-
         okCard = null;
         recipientList = null;
         positions = new ArrayList<>();
 
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         ComponentName componentName = new ComponentName(context.getPackageName(), OKCardWidget.class.getName());
+        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(componentName);
+
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
 
         Query query = OKCardHelper.getOKCard();
 
         if ( query != null ) {
+
+
             query.get().addOnSuccessListener(querySnapshot ->
             {
-                setData(0);
+                if ( !querySnapshot.isEmpty() ) {
+                    setData(context);
 
-                Intent nextIntent = new Intent(context, OKCardWidget.class);
+                    context.sendBroadcast(createIntentNextOrPreviousOkCard(context, appWidgetIds, EXTRA_NEXT));
+                }
 
-                int[] appWidgetIds = appWidgetManager.getAppWidgetIds(componentName);
-
-                nextIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-                nextIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-                nextIntent.putExtra(EXTRA_DIRECTION, EXTRA_NEXT);
-                nextIntent.putExtra(EXTRA_INDICE, 0);
-
-                Uri data = Uri.withAppendedPath(Uri.parse("WIDGET://widget/id/"), String.valueOf(R.id.widget_btn_left));
-                nextIntent.setData(data);
-
-                context.sendBroadcast(nextIntent);
+                initOK = true;
             });
 
-            registration = query.addSnapshotListener((value, e) -> {
+            registrationOKCard = query.addSnapshotListener(initExecutor, (value, e) -> {
                 if ( e != null ) {
                     Utils.onFailureListener(context, e);
                     return;
                 }
 
-                for (DocumentChange dc : value.getDocumentChanges()) {
-                    switch (dc.getType()) {
-                        case ADDED:
-                            idOKCard.add(dc.getDocument().getId());
-                            break;
-                        case MODIFIED:
-                            okCard = dc.getDocument().toObject(OKCard.class);
+                if ( value != null ) {
+                    for (DocumentChange dc : value.getDocumentChanges()) {
+                        switch (dc.getType()) {
+                            case ADDED:
+                                idOKCard.add(dc.getDocument().getId());
 
-                            RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
+                                if ( idOKCard.size() > 1 ) {
+                                    views.setViewVisibility(R.id.widget_btn_left, View.VISIBLE);
+                                    views.setViewVisibility(R.id.widget_btn_right, View.VISIBLE);
 
-                            setOKCard(views);
+                                    appWidgetManager.updateAppWidget(componentName, views);
+                                }
 
-                            views.setTextViewText(R.id.widget_ok_card_message, okCard.getMessage());
+                                break;
+                            case MODIFIED:
+                                if ( okCard != null && dc.getDocument().getId().equals(okCard.getId()) ) {
+                                    okCard = dc.getDocument().toObject(OKCard.class);
+
+                                    setData(context);
+
+                                    setOKCard(views);
+                                    setRecipientList(views);
+                                    setPositions(views);
+
+                                    appWidgetManager.updateAppWidget(componentName, views);
+                                }
+
+                                break;
+                            case REMOVED:
+                                idOKCard.remove(dc.getDocument().getId());
+
+                                if ( okCard != null && dc.getDocument().getId().equals(okCard.getId()) ) {
+                                    context.sendBroadcast(createIntentNextOrPreviousOkCard(context, appWidgetIds, EXTRA_NEXT));
+                                }
+
+                                break;
+                        }
+                    }
+                }
+            });
+
+            registrationRecipientList = RecipientListHelper.getRecipientList().addSnapshotListener(initExecutor, (value, e) -> {
+                if ( e != null ) {
+                    Utils.onFailureListener(context, e);
+                    return;
+                }
+
+                if ( value != null ) {
+                    for (DocumentChange dc : value.getDocumentChanges()) {
+                        if ( DocumentChange.Type.MODIFIED == dc.getType() && recipientList != null && dc.getDocument().getId().equals(recipientList.getId()) ) {
+
+                            recipientList = dc.getDocument().toObject(RecipientList.class);
+
+                            setRecipientList(views);
 
                             appWidgetManager.updateAppWidget(componentName, views);
+                        }
+                    }
+                }
+            });
 
-                            break;
-                        case REMOVED:
-                            idOKCard.remove(dc.getDocument().getId());
-                            break;
+            registrationPosition = PositionHelper.getPosition().addSnapshotListener(initExecutor, (value, e) -> {
+                if ( e != null ) {
+                    Utils.onFailureListener(context, e);
+                    return;
+                }
+
+                if ( value != null ) {
+                    for (DocumentChange dc : value.getDocumentChanges()) {
+                        if ( DocumentChange.Type.MODIFIED == dc.getType() && !positions.isEmpty() ) {
+
+                            ArrayList<Position> newPosition = new ArrayList<>();
+
+                            for (Position oldPosition : positions) {
+                                if ( oldPosition.getId().equals(dc.getDocument().getId()) ) {
+                                    newPosition.add(dc.getDocument().toObject(Position.class));
+                                } else {
+                                    newPosition.add(oldPosition);
+                                }
+                            }
+
+                            positions = newPosition;
+
+                            setPositions(views);
+
+                            appWidgetManager.updateAppWidget(componentName, views);
+                        }
                     }
                 }
             });
         }
     }
 
-    @Override
-    public void onEnabled(Context context) {
-        super.onEnabled(context);
+    private static Intent createIntentNextOrPreviousOkCard(Context context, int[] appWidgetIds, String extraDirection) {
+        Intent nextIntent = new Intent(context, OKCardWidget.class);
 
-        initData(context);
-    }
+        nextIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        nextIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+        nextIntent.putExtra(EXTRA_DIRECTION, extraDirection);
+        nextIntent.putExtra(EXTRA_INDICE, indice);
 
-    @Override
-    public void onDisabled(Context context) {
-        super.onDisabled(context);
+        Uri data = Uri.withAppendedPath(Uri.parse("WIDGET://widget/id/"), String.valueOf(R.id.widget_btn_left));
+        nextIntent.setData(data);
+
+        return nextIntent;
     }
 
     private static void setOKCard(RemoteViews views) {
@@ -227,91 +294,101 @@ public class OKCardWidget extends AppWidgetProvider {
     }
 
     @Override
+    public void onEnabled(Context context) {
+        super.onEnabled(context);
+    }
+
+    @Override
+    public void onDisabled(Context context) {
+        super.onDisabled(context);
+    }
+
+    @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         for (int appWidgetId : appWidgetIds) {
             // On récupère le RemoteViews qui correspond à l'AppWidget
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
 
-            if ( !idOKCard.isEmpty() && okCard != null ) {
-                views.setViewVisibility(R.id.widget_ok_card_error, View.GONE);
-                views.setViewVisibility(R.id.widget_ok_card, View.VISIBLE);
-
-                setOKCard(views);
-                setRecipientList(views);
-                setPositions(views);
-
-                // La section suivante est destinée à l'ouverture d'une OKCard
-                // L'intent ouvre cette classe même…
-                Intent linkIntent = new Intent(context, OKCardWidget.class);
-
-                // Action l'action ACTION_OPEN_OKCARD
-                linkIntent.setAction(ACTION_OPEN_OKCARD);
-                // Et l'id de l'OKCard a ouvrir
-                linkIntent.putExtra(OKCardActivity.BUNDLE_KEY_OK_CARD_ID, okCard.getId());
-                linkIntent.putExtra(OKCardActivity.BUNDLE_KEY_OK_CARD_IMAGE_URL, okCard.getUrlPicture());
-
-                // On ajoute l'intent dans un PendingIntent
-                PendingIntent linkPending = PendingIntent.getBroadcast(context, 2, linkIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-                views.setOnClickPendingIntent(R.id.widget_ok_card_name, linkPending);
-                views.setOnClickPendingIntent(R.id.widget_ok_card_image, linkPending);
-            } else {
+            if ( !initOK ) {
                 views.setViewVisibility(R.id.widget_ok_card, View.GONE);
-                views.setViewVisibility(R.id.widget_ok_card_error, View.VISIBLE);
+                views.setViewVisibility(R.id.widget_ok_card_empty, View.GONE);
+                views.setViewVisibility(R.id.widget_ok_card_sync, View.VISIBLE);
+            } else {
+                if ( idOKCard.isEmpty() || okCard == null ) {
+                    views.setViewVisibility(R.id.widget_ok_card, View.GONE);
+                    views.setViewVisibility(R.id.widget_ok_card_sync, View.GONE);
+                    views.setViewVisibility(R.id.widget_ok_card_empty, View.VISIBLE);
 
-                // La section suivante est destinée à l'ouverture d'une OKCard
-                // L'intent ouvre cette classe même…
-                Intent linkIntent = new Intent(context, OKCardWidget.class);
+                    // La section suivante est destinée à l'ouverture d'une OKCard
+                    // L'intent ouvre cette classe même…
+                    Intent createIntent = new Intent(context, OKCardWidget.class);
 
-                // Action l'action ACTION_OPEN_OKCARD
-                linkIntent.setAction(ACTION_OPEN_OKCARD);
+                    // Action l'action ACTION_OPEN_OKCARD
+                    createIntent.setAction(ACTION_CREATE_OKCARD);
 
-                // On ajoute l'intent dans un PendingIntent
-                PendingIntent linkPending = PendingIntent.getBroadcast(context, 2, linkIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-                views.setOnClickPendingIntent(R.id.widget_ok_card_create, linkPending);
+                    // On ajoute l'intent dans un PendingIntent
+                    PendingIntent createPending = PendingIntent.getBroadcast(context, 2, createIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    views.setOnClickPendingIntent(R.id.widget_ok_card_create, createPending);
+                } else {
+                    views.setViewVisibility(R.id.widget_ok_card_empty, View.GONE);
+                    views.setViewVisibility(R.id.widget_ok_card_sync, View.GONE);
+                    views.setViewVisibility(R.id.widget_ok_card, View.VISIBLE);
+
+                    if ( idOKCard.size() > 1 ) {
+                        views.setViewVisibility(R.id.widget_btn_left, View.VISIBLE);
+                        views.setViewVisibility(R.id.widget_btn_right, View.VISIBLE);
+                    } else {
+                        views.setViewVisibility(R.id.widget_btn_left, View.GONE);
+                        views.setViewVisibility(R.id.widget_btn_right, View.GONE);
+                    }
+
+                    setOKCard(views);
+                    setRecipientList(views);
+                    setPositions(views);
+
+                    // La section suivante est destinée à l'ouverture d'une OKCard
+                    // L'intent ouvre cette classe même…
+                    Intent openIntent = new Intent(context, OKCardWidget.class);
+
+                    // Action l'action ACTION_OPEN_OKCARD
+                    openIntent.setAction(ACTION_OPEN_OKCARD);
+                    // Et l'id de l'OKCard a ouvrir
+                    openIntent.putExtra(OKCardActivity.BUNDLE_KEY_OK_CARD_ID, okCard.getId());
+                    openIntent.putExtra(OKCardActivity.BUNDLE_KEY_OK_CARD_IMAGE_URL, okCard.getUrlPicture());
+
+                    // On ajoute l'intent dans un PendingIntent
+                    PendingIntent openPending = PendingIntent.getBroadcast(context, 2, openIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    views.setOnClickPendingIntent(R.id.widget_ok_card_name, openPending);
+                    views.setOnClickPendingIntent(R.id.widget_ok_card_image, openPending);
+
+                    // La section suivante est destinée à l'envoie d'un message d'une OKCard
+                    // L'intent ouvre cette classe même…
+                    Intent sendIntent = new Intent(context, OKCardWidget.class);
+
+                    // Action l'action ACTION_OPEN_OKCARD
+                    sendIntent.setAction(ACTION_SEND);
+                    // Et l'id de l'OKCard a ouvrir
+                    sendIntent.putExtra(OKCardActivity.BUNDLE_KEY_OK_CARD_ID, okCard.getId());
+
+                    // On ajoute l'intent dans un PendingIntent
+                    PendingIntent sendPending = PendingIntent.getBroadcast(context, 2, sendIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    views.setOnClickPendingIntent(R.id.widget_ok_card_send, sendPending);
+                }
             }
 
-            //********************************************************
             //*******************NEXT*********************************
-            //********************************************************
-            Intent nextIntent = new Intent(context, OKCardWidget.class);
-
-            // On veut que l'intent lance la mise à jour
-            nextIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-
-            // On n'oublie pas les identifiants
-            nextIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-
-            // On rajoute la direction
-            nextIntent.putExtra(EXTRA_DIRECTION, EXTRA_NEXT);
-
-            // Ainsi que l'indice
-            nextIntent.putExtra(EXTRA_INDICE, indice);
-
-            // Les données inutiles mais qu'il faut rajouter
-            Uri data = Uri.withAppendedPath(Uri.parse("WIDGET://widget/id/"), String.valueOf(R.id.widget_btn_right));
-            nextIntent.setData(data);
-
             // On insère l'intent dans un PendingIntent
-            PendingIntent nextPending = PendingIntent.getBroadcast(context, 0, nextIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent nextPending = PendingIntent.getBroadcast(context, 0,
+                    createIntentNextOrPreviousOkCard(context, appWidgetIds, EXTRA_NEXT),
+                    PendingIntent.FLAG_UPDATE_CURRENT);
 
             // Et on l'associe à l'activation du bouton
             views.setOnClickPendingIntent(R.id.widget_btn_right, nextPending);
 
-            //********************************************************
             //*******************PREVIOUS*****************************
-            //********************************************************
-
-            Intent previousIntent = new Intent(context, OKCardWidget.class);
-
-            previousIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-            previousIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-            previousIntent.putExtra(EXTRA_DIRECTION, EXTRA_PREVIOUS);
-            previousIntent.putExtra(EXTRA_INDICE, indice);
-
-            data = Uri.withAppendedPath(Uri.parse("WIDGET://widget/id/"), String.valueOf(R.id.widget_btn_left));
-            previousIntent.setData(data);
-
-            PendingIntent previousPending = PendingIntent.getBroadcast(context, 1, previousIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent previousPending = PendingIntent.getBroadcast(context, 1,
+                    createIntentNextOrPreviousOkCard(context, appWidgetIds, EXTRA_PREVIOUS),
+                    PendingIntent.FLAG_UPDATE_CURRENT);
 
             views.setOnClickPendingIntent(R.id.widget_btn_left, previousPending);
 
@@ -324,9 +401,19 @@ public class OKCardWidget extends AppWidgetProvider {
 
     @Override
     public void onDeleted(Context context, int[] appWidgetIds) {
-        if ( registration != null ) {
+        if ( registrationOKCard != null ) {
             // Stop listening to changes
-            registration.remove();
+            registrationOKCard.remove();
+        }
+
+        if ( registrationRecipientList != null ) {
+            // Stop listening to changes
+            registrationRecipientList.remove();
+        }
+
+        if ( registrationPosition != null ) {
+            // Stop listening to changes
+            registrationPosition.remove();
         }
 
         super.onDeleted(context, appWidgetIds);
@@ -335,15 +422,37 @@ public class OKCardWidget extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         // Si l'action est celle d'ouverture de carte
-        if ( ACTION_OPEN_OKCARD.equals(intent.getAction()) ) {
+        if ( ACTION_CREATE_OKCARD.equals(intent.getAction()) ) {
+
             Intent intentOKCardActivity = new Intent(context.getApplicationContext(), OKCardActivity.class);
+            context.startActivity(intentOKCardActivity);
+
+        } else if ( ACTION_OPEN_OKCARD.equals(intent.getAction()) ) {
 
             if ( intent.getExtras() != null ) {
+                Intent intentOKCardActivity = new Intent(context.getApplicationContext(), OKCardActivity.class);
                 intentOKCardActivity.putExtras(intent.getExtras());
+                context.startActivity(intentOKCardActivity);
             }
 
-            context.startActivity(intentOKCardActivity);
-        } else {
+        } else if ( ACTION_SEND.equals(intent.getAction()) ) {
+
+            // TODO écrire
+            Toast.makeText(context, "Message send à écrire", Toast.LENGTH_SHORT).show();
+
+//            Intent intentOKCardActivity = new Intent(context.getApplicationContext(), OKCardActivity.class);
+//            intentOKCardActivity.putExtras(intent.getExtras());
+//            context.startActivity(intentOKCardActivity);
+
+        } else if ( ACTION_REFRESH.equals(intent.getAction()) ) {
+
+            Utils.openMenu(context, Utils.Menu.OKCard);
+
+        } else if ( AppWidgetManager.ACTION_APPWIDGET_UPDATE.equals(intent.getAction()) ) {
+            if ( idOKCard.isEmpty() ) {
+                initData(context);
+            }
+
             // Sinon, s'il s'agit d'une demande de mise à jour
             // On récupère l'indice passé en extra, ou -1 s'il n'y a pas d'indice
             int tmp = intent.getIntExtra(EXTRA_INDICE, -1);
@@ -364,7 +473,7 @@ public class OKCardWidget extends AppWidgetProvider {
                     }
                 }
 
-                setData(indice);
+                setData(context);
             }
         }
 

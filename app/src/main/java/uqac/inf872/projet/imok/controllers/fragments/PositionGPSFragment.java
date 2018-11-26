@@ -1,22 +1,20 @@
 package uqac.inf872.projet.imok.controllers.fragments;
 
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+import com.google.firebase.firestore.GeoPoint;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import uqac.inf872.projet.imok.R;
 import uqac.inf872.projet.imok.api.PositionHelper;
 import uqac.inf872.projet.imok.base.BaseFragment;
-import uqac.inf872.projet.imok.controllers.activities.MenuViewPagerActivity;
-import uqac.inf872.projet.imok.controllers.activities.PositionActivity;
+import uqac.inf872.projet.imok.controllers.activities.PositionGPSActivity;
 import uqac.inf872.projet.imok.models.Position;
 import uqac.inf872.projet.imok.utils.Utils;
 import uqac.inf872.projet.imok.views.RobotoButton;
@@ -24,16 +22,22 @@ import uqac.inf872.projet.imok.views.RobotoButton;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PositionFragment extends BaseFragment {
+public class PositionGPSFragment extends BaseFragment {
 
     // FOR DESIGN
-    @BindView(R.id.position_image)
-    ImageView imageView;
-
-    @BindView(R.id.position_name)
+    @BindView(R.id.position_gps_name)
     EditText editTextName;
 
-    @BindView(R.id.position_btn_delete)
+    @BindView(R.id.position_gps_rayon_edit)
+    EditText editTextRayon;
+
+    @BindView(R.id.position_gps_latitude_value)
+    EditText editTextLatitude;
+
+    @BindView(R.id.position_gps_longitude_value)
+    EditText editTextLongitude;
+
+    @BindView(R.id.position_gps_btn_delete)
     RobotoButton btnDelete;
 
     // FOR DATA
@@ -45,12 +49,11 @@ public class PositionFragment extends BaseFragment {
 
     @Override
     protected int getFragmentLayout() {
-        return R.layout.fragment_position;
+        return R.layout.fragment_position_gps;
     }
 
     @Override
     protected void configureDesign() {
-
     }
 
     @Override
@@ -64,56 +67,47 @@ public class PositionFragment extends BaseFragment {
     // ACTIONS
     // -------------------
 
-    @OnClick(R.id.psoition_btn_cancel)
-    public void onClickCancel(View view) {
-        openMenu();
+    @OnClick(R.id.psoition_gps_btn_cancel)
+    public void onClickCancel() {
+        Utils.openMenu(this.getContext(), Utils.Menu.Position);
     }
 
-    @OnClick(R.id.position_btn_save)
+    @OnClick(R.id.position_gps_btn_save)
     public void onClickSave(View view) {
 
-        if ( currentPosition != null ) {
-            currentPosition.setName(editTextName.getText().toString());
+        String name = editTextName.getText().toString();
 
-//        if (currentPosition.isWifi())
-//            currentPosition.setSsid();
-//        else{
-//            currentPosition.setCoordonnees();
-//            currentPosition.setRayon();
-//        }
+        int rayon = Integer.valueOf(editTextRayon.getText().toString());
+
+        double latitude = Double.valueOf(editTextLatitude.getText().toString());
+        double longitude = Double.valueOf(editTextLongitude.getText().toString());
+
+        if ( currentPosition != null ) {
+            currentPosition.setName(name);
+
+            currentPosition.setRayon(rayon);
+
+            currentPosition.setCoordonnees(new GeoPoint(latitude, longitude));
 
             PositionHelper.updatePosition(currentPosition)
-                    .addOnFailureListener(Utils.onFailureListener(view.getContext()))
-                    .addOnSuccessListener(aVoid -> openMenu());
+                    .addOnFailureListener(Utils.onFailureListener(view.getContext()));
         } else {
-
-            String name = editTextName.getText().toString();
-
-            // TODO changer
-            boolean isWifi = true;
-
-            String SSID = "";
-
-            double longitude = 0.0;
-            double latitude = 0.0;
-            int rayon = 30;
-
             String userID = Utils.getCurrentUser().getUid();
 
-            if ( isWifi ) {
-                PositionHelper.createPositionWifi(name, SSID, userID)
-                        .addOnFailureListener(Utils.onFailureListener(view.getContext()))
-                        .addOnSuccessListener(aVoid -> openMenu());
-            } else {
-                PositionHelper.createPositionGPS(name, longitude, latitude, rayon, userID)
-                        .addOnFailureListener(Utils.onFailureListener(view.getContext()))
-                        .addOnSuccessListener(aVoid -> openMenu());
-            }
+            PositionHelper.createPositionGPS(name, latitude, longitude, rayon, userID)
+                    .addOnFailureListener(Utils.onFailureListener(view.getContext()));
         }
+        Utils.openMenu(this.getContext(), Utils.Menu.Position);
     }
 
+    @OnClick(R.id.position_gps_btn_open_map)
+    public void onClickOpenMap(View view) {
 
-    @OnClick(R.id.position_btn_delete)
+        Toast.makeText(this.getContext(), "En cours de conctruction", Toast.LENGTH_LONG).show();
+
+    }
+
+    @OnClick(R.id.position_gps_btn_delete)
     public void onClickDelete(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
 
@@ -124,7 +118,7 @@ public class PositionFragment extends BaseFragment {
         builder.setPositiveButton("OUI", (dialog, id) ->
         {
             PositionHelper.deletePosition(currentPosition.getId());
-            openMenu();
+            Utils.openMenu(this.getContext(), Utils.Menu.Position);
         });
         builder.setNegativeButton("NON", (dialog, id) -> dialog.cancel());
 
@@ -150,13 +144,10 @@ public class PositionFragment extends BaseFragment {
                     currentPosition = documentSnapshot.toObject(Position.class);
 
                     if ( currentPosition != null ) {
-                        if ( currentPosition.isWifi() ) {
-                            Glide.with(this).asDrawable().load(R.drawable.ic_wifi_white_large).into(imageView);
-                        } else {
-                            Glide.with(this).asDrawable().load(R.drawable.ic_location_white_large).into(imageView);
-                        }
-
                         editTextName.setText(currentPosition.getName());
+                        editTextRayon.setText(String.valueOf(currentPosition.getRayon()));
+                        editTextLatitude.setText(String.valueOf(currentPosition.getCoordonnees().getLatitude()));
+                        editTextLongitude.setText(String.valueOf(currentPosition.getCoordonnees().getLongitude()));
                     }
                 });
     }
@@ -165,18 +156,8 @@ public class PositionFragment extends BaseFragment {
     // UTILS
     // -------------------
 
-    private void openMenu() {
-        Intent intent = new Intent(this.getContext(), MenuViewPagerActivity.class);
-
-        Bundle bundle = new Bundle();
-        bundle.putInt(MenuViewPagerActivity.BUNDLE_KEY_MENU_ID, 2);
-        intent.putExtras(bundle);
-
-        startActivity(intent);
-    }
-
     private String getPositionIdFromBundle() {
         Bundle bundle = getActivity().getIntent().getExtras();
-        return bundle.getString(PositionActivity.BUNDLE_KEY_POSITION_ID);
+        return bundle.getString(PositionGPSActivity.BUNDLE_KEY_POSITION_GPS_ID);
     }
 }

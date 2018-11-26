@@ -68,7 +68,7 @@
 
         <Spinner
             android:id="@+id/ok_card_recipient_list"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:drawable/btn_dropdown"
             android:spinnerMode="dropdown" />
@@ -81,7 +81,7 @@
 
         <Spinner
             android:id="@+id/ok_card_list_gps"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:drawable/btn_dropdown"
             android:spinnerMode="dropdown" />
@@ -94,7 +94,7 @@
 
         <Spinner
             android:id="@+id/ok_card_list_wifi"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:drawable/btn_dropdown"
             android:spinnerMode="dropdown" />

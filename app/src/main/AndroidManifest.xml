@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="uqac.inf872.projet.imok">
 
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -63,8 +64,12 @@
             android:parentActivityName=".controllers.activities.MenuViewPagerActivity" />
         <!-- POSITION ACTIVITY -->
         <activity
-            android:name=".controllers.activities.PositionActivity"
-            android:label="@string/toolbar_title_activity_position"
+            android:name=".controllers.activities.PositionWIFIActivity"
+            android:label="@string/toolbar_title_activity_position_wifi"
+            android:parentActivityName=".controllers.activities.MenuViewPagerActivity" />
+        <activity
+            android:name=".controllers.activities.PositionGPSActivity"
+            android:label="@string/toolbar_title_activity_position_gps"
             android:parentActivityName=".controllers.activities.MenuViewPagerActivity" />
 
         <!-- NOTIFICATION SERVICE -->
@@ -83,7 +88,10 @@
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="uqac.inf872.projet.imok.widget.action.ACTION_CREATE_OKCARD" />
                 <action android:name="uqac.inf872.projet.imok.widget.action.ACTION_OPEN_OKCARD" />
+                <action android:name="uqac.inf872.projet.imok.widget.action.ACTION_SEND" />
+                <action android:name="uqac.inf872.projet.imok.widget.action.ACTION_REFRESH" />
             </intent-filter>
 
             <meta-data

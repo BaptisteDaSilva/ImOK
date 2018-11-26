@@ -78,7 +78,7 @@ public class OKCard extends Model {
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof OKCard && ((OKCard) obj).getId() == this.getId();
+        return obj instanceof OKCard && ((OKCard) obj).getId().equals(this.getId());
 
     }
 }

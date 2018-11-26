@@ -1,5 +1,6 @@
 package uqac.inf872.projet.imok.controllers.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -7,11 +8,12 @@ import android.support.v4.view.ViewPager;
 import uqac.inf872.projet.imok.R;
 import uqac.inf872.projet.imok.adapters.PageAdapter;
 import uqac.inf872.projet.imok.base.BaseActivity;
+import uqac.inf872.projet.imok.controllers.fragments.ChoiceTypePositionDialog;
 import uqac.inf872.projet.imok.controllers.fragments.ListOKCardFragment;
 import uqac.inf872.projet.imok.controllers.fragments.ListPositionFragment;
 import uqac.inf872.projet.imok.controllers.fragments.ListRecipientsListFragment;
 
-public class MenuViewPagerActivity extends BaseActivity {
+public class MenuViewPagerActivity extends BaseActivity implements ChoiceTypePositionDialog.ChoiceTypePositionListener {
 
     public static final String BUNDLE_KEY_MENU_ID = "BUNDLE_KEY_MENU_ID";
 
@@ -59,7 +61,6 @@ public class MenuViewPagerActivity extends BaseActivity {
         // TODO https://developer.android.com/training/implementing-navigation/temporal
     }
 
-
 //    @Override
 //    protected void setDataBinding(ViewDataBinding mDataBinding) {
 //
@@ -68,5 +69,19 @@ public class MenuViewPagerActivity extends BaseActivity {
     @Override
     protected int getFragmentLayout() {
         return R.layout.activity_menu_view_pager;
+    }
+
+    // -------------------
+    // NAVIGATION
+    // -------------------
+
+    public void createNewGPS() {
+        Intent intent = new Intent(this, PositionGPSActivity.class);
+        startActivity(intent);
+    }
+
+    public void createNewWIFI() {
+        Intent intent = new Intent(this, PositionWIFIActivity.class);
+        startActivity(intent);
     }
 }

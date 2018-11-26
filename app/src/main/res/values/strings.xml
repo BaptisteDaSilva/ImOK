@@ -59,7 +59,8 @@
     <string name="fragment_menu_recipient_list_item_image_list">Logo image liste</string>
     <string name="toolbar_title_activity_ok_card">OK Card</string>
     <string name="toolbar_title_activity_recipient_list">Liste destinataire</string>
-    <string name="toolbar_title_activity_position">Localisation</string>
+    <string name="toolbar_title_activity_position_wifi">Localisation WIFI</string>
+    <string name="toolbar_title_activity_position_gps">Localisation GPS</string>
     <string name="popup_title_permission_sens_message">Envoyer message</string>
     <string name="cancel">Annuler</string>
     <string name="save">Enregistrer</string>
@@ -68,7 +69,8 @@
     <string name="wifi">WIFI</string>
     <string name="send">Envoyer</string>
     <string name="delete">Supprimer</string>
-    <string name="position_image_description">Image gps ou wifi</string>
+    <string name="position_image_wifi_description">Image wifi</string>
+    <string name="position_image_gps_description">Image gps</string>
     <string name="yes">OUI</string>
     <string name="no">NON</string>
     <string name="title_activity_settings">Settings</string>
@@ -78,5 +80,17 @@
     <string name="logo_WIFI">Logo WIFI</string>
     <string name="create_new_ok_card">Créer une OKCard</string>
     <string name="widget_error_no_ok_card">Vous n\'avez pas d\'OKCard de créer !!!</string>
+    <string name="widget_message_sync">Synchronisation en cours</string>
+    <string name="preference_file_key">Settings_ImOK</string>
+    <string name="switch_preference">switch_preference</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="dialog_choice_type_title">Veillez choisir un type :</string>
+    <string name="popup_title_permission_access_wifi">Permission acces WIFI</string>
+    <string name="position_gps_rayon">Rayon (en mètres) :</string>
+    <string name="latitude">Latitude :</string>
+    <string name="longitude">Longitude :</string>
+    <string name="open_map">Ouvrir carte</string>
 
 </resources>

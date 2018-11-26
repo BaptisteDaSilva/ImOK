@@ -4,14 +4,14 @@ import android.os.Bundle;
 
 import uqac.inf872.projet.imok.R;
 import uqac.inf872.projet.imok.base.BaseActivity;
-import uqac.inf872.projet.imok.controllers.fragments.PositionFragment;
+import uqac.inf872.projet.imok.controllers.fragments.PositionWIFIFragment;
 
-public class PositionActivity extends BaseActivity {
+public class PositionWIFIActivity extends BaseActivity {
 
-    public static final String BUNDLE_KEY_POSITION_ID = "BUNDLE_KEY_POSITION_ID";
+    public static final String BUNDLE_KEY_POSITION_WIFI_ID = "BUNDLE_KEY_POSITION_WIFI_ID";
 
     // FOR DATA
-    private PositionFragment positionFragment;
+    private PositionWIFIFragment mPositionWIFIFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +35,12 @@ public class PositionActivity extends BaseActivity {
     // -------------------
 
     private void configureAndShowDetailFragment() {
-        positionFragment = (PositionFragment) getSupportFragmentManager().findFragmentById(R.id.activity_position_frame_layout);
+        mPositionWIFIFragment = (PositionWIFIFragment) getSupportFragmentManager().findFragmentById(R.id.activity_position_frame_layout);
 
-        if ( positionFragment == null ) {
-            positionFragment = new PositionFragment();
+        if ( mPositionWIFIFragment == null ) {
+            mPositionWIFIFragment = new PositionWIFIFragment();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.activity_position_frame_layout, positionFragment)
+                    .add(R.id.activity_position_frame_layout, mPositionWIFIFragment)
                     .commit();
         }
     }

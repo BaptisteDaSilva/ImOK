@@ -2,7 +2,6 @@ package uqac.inf872.projet.imok.controllers.fragments;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.view.View;
@@ -32,7 +31,6 @@ import uqac.inf872.projet.imok.api.OKCardHelper;
 import uqac.inf872.projet.imok.api.PositionHelper;
 import uqac.inf872.projet.imok.api.RecipientListHelper;
 import uqac.inf872.projet.imok.base.BaseFragment;
-import uqac.inf872.projet.imok.controllers.activities.MenuViewPagerActivity;
 import uqac.inf872.projet.imok.controllers.activities.OKCardActivity;
 import uqac.inf872.projet.imok.models.OKCard;
 import uqac.inf872.projet.imok.models.Position;
@@ -187,7 +185,7 @@ public class OKCardFragment extends BaseFragment {
 
     @OnClick(R.id.ok_card_btn_cancel)
     public void onClickCancel(View view) {
-        openMenu();
+        Utils.openMenu(this.getContext(), Utils.Menu.OKCard);
     }
 
     @OnClick(R.id.ok_card_btn_save)
@@ -222,13 +220,13 @@ public class OKCardFragment extends BaseFragment {
 
 
             OKCardHelper.updateOKCard(currentOKCard)
-                    .addOnFailureListener(Utils.onFailureListener(view.getContext()))
-                    .addOnSuccessListener(aVoid -> openMenu());
+                    .addOnFailureListener(Utils.onFailureListener(view.getContext()));
         } else {
             OKCardHelper.createOKCard(name, message, urlPicture, recipientList.getId(), triggers, Utils.getCurrentUser().getUid())
-                    .addOnFailureListener(Utils.onFailureListener(view.getContext()))
-                    .addOnSuccessListener(aVoid -> openMenu());
+                    .addOnFailureListener(Utils.onFailureListener(view.getContext()));
         }
+
+        Utils.openMenu(this.getContext(), Utils.Menu.OKCard);
     }
 
     @OnClick(R.id.ok_card_btn_envoyer)
@@ -251,7 +249,7 @@ public class OKCardFragment extends BaseFragment {
         builder.setPositiveButton(R.string.yes, (dialog, id) ->
         {
             OKCardHelper.deleteOKCard(currentOKCard.getId());
-            openMenu();
+            Utils.openMenu(this.getContext(), Utils.Menu.OKCard);
         });
         builder.setNegativeButton(R.string.no, (dialog, id) -> dialog.cancel());
 
@@ -342,16 +340,6 @@ public class OKCardFragment extends BaseFragment {
     // -------------------
     // UTILS
     // -------------------
-
-    private void openMenu() {
-        Intent intent = new Intent(this.getContext(), MenuViewPagerActivity.class);
-
-        Bundle bundle = new Bundle();
-        bundle.putInt(MenuViewPagerActivity.BUNDLE_KEY_MENU_ID, 0);
-        intent.putExtras(bundle);
-
-        startActivity(intent);
-    }
 
     private String getOKCardIdFromBundle() {
         Bundle bundle = getActivity().getIntent().getExtras();

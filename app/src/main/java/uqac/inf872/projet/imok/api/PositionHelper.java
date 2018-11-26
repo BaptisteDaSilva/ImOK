@@ -11,6 +11,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import uqac.inf872.projet.imok.models.Position;
@@ -34,7 +35,7 @@ public class PositionHelper {
 
     // --- CREATE ---
 
-    public static Task<Void> createPositionGPS(String name, double longitude, double latitude, int rayon, String userID) {
+    public static Task<Void> createPositionGPS(String name, double latitude, double longitude, int rayon, String userID) {
         String id = PositionHelper.getPositionCollection().document().getId();
 
         // Create Obj
@@ -43,7 +44,7 @@ public class PositionHelper {
         return PositionHelper.getPositionCollection().document(id).set(positionToCreate);
     }
 
-    public static Task<Void> createPositionWifi(String name, String ssid, String userID) {
+    public static Task<Void> createPositionWifi(String name, List<String> ssid, String userID) {
         String id = PositionHelper.getPositionCollection().document().getId();
 
         // Create Obj

@@ -3,13 +3,15 @@ package uqac.inf872.projet.imok.models;
 
 import com.google.firebase.firestore.GeoPoint;
 
+import java.util.List;
+
 public class Position extends Model {
 
     private String name;
     private boolean wifi;
     private GeoPoint coordonnes;
     private int rayon;
-    private String ssid;
+    private List<String> ssid;
     private String userID;
 
     // Use by Firebase
@@ -28,7 +30,7 @@ public class Position extends Model {
         this.rayon = rayon;
     }
 
-    public Position(String idWifi, String name, String ssid, String userID) {
+    public Position(String idWifi, String name, List<String> ssid, String userID) {
         super(idWifi);
 
         this.name = name;
@@ -67,11 +69,11 @@ public class Position extends Model {
         this.rayon = rayon;
     }
 
-    public String getSsid() {
+    public List<String> getSsid() {
         return ssid;
     }
 
-    public void setSsid(String ssid) {
+    public void setSsid(List<String> ssid) {
         this.ssid = ssid;
     }
 

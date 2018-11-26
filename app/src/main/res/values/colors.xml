@@ -5,11 +5,12 @@
     <color name="colorAccent">#ff9e40</color>
     <color name="colorAccentDark">#ba7028</color>
 
-    <color name="colorError">#FF5252</color>
+    <color name="colorError">#ff5252</color>
 
     <color name="primaryTextColor">#000000</color>
     <color name="secondaryTextColor">#000000</color>
 
     <!-- BUTTON -->
     <color name="button_favorite">@color/colorPrimaryDark</color>
+
 </resources>

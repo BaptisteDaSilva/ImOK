@@ -1,6 +1,5 @@
 package uqac.inf872.projet.imok.controllers.fragments;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
@@ -24,7 +23,6 @@ import butterknife.BindView;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import pub.devrel.easypermissions.AfterPermissionGranted;
-import pub.devrel.easypermissions.EasyPermissions;
 import uqac.inf872.projet.imok.R;
 import uqac.inf872.projet.imok.api.OKCardHelper;
 import uqac.inf872.projet.imok.api.PositionHelper;
@@ -37,9 +35,6 @@ import uqac.inf872.projet.imok.models.RecipientList;
 import uqac.inf872.projet.imok.utils.Utils;
 
 public class OKCardFragment extends BaseFragment {
-
-    private static final String PERMS_SEND_SMS = Manifest.permission.SEND_SMS;
-    private static final int RC_FINE_SEND_SMS_PERMS = 100;
 
     // FOR DESIGN
     @BindView(R.id.ok_card_image)
@@ -230,11 +225,20 @@ public class OKCardFragment extends BaseFragment {
 
     @OnClick(R.id.ok_card_btn_envoyer)
     public void onClickEnvoyer(View view) {
-        if ( EasyPermissions.hasPermissions(view.getContext(), PERMS_SEND_SMS) ) {
+        if ( Utils.isGrantedPermission(this, Utils.Permission.SEND_SMS) ) {
             sendMessage();
-        } else {
-            EasyPermissions.requestPermissions(this, getString(R.string.popup_title_permission_sens_message), RC_FINE_SEND_SMS_PERMS, PERMS_SEND_SMS);
         }
+    }
+
+    @AfterPermissionGranted(Utils.PERMISSION_SEND_SMS_RC)
+    private void sendMessage() {
+        String msg = editTextMessage.getText().toString();
+
+        RecipientList recipientList = (RecipientList) spinnerRecipientList.getSelectedItem();
+
+        Utils.sendMessage(msg, recipientList.getId());
+
+        Toast.makeText(this.getActivity(), "Message envoyé", Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.ok_card_btn_delete)
@@ -353,22 +357,5 @@ public class OKCardFragment extends BaseFragment {
     private String getImageURLFromBundle() {
         Bundle bundle = getActivity().getIntent().getExtras();
         return bundle.getString(OKCardActivity.BUNDLE_KEY_OK_CARD_IMAGE_URL);
-    }
-
-    @AfterPermissionGranted(RC_FINE_SEND_SMS_PERMS)
-    public void sendMessage() {
-
-        String msg = editTextMessage.getText().toString();
-
-        RecipientList recipientList = (RecipientList) spinnerRecipientList.getSelectedItem();
-
-        RecipientListHelper.getRecipientList(recipientList.getId()).addOnSuccessListener(documentSnapshot ->
-        {
-            RecipientList currentRecipientList = documentSnapshot.toObject(RecipientList.class);
-
-            Utils.sendMessage(currentRecipientList.getRecipients(), msg);
-        });
-
-        Toast.makeText(this.getActivity(), "Message envoyé", Toast.LENGTH_SHORT).show();
     }
 }

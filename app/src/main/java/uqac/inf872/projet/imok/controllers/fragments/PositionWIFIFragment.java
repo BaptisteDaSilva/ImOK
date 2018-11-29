@@ -1,6 +1,5 @@
 package uqac.inf872.projet.imok.controllers.fragments;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.net.wifi.WifiConfiguration;
@@ -20,7 +19,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import pub.devrel.easypermissions.AfterPermissionGranted;
-import pub.devrel.easypermissions.EasyPermissions;
 import uqac.inf872.projet.imok.R;
 import uqac.inf872.projet.imok.api.PositionHelper;
 import uqac.inf872.projet.imok.base.BaseFragment;
@@ -34,8 +32,6 @@ import uqac.inf872.projet.imok.views.RobotoButton;
  */
 public class PositionWIFIFragment extends BaseFragment {
 
-    private static final String PERMS_ACCESS_WIFI_STATE = Manifest.permission.ACCESS_WIFI_STATE;
-    private static final int RC_ACCESS_WIFI_STATE_PERMS = 100;
 
     // FOR DESIGN
     @BindView(R.id.position_wifi_name)
@@ -66,10 +62,8 @@ public class PositionWIFIFragment extends BaseFragment {
 
     @Override
     protected void configureDesign() {
-        if ( EasyPermissions.hasPermissions(this.getContext(), PERMS_ACCESS_WIFI_STATE) ) {
+        if ( Utils.isGrantedPermission(this, Utils.Permission.ACCESS_WIFI_STATE) ) {
             setListConfiguredNetworks();
-        } else {
-            EasyPermissions.requestPermissions(this, getString(R.string.popup_title_permission_access_wifi), RC_ACCESS_WIFI_STATE_PERMS, PERMS_ACCESS_WIFI_STATE);
         }
     }
 
@@ -223,7 +217,7 @@ public class PositionWIFIFragment extends BaseFragment {
         return bundle.getString(PositionWIFIActivity.BUNDLE_KEY_POSITION_WIFI_ID);
     }
 
-    @AfterPermissionGranted(RC_ACCESS_WIFI_STATE_PERMS)
+    @AfterPermissionGranted(Utils.PERMISSION_ACCESS_WIFI_STATE_RC)
     private void setListConfiguredNetworks() {
         WifiManager wifiManager = (WifiManager) this.getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 

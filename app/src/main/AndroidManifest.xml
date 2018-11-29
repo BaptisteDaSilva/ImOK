@@ -87,10 +87,9 @@
             android:name=".receiver.WifiReceiver"
             android:enabled="true"
             android:exported="false">
-
             <intent-filter>
-                <!--protected-broadcast: Special broadcast that only the system can send-->
-                <!--Corresponds to: android.net.wifi.WifiManager.NETWORK_STATE_CHANGED_ACTION-->
+                <!-- protected-broadcast: Special broadcast that only the system can send -->
+                <!-- Corresponds to: android.net.wifi.WifiManager.NETWORK_STATE_CHANGED_ACTION -->
                 <action android:name="android.net.wifi.STATE_CHANGE" />
             </intent-filter>
         </receiver>
@@ -103,26 +102,47 @@
             <intent-filter>
                 <action android:name="uqac.inf872.projet.imok.receiver.ProximityAlert" />
             </intent-filter>
-
         </receiver>
 
-        <!-- WIDGET -->
+        <!-- WIDGETS -->
         <receiver
-            android:name=".widget.OKCardWidget"
+            android:name=".widget.OKCardsWidget"
             android:icon="@drawable/ic_logo"
-            android:label="@string/app_name">
+            android:label="@string/widget_ok_cards_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="uqac.inf872.projet.imok.widget.action.ACTION_CREATE_OKCARD" />
-                <action android:name="uqac.inf872.projet.imok.widget.action.ACTION_OPEN_OKCARD" />
-                <action android:name="uqac.inf872.projet.imok.widget.action.ACTION_SEND" />
-                <action android:name="uqac.inf872.projet.imok.widget.action.ACTION_REFRESH" />
+                <action android:name="uqac.inf872.projet.imok.widget_ok_cards.action.ACTION_CREATE_OKCARD" />
+                <action android:name="uqac.inf872.projet.imok.widget_ok_cards.action.ACTION_OPEN_OKCARD" />
+                <action android:name="uqac.inf872.projet.imok.widget_ok_cards.action.ACTION_SEND" />
+                <action android:name="uqac.inf872.projet.imok.widget_ok_cards.action.ACTION_CONNECTION" />
             </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/widget_provider_info" />
+                android:resource="@xml/widget_ok_cards_provider_info" />
         </receiver>
+
+        <receiver
+            android:name=".widget.OKCardWidget"
+            android:icon="@drawable/ic_logo"
+            android:label="@string/widget_ok_card_name">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="uqac.inf872.projet.imok.widget_ok_card.action.ACTION_SEND" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_ok_card_provider_info" />
+        </receiver>
+
+        <activity
+            android:name=".widget.OKCardWidgetConfigureActivity"
+            android:label="@string/toolbar_title_activity_configure_widget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

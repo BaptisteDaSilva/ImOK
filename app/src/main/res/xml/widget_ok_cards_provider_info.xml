@@ -1,7 +1,7 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:initialLayout="@layout/widget"
+    android:initialLayout="@layout/widget_ok_cards"
     android:minWidth="250dp"
     android:minHeight="250dp"
-    android:previewImage="@drawable/appwidget_preview"
+    android:previewImage="@drawable/widget_ok_cards_preview"
     android:updatePeriodMillis="86400000"
     android:widgetCategory="home_screen" /> <!--24h-->

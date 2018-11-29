@@ -10,6 +10,7 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 
 import uqac.inf872.projet.imok.R;
+import uqac.inf872.projet.imok.controllers.activities.MainActivity;
 
 public class ProximityAlertReceiver extends BroadcastReceiver {
 
@@ -18,14 +19,15 @@ public class ProximityAlertReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        String locationManager = LocationManager.KEY_PROXIMITY_ENTERING;
+        String keyProximityEntering = LocationManager.KEY_PROXIMITY_ENTERING;
 
-        Boolean entering = intent.getBooleanExtra(locationManager, false);
+        Boolean entering = intent.getBooleanExtra(keyProximityEntering, false);
+        String name = intent.getStringExtra(MainActivity.PROX_ALERT_INTENT_EXTRA);
 
         // Create a Style for the Notification
         NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
-        inboxStyle.setBigContentTitle("Location alert");
-        inboxStyle.addLine(entering ? "Entering" : "Exiting");
+        inboxStyle.setBigContentTitle("Location alert - " + name);
+        inboxStyle.addLine(entering ? "Entering" : "Exiting " + name);
 
         // Create a Channel (Android 8)
         String channelId = context.getString(R.string.default_notification_channel_id);

@@ -20,10 +20,10 @@
             android:id="@+id/fragment_menu_position_item_image"
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:tint="@color/colorAccent"
             android:contentDescription="@string/fragment_menu_ok_card_item_image_desciption"
             android:padding="4dp"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:tint="@color/colorAccent" />
 
         <uqac.inf872.projet.imok.views.RobotoTextView
             android:id="@+id/fragment_menu_position_item_name"

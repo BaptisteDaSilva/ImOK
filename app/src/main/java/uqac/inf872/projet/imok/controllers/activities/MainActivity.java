@@ -1,8 +1,9 @@
 package uqac.inf872.projet.imok.controllers.activities;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.PendingIntent;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
@@ -21,62 +22,71 @@ import java.util.Arrays;
 import butterknife.BindView;
 import butterknife.OnClick;
 import pub.devrel.easypermissions.AfterPermissionGranted;
-import pub.devrel.easypermissions.EasyPermissions;
 import uqac.inf872.projet.imok.R;
 import uqac.inf872.projet.imok.api.UserHelper;
 import uqac.inf872.projet.imok.base.BaseActivity;
 import uqac.inf872.projet.imok.utils.Utils;
+import uqac.inf872.projet.imok.widget.OKCardsWidget;
 
 public class MainActivity extends BaseActivity {
 
-    //FOR DATA
-    private static final int RC_SIGN_IN = 123;
-    //FOR DESIGN
-    @BindView(R.id.main_activity_coordinator_layout)
-    CoordinatorLayout coordinatorLayout;
-
-    @BindView(R.id.main_activity_button_login)
-    Button buttonLogin;
-
-//    @Override
+    public static final String PROX_ALERT_INTENT_EXTRA = "uqac.inf872.projet.imok.receiver.ProximityAlert.extra";
+    public static final String BUNDLE_KEY_CONNECTION_ASK = "BUNDLE_KEY_CONNECTION_ASK";
+    private static final String PROX_ALERT_INTENT = "uqac.inf872.projet.imok.receiver.ProximityAlert";
+    //    @Override
 //    protected void setDataBinding(ViewDataBinding mDataBinding) {
 //
 //    }
-
-
-    private static final String PERMS_ACCESS_FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
-    private static final int RC_ACCESS_FINE_LOCATION_PERMS = 200;
-    private static final String PROX_ALERT_INTENT = "uqac.inf872.projet.imok.receiver.ProximityAlert";
     private static final long POINT_RADIUS = 100; // in Meters
     private static final long PROX_ALERT_EXPIRATION = -1; // It will never expire
+    //FOR DESIGN
+    @BindView(R.id.main_activity_coordinator_layout)
+    CoordinatorLayout coordinatorLayout;
+    @BindView(R.id.main_activity_button_login)
+    Button buttonLogin;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if ( EasyPermissions.hasPermissions(this, PERMS_ACCESS_FINE_LOCATION) ) {
-            addProximityAlert(48.42630690000001, -71.05366229999998); // Appartement
-        } else {
-            EasyPermissions.requestPermissions(this, getString(R.string.popup_title_permission_sens_message), RC_ACCESS_FINE_LOCATION_PERMS, PERMS_ACCESS_FINE_LOCATION);
+        Utils.askAllPermissions(this);
+
+        if ( Utils.isGrantedPermission(this, Utils.Permission.ACCESS_FINE_LOCATION) ) {
+            addAllProximityAlert();
         }
 
-        addProximityAlert(48.420329, -71.05264999999997); // UQAC
+        Bundle extras = getIntent().getExtras();
+        if ( extras != null ) {
+            if ( extras.getBoolean(BUNDLE_KEY_CONNECTION_ASK, false) ) {
+                this.startSignInActivity();
+            }
+        }
+    }
+
+    @AfterPermissionGranted(Utils.PERMISSION_ACCESS_FINE_LOCATION_RC)
+    private void addAllProximityAlert() {
+        addProximityAlert(48.42630690000001, -71.05366229999998, "Appartement");
+        addProximityAlert(48.420329, -71.05264999999997, "UQAC");
     }
 
     @SuppressLint("MissingPermission")
-    @AfterPermissionGranted(RC_ACCESS_FINE_LOCATION_PERMS)
-    private void addProximityAlert(double latitude, double longitude) {
+    public void addProximityAlert(double latitude, double longitude, String nom) {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         Intent intent = new Intent(PROX_ALERT_INTENT);
-        PendingIntent proximityIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        intent.putExtra(PROX_ALERT_INTENT_EXTRA, nom);
+
+        PendingIntent proximityIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
         locationManager.addProximityAlert(
                 latitude, // the latitude of the central point of the alert region
                 longitude, // the longitude of the central point of the alert region
                 POINT_RADIUS, // the radius of the central point of the alert region, in meters
-                PROX_ALERT_EXPIRATION, // time for this proximity alert, in milliseconds, or -1 to indicate no                           expiration
+                PROX_ALERT_EXPIRATION, // time for this proximity alert, in milliseconds, or -1 to indicate no expiration
                 proximityIntent // will be used to generate an Intent to fire when entry to or exit from the alert region is detected
         );
+
+        locationManager.removeProximityAlert(proximityIntent);
     }
 
     @Override
@@ -150,7 +160,7 @@ public class MainActivity extends BaseActivity {
                         .setIsSmartLockEnabled(false, true)
                         .setLogo(R.drawable.ic_logo)
                         .build(),
-                RC_SIGN_IN);
+                Utils.RC_SIGN_IN);
     }
 
     private void startProfileActivity() {
@@ -183,10 +193,21 @@ public class MainActivity extends BaseActivity {
 
         IdpResponse response = IdpResponse.fromResultIntent(data);
 
-        if ( requestCode == RC_SIGN_IN ) {
+        if ( requestCode == Utils.RC_SIGN_IN ) {
             if ( resultCode == RESULT_OK ) { // SUCCESS
                 this.createUserInFirestore();
                 showSnackBar(this.coordinatorLayout, getString(R.string.connection_succeed));
+
+                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(getApplicationContext());
+                ComponentName componentName = new ComponentName(getApplicationContext().getPackageName(), OKCardsWidget.class.getName());
+                int[] appWidgetIds = appWidgetManager.getAppWidgetIds(componentName);
+
+                Intent refreshIntent = new Intent(getApplicationContext(), OKCardsWidget.class);
+
+                refreshIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+                refreshIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+
+                sendBroadcast(refreshIntent);
             } else { // ERRORS
                 if ( response == null ) {
                     showSnackBar(this.coordinatorLayout, getString(R.string.error_authentication_canceled));

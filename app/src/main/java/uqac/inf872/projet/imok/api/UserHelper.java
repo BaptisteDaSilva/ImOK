@@ -29,7 +29,6 @@ public class UserHelper {
     public static Task<Void> createUser(String uid, String username, String urlPicture) {
         User userToCreate = new User(uid, username, urlPicture);
 
-//        return UserHelper.getUsersCollection().document().set(userToCreate); // Génère la clé
         return UserHelper.getUsersCollection().document(uid).set(userToCreate);
     }
 

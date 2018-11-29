@@ -92,5 +92,23 @@
     <string name="latitude">Latitude :</string>
     <string name="longitude">Longitude :</string>
     <string name="open_map">Ouvrir carte</string>
+    <string name="rationale_ask_ok">OK</string>
+    <string name="rationale_ask_cancel">Annuler</string>
+
+    <!-- PERMISSION - TODO écrire-->
+    <string name="popup_ask_all_permissions">Toutes les autorisations sont nécessaires pour exécuter cette application.</string>
+
+    <string name="popup_ask_permission_1">Toutes les autorisations sont nécessaires pour exécuter cette application.</string>
+    <string name="popup_ask_permission_2">Toutes les autorisations sont nécessaires pour exécuter cette application.</string>
+    <string name="popup_ask_permission_3">Toutes les autorisations sont nécessaires pour exécuter cette application.</string>
+    <string name="popup_ask_permission_4">Toutes les autorisations sont nécessaires pour exécuter cette application.</string>
+    <string name="configure">Configure</string>
+    <string name="add_widget">Ajouter widget</string>
+    <string name="widget_message_not_exist">C\'est OKCard n\'existe pas</string>
+    <string name="toolbar_title_activity_configure_widget">Configuration</string>
+    <string name="widget_choose_ok_card">Veuiller choisir une OKCrad :</string>
+    <string name="widget_ok_cards_name">OKCards</string>
+    <string name="widget_ok_card_name">OKCard</string>
+    <string name="se_connecter">Se connecter</string>
 
 </resources>

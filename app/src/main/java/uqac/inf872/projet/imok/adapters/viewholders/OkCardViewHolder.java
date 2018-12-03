@@ -16,7 +16,6 @@ import uqac.inf872.projet.imok.views.RobotoTextView;
 public class OkCardViewHolder extends RecyclerView.ViewHolder {
 
     // FOR DESIGN
-
     @BindView(R.id.fragment_menu_ok_card_item_image)
     ImageView imageView;
 

@@ -7,7 +7,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.Toast;
@@ -40,11 +39,14 @@ public class OKCardWidget extends AppWidgetProvider {
 
     // Action qui indique ce qu'on essaie de faire
     private final static String ACTION_SEND = "uqac.inf872.projet.imok.receiver.widget_ok_card.action.ACTION_SEND";
+
     // Task
     static Task taskRecipientList;
-    // TODO ecrire
+
+    // Listes des OKCards et RecipientList présente
     private static HashMap<String, OKCard> okCards;
     private static HashMap<String, RecipientList> recipientLists;
+
     // Listener
     private static ListenerRegistration registrationOKCard;
     private static ListenerRegistration registrationRecipientList;
@@ -117,25 +119,22 @@ public class OKCardWidget extends AppWidgetProvider {
                                     OKCard okCard = dc.getDocument().toObject(OKCard.class);
 
                                     okCards.put(okCard.getId(), okCard);
-
-                                    setOKCard(views, okCard);
-
-                                    // TODO faire marcher
-//                                    setRecipientList(views, recipientList);
                                 }
 
                                 break;
                             case REMOVED:
-                                okCards.remove(dc.getDocument().getId()); // TODO faire en sorte que la carte se refraichisse et affiche une erreur
+                                okCards.remove(dc.getDocument().getId());
 
-                                Log.e("I'm OK", "Delete okCrad");
+                                views.setViewVisibility(R.id.widget_ok_card, View.GONE);
+                                views.setViewVisibility(R.id.widget_ok_card_sync, View.GONE);
+                                views.setViewVisibility(R.id.widget_ok_card_not_exist, View.VISIBLE);
 
                                 break;
                         }
                     }
 
                     // TODO update seulement les bons
-//                    appWidgetManager.updateAppWidget(componentName, views);
+                    appWidgetManager.updateAppWidget(componentName, views);
                 }
             });
 
@@ -163,13 +162,12 @@ public class OKCardWidget extends AppWidgetProvider {
                                 break;
                             case REMOVED:
                                 recipientLists.remove(dc.getDocument().getId());
-
                                 break;
                         }
                     }
 
                     // TODO update seulement les bons
-                    // appWidgetManager.updateAppWidget(componentName, views);
+                    appWidgetManager.updateAppWidget(componentName, views);
                 }
             });
         }
@@ -193,6 +191,7 @@ public class OKCardWidget extends AppWidgetProvider {
 
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_ok_card);
+
 
         views.setViewVisibility(R.id.widget_ok_card_not_exist, View.GONE);
         views.setViewVisibility(R.id.widget_ok_card, View.GONE);

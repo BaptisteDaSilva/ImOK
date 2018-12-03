@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.google.android.gms.tasks.Task;
@@ -24,6 +26,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import uqac.inf872.projet.imok.R;
 import uqac.inf872.projet.imok.api.OKCardHelper;
+import uqac.inf872.projet.imok.controllers.activities.MainActivity;
 import uqac.inf872.projet.imok.models.OKCard;
 import uqac.inf872.projet.imok.utils.Utils;
 
@@ -40,8 +43,15 @@ public class OKCardWidgetConfigureActivity extends AppCompatActivity {
     private static Executor getOKCardExecutor = Executors.newSingleThreadExecutor();
     private static ArrayList<OKCard> listOKCard;
     int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
+
     @BindView(R.id.appwidget_list_ok_card)
     Spinner spinnerListOKCrad;
+
+    @BindView(R.id.appwidget_configuration)
+    LinearLayout appwidgetConfiguration;
+
+    @BindView(R.id.appwidget_configuration_connection)
+    LinearLayout appwidgetConfigurationConnection;
 
     public OKCardWidgetConfigureActivity() {
         super();
@@ -86,52 +96,59 @@ public class OKCardWidgetConfigureActivity extends AppCompatActivity {
         // Set the toolbar
         setSupportActionBar(toolbar);
 
-        // TODO gerer utilisateur non connecte
-
         // Set the result to CANCELED.  This will cause the widget host to cancel
         // out of the widget placement if the user presses the back button.
         setResult(RESULT_CANCELED);
 
-        // Find the widget id from the intent.
-        Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-        if ( extras != null ) {
-            mAppWidgetId = extras.getInt(
-                    AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
-        }
+        if ( Utils.getCurrentUser() == null ) {
+            appwidgetConfiguration.setVisibility(View.GONE);
+            appwidgetConfigurationConnection.setVisibility(View.VISIBLE);
+        } else {
 
-        // If this activity was started with an intent without an app widget ID, finish with an error.
-        if ( mAppWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID ) {
-            finish();
-            return;
-        }
+            appwidgetConfigurationConnection.setVisibility(View.GONE);
+            appwidgetConfiguration.setVisibility(View.VISIBLE);
 
-        listOKCard = new ArrayList<>();
-
-        Query query = OKCardHelper.getOKCard();
-
-        if ( query != null ) {
-            Task taskOKCard = query.get().addOnCompleteListener(getOKCardExecutor, task -> {
-                if ( task.isSuccessful() ) {
-
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        listOKCard.add(document.toObject(OKCard.class));
-                    }
-                } else {
-                    Utils.onFailureListener(this, task.getException());
-                }
-            });
-
-            while (!taskOKCard.isComplete()) {
-                sleep(50);
+            // Find the widget id from the intent.
+            Intent intent = getIntent();
+            Bundle extras = intent.getExtras();
+            if ( extras != null ) {
+                mAppWidgetId = extras.getInt(
+                        AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
             }
+
+            // If this activity was started with an intent without an app widget ID, finish with an error.
+            if ( mAppWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID ) {
+                finish();
+                return;
+            }
+
+            listOKCard = new ArrayList<>();
+
+            Query query = OKCardHelper.getOKCard();
+
+            if ( query != null ) {
+                Task taskOKCard = query.get().addOnCompleteListener(getOKCardExecutor, task -> {
+                    if ( task.isSuccessful() ) {
+
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            listOKCard.add(document.toObject(OKCard.class));
+                        }
+                    } else {
+                        Utils.onFailureListener(this, task.getException());
+                    }
+                });
+
+                while (!taskOKCard.isComplete()) {
+                    sleep(50);
+                }
+            }
+
+            ArrayAdapter<OKCard> adapter =
+                    new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, listOKCard);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+            spinnerListOKCrad.setAdapter(adapter);
         }
-
-        ArrayAdapter<OKCard> adapter =
-                new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, listOKCard);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinnerListOKCrad.setAdapter(adapter);
     }
 
     // -------------------
@@ -160,6 +177,17 @@ public class OKCardWidgetConfigureActivity extends AppCompatActivity {
             setResult(RESULT_OK, resultValue);
         }
         finish();
+    }
+
+    @OnClick(R.id.appwidget_btn_connection)
+    public void onClickConnection(View view) {
+
+        Intent connectionIntent = new Intent(getApplicationContext(), MainActivity.class);
+        connectionIntent.putExtra(MainActivity.BUNDLE_KEY_CONNECTION_ASK, true);
+
+        TaskStackBuilder.create(getApplicationContext())
+                .addNextIntentWithParentStack(connectionIntent)
+                .startActivities();
     }
 }
 

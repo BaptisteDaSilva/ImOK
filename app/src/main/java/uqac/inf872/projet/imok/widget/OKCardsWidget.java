@@ -7,6 +7,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.TaskStackBuilder;
 import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.Toast;
@@ -146,7 +147,6 @@ public class OKCardsWidget extends AppWidgetProvider {
 
         if ( query != null ) {
 
-            initOK = true;
             query.get().addOnSuccessListener(querySnapshot ->
             {
                 if ( !querySnapshot.isEmpty() ) {
@@ -191,10 +191,7 @@ public class OKCardsWidget extends AppWidgetProvider {
 
                                     setData(context);
 
-                                    setOKCard(views);
-                                    // TODO faire en sorte de
-//                                    setRecipientList(views);
-//                                    setPositions(views);
+                                    setOKCard(context, views);
 
                                     appWidgetManager.updateAppWidget(componentName, views);
                                 }
@@ -289,12 +286,11 @@ public class OKCardsWidget extends AppWidgetProvider {
         return nextIntent;
     }
 
-    private static void setOKCard(RemoteViews views) {
-
-        // On met les bon texte
+    private static void setOKCard(Context context, RemoteViews views) {
         views.setTextViewText(R.id.widget_ok_cards_name, okCard.getName());
-//                views.setImageViewUri(R.id.widget_ok_card_image, okCard.getUrlPicture()); // TODO gérer
         views.setTextViewText(R.id.widget_ok_cards_message, okCard.getMessage());
+
+        views.setImageViewResource(R.id.widget_ok_cards_image, R.drawable.ic_logo); // TODO changer
     }
 
     private static void setRecipientList(RemoteViews views) {
@@ -402,7 +398,7 @@ public class OKCardsWidget extends AppWidgetProvider {
                         views.setViewVisibility(R.id.widget_ok_cards_btn_right, View.GONE);
                     }
 
-                    setOKCard(views);
+                    setOKCard(context, views);
                     setRecipientList(views);
                     setPositions(views);
 
@@ -492,14 +488,20 @@ public class OKCardsWidget extends AppWidgetProvider {
         if ( ACTION_CREATE_OKCARD.equals(intent.getAction()) ) {
 
             Intent intentOKCardActivity = new Intent(context.getApplicationContext(), OKCardActivity.class);
-            context.startActivity(intentOKCardActivity);
+
+            TaskStackBuilder.create(context)
+                    .addNextIntentWithParentStack(intentOKCardActivity)
+                    .startActivities();
 
         } else if ( ACTION_OPEN_OKCARD.equals(intent.getAction()) ) {
 
             if ( intent.getExtras() != null ) {
-                Intent intentOKCardActivity = new Intent(context.getApplicationContext(), OKCardActivity.class);
-                intentOKCardActivity.putExtras(intent.getExtras());
-                context.startActivity(intentOKCardActivity);
+                Intent intentOpenOKCard = new Intent(context.getApplicationContext(), OKCardActivity.class);
+                intentOpenOKCard.putExtras(intent.getExtras());
+
+                TaskStackBuilder.create(context)
+                        .addNextIntentWithParentStack(intentOpenOKCard)
+                        .startActivities();
             }
 
         } else if ( ACTION_SEND.equals(intent.getAction()) ) {
@@ -515,7 +517,10 @@ public class OKCardsWidget extends AppWidgetProvider {
             if ( intent.getExtras() != null ) {
                 Intent intentMainActivity = new Intent(context.getApplicationContext(), MainActivity.class);
                 intentMainActivity.putExtras(intent.getExtras());
-                context.startActivity(intentMainActivity);
+
+                TaskStackBuilder.create(context)
+                        .addNextIntentWithParentStack(intentMainActivity)
+                        .startActivities();
             }
 
         } else if ( AppWidgetManager.ACTION_APPWIDGET_UPDATE.equals(intent.getAction()) ) {

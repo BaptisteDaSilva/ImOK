@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".widget.OKCardWidgetConfigureActivity">
 
@@ -16,17 +16,19 @@
         app:titleTextAppearance="@style/Toolbar.TitleText" />
 
     <LinearLayout
+        android:id="@+id/appwidget_configuration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
         android:layout_margin="20dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
-        <TextView
-            android:id="@+id/appwidget_text"
+        <uqac.inf872.projet.imok.views.RobotoTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/widget_choose_ok_card" />
+            android:text="@string/widget_choose_ok_card"
+            app:fontName="Roboto_Medium" />
 
         <Spinner
             android:id="@+id/appwidget_list_ok_card"
@@ -46,6 +48,37 @@
             android:background="@drawable/button_radius_accent_color"
             android:padding="@dimen/default_margin"
             android:text="@string/add_widget"
+            android:textColor="#fff"
+            android:textSize="@dimen/default_text_size"
+            app:fontName="Roboto_Medium" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/appwidget_configuration_connection"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:layout_centerInParent="true"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <uqac.inf872.projet.imok.views.RobotoTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/widget_connection"
+            android:textAlignment="center"
+            android:textSize="36sp"
+            app:fontName="Roboto_Medium" />
+
+        <uqac.inf872.projet.imok.views.RobotoButton
+            android:id="@+id/appwidget_btn_connection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_radius_error_color"
+            android:padding="@dimen/default_margin"
+            android:text="@string/connection"
             android:textColor="#fff"
             android:textSize="@dimen/default_text_size"
             app:fontName="Roboto_Medium" />

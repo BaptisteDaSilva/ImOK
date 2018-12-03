@@ -77,6 +77,7 @@
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/default_margin"
                     android:paddingEnd="@dimen/default_margin"
+                    android:text="@{user.email}"
                     android:textSize="@dimen/default_text_size" />
 
             </LinearLayout>

@@ -67,7 +67,7 @@
                 <!-- PROFILE EMAIL CONTAINER -->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_margin="@dimen/default_margin"
                     android:orientation="horizontal">
 
@@ -85,6 +85,7 @@
                         android:layout_height="wrap_content"
                         android:paddingStart="@dimen/default_margin"
                         android:paddingEnd="@dimen/default_margin"
+                        android:text="@{user.email}"
                         android:textSize="@dimen/default_text_size" />
 
                 </LinearLayout>

@@ -5,5 +5,4 @@
     android:minWidth="110dp"
     android:minHeight="110dp"
     android:previewImage="@drawable/widget_ok_card_preview"
-    android:resizeMode="horizontal|vertical"
     android:widgetCategory="home_screen" />

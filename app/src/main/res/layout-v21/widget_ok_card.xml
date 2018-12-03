@@ -71,7 +71,6 @@
         android:visibility="gone">
 
         <TextView
-            android:id="@+id/widget_ok_card_not_exist_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -91,7 +90,6 @@
         android:orientation="vertical">
 
         <ProgressBar
-            android:id="@+id/widget_ok_card_message_sync_progressBar"
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

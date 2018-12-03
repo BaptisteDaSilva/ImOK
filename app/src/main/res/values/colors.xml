@@ -13,4 +13,7 @@
     <!-- BUTTON -->
     <color name="button_favorite">@color/colorPrimaryDark</color>
 
+
+    <color name="colorAccentMap">#80ff9e40</color>
+
 </resources>

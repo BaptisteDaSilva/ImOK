@@ -61,7 +61,7 @@
     <string name="toolbar_title_activity_recipient_list">Liste destinataire</string>
     <string name="toolbar_title_activity_position_wifi">Localisation WIFI</string>
     <string name="toolbar_title_activity_position_gps">Localisation GPS</string>
-    <string name="popup_title_permission_sens_message">Envoyer message</string>
+    <string name="toolbar_title_activity_maps">Coordonnée sélectionnées</string>
     <string name="cancel">Annuler</string>
     <string name="save">Enregistrer</string>
     <string name="ok_card_image_description">Image de l\'OKCard</string>
@@ -84,10 +84,7 @@
     <string name="preference_file_key">Settings_ImOK</string>
     <string name="switch_preference">switch_preference</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="dialog_choice_type_title">Veillez choisir un type :</string>
-    <string name="popup_title_permission_access_wifi">Permission acces WIFI</string>
     <string name="position_gps_rayon">Rayon (en mètres) :</string>
     <string name="latitude">Latitude :</string>
     <string name="longitude">Longitude :</string>
@@ -97,18 +94,21 @@
 
     <!-- PERMISSION - TODO écrire-->
     <string name="popup_ask_all_permissions">Toutes les autorisations sont nécessaires pour exécuter cette application.</string>
-
     <string name="popup_ask_permission_1">Toutes les autorisations sont nécessaires pour exécuter cette application.</string>
     <string name="popup_ask_permission_2">Toutes les autorisations sont nécessaires pour exécuter cette application.</string>
     <string name="popup_ask_permission_3">Toutes les autorisations sont nécessaires pour exécuter cette application.</string>
     <string name="popup_ask_permission_4">Toutes les autorisations sont nécessaires pour exécuter cette application.</string>
-    <string name="configure">Configure</string>
+
     <string name="add_widget">Ajouter widget</string>
     <string name="widget_message_not_exist">C\'est OKCard n\'existe pas</string>
     <string name="toolbar_title_activity_configure_widget">Configuration</string>
     <string name="widget_choose_ok_card">Veuiller choisir une OKCrad :</string>
+    <string name="widget_connection">Veuiller vous connecter pour utiliser ce Widget :</string>
     <string name="widget_ok_cards_name">OKCards</string>
     <string name="widget_ok_card_name">OKCard</string>
-    <string name="se_connecter">Se connecter</string>
+    <string name="connection">Se connecter</string>
+    <string name="coordonnee">Coordonnée :</string>
+    <string name="find_adresse">Rechercher</string>
+    <string name="name">Nom :</string>
 
 </resources>

@@ -52,6 +52,7 @@
         <activity
             android:name=".controllers.activities.MenuViewPagerActivity"
             android:label="@string/toolbar_title_activity_menu"
+            android:parentActivityName=".controllers.activities.MainActivity"
             android:theme="@style/ImOK" />
         <!-- OKCARD ACTIVITY -->
         <activity
@@ -73,6 +74,11 @@
             android:label="@string/toolbar_title_activity_position_gps"
             android:parentActivityName=".controllers.activities.MenuViewPagerActivity" />
 
+        <activity
+            android:name=".controllers.activities.MapsActivity"
+            android:label="@string/toolbar_title_activity_maps"
+            android:parentActivityName=".controllers.activities.PositionGPSActivity" />
+
         <!-- NOTIFICATION SERVICE -->
         <service
             android:name=".services.NotificationsService"
@@ -88,6 +94,7 @@
             android:enabled="true"
             android:exported="false">
             <intent-filter>
+
                 <!-- protected-broadcast: Special broadcast that only the system can send -->
                 <!-- Corresponds to: android.net.wifi.WifiManager.NETWORK_STATE_CHANGED_ACTION -->
                 <action android:name="android.net.wifi.STATE_CHANGE" />
@@ -121,7 +128,6 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_ok_cards_provider_info" />
         </receiver>
-
         <receiver
             android:name=".widget.OKCardWidget"
             android:icon="@drawable/ic_logo"

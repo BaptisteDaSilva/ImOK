@@ -15,13 +15,21 @@
       },
       "oauth_client": [
         {
+          "client_id": "1018889118781-qt5u3dmfvhr1pqr6cfed394amd011oaq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "uqac.inf872.projet.imok",
+            "certificate_hash": "3862ba4c0fac5b6bca28084b479c9ca12ef39860"
+          }
+        },
+        {
           "client_id": "1018889118781-dkd8ts6mhvo6f67d14htn1p07lr5cdak.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBxMXHDzlEZMaToN1ujxiRPUqf90xdfkbs"
+          "current_key": "AIzaSyATy53MF3OJYcyVLAwB--eHaWEjH2U5XzY"
         }
       ],
       "services": {
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1018889118781-dkd8ts6mhvo6f67d14htn1p07lr5cdak.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

@@ -64,38 +64,20 @@
             android:inputType="textShortMessage" />
 
         <TextView
-            android:id="@+id/position_gps_rayon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/position_gps_rayon_edit"
-            android:layout_margin="5dp"
-            android:text="@string/position_gps_rayon" />
-
-        <EditText
-            android:id="@+id/position_gps_rayon_edit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/position_gps_name"
-            android:layout_margin="5dp"
-            android:layout_toEndOf="@id/position_gps_rayon"
-            android:inputType="number"
-            android:labelFor="@+id/position_gps_coordonnee" />
-
-        <TextView
             android:id="@+id/position_gps_coordonnee"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/position_gps_rayon"
+            android:layout_below="@+id/position_gps_name"
             android:layout_marginStart="5dp"
             android:layout_marginTop="20dp"
-            android:text="Coordonnée :" />
+            android:text="@string/coordonnee" />
 
         <RelativeLayout
             android:id="@+id/position_gps_coordonnee_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/position_gps_coordonnee"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp">
 
@@ -131,13 +113,44 @@
                 android:layout_marginTop="10dp"
                 android:layout_toEndOf="@id/position_gps_longitude"
                 android:inputType="numberDecimal" />
+
+            <uqac.inf872.projet.imok.views.RobotoButton
+                android:id="@+id/position_gps_btn_choose_adresse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/position_gps_longitude_value"
+                android:layout_margin="@dimen/default_margin"
+                android:background="@drawable/button_radius_accent_color"
+                android:padding="@dimen/default_margin"
+                android:text="@string/find_adresse"
+                android:textColor="#fff"
+                android:textSize="@dimen/default_text_size"
+                app:fontName="Roboto_Medium" />
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/position_gps_rayon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/position_gps_rayon_edit"
+            android:layout_margin="5dp"
+            android:text="@string/position_gps_rayon" />
+
+        <EditText
+            android:id="@+id/position_gps_rayon_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/position_gps_coordonnee_value"
+            android:layout_margin="5dp"
+            android:layout_toEndOf="@id/position_gps_rayon"
+            android:inputType="number"
+            android:labelFor="@+id/position_gps_coordonnee" />
 
         <uqac.inf872.projet.imok.views.RobotoButton
             android:id="@+id/position_gps_btn_open_map"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/position_gps_coordonnee_value"
+            android:layout_below="@id/position_gps_rayon_edit"
             android:layout_margin="@dimen/default_margin"
             android:background="@drawable/button_radius_error_color"
             android:padding="@dimen/default_margin"

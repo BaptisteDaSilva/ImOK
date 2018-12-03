@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
+import butterknife.BindView;
 import uqac.inf872.projet.imok.R;
 import uqac.inf872.projet.imok.adapters.PageAdapter;
 import uqac.inf872.projet.imok.base.BaseActivity;
@@ -20,6 +21,12 @@ public class MenuViewPagerActivity extends BaseActivity implements ChoiceTypePos
     //    private static final String[] TITLE = new String[] {"OK Card", "Destinataire", "Position"};
     private static final int[] TITLE_ICON = new int[]{R.drawable.ic_ok, R.drawable.ic_list_alt_white, R.drawable.ic_location_white};
 
+    @BindView(R.id.activity_menu_wiew_pager)
+    ViewPager pager;
+
+    @BindView(R.id.activity_menu_wiew_pager_tabs)
+    TabLayout tabs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,8 +35,6 @@ public class MenuViewPagerActivity extends BaseActivity implements ChoiceTypePos
     }
 
     private void configureViewPagerAndTabs() {
-        // Get ViewPager from layout
-        ViewPager pager = findViewById(R.id.activity_menu_wiew_pager);
         // Set Adapter PageAdapter and glue it together
         PageAdapter adapter = new PageAdapter(getSupportFragmentManager());
         adapter.addFrag(ListOKCardFragment.newInstance()); //, TITLE[0]);
@@ -37,8 +42,6 @@ public class MenuViewPagerActivity extends BaseActivity implements ChoiceTypePos
         adapter.addFrag(ListPositionFragment.newInstance()); //, TITLE[2]);
         pager.setAdapter(adapter);
 
-        // Get TabLayout from layout
-        TabLayout tabs = findViewById(R.id.activity_menu_wiew_pager_tabs);
         // Glue TabLayout and ViewPager together
         tabs.setupWithViewPager(pager);
         // Design purpose. Tabs have the same width
@@ -56,8 +59,6 @@ public class MenuViewPagerActivity extends BaseActivity implements ChoiceTypePos
             TabLayout.Tab tab = tabs.getTabAt(idMenu);
             tab.select();
         }
-
-        // TODO https://developer.android.com/training/implementing-navigation/temporal
     }
 
 //    @Override

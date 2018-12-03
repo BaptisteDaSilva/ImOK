@@ -1,6 +1,10 @@
 package uqac.inf872.projet.imok.models;
 
+import android.databinding.Bindable;
+
 import java.util.List;
+
+import uqac.inf872.projet.imok.BR;
 
 public class RecipientList extends Model {
 
@@ -19,20 +23,24 @@ public class RecipientList extends Model {
         this.userID = userID;
     }
 
+    @Bindable
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+        notifyPropertyChanged(BR.name);
     }
 
+    @Bindable
     public List<String> getRecipients() {
         return recipients;
     }
 
     public void setRecipients(List<String> recipients) {
         this.recipients = recipients;
+        notifyPropertyChanged(BR.recipients);
     }
 
     public String getUserID() {

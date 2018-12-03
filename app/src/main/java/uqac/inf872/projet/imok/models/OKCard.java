@@ -1,6 +1,10 @@
 package uqac.inf872.projet.imok.models;
 
+import android.databinding.Bindable;
+
 import java.util.List;
+
+import uqac.inf872.projet.imok.BR;
 
 public class OKCard extends Model {
 
@@ -26,44 +30,54 @@ public class OKCard extends Model {
         this.userID = userID;
     }
 
+    @Bindable
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+        notifyPropertyChanged(BR.name);
     }
 
+    @Bindable
     public String getMessage() {
         return message;
     }
 
     public void setMessage(String message) {
         this.message = message;
+        notifyPropertyChanged(BR.message);
     }
 
+    @Bindable
     public String getUrlPicture() {
         return urlPicture;
     }
 
     public void setUrlPicture(String urlPicture) {
         this.urlPicture = urlPicture;
+        notifyPropertyChanged(BR.urlPicture);
     }
 
+    @Bindable
     public String getIdListe() {
         return idListe;
     }
 
     public void setIdListe(String idListe) {
         this.idListe = idListe;
+        notifyPropertyChanged(BR.idListe);
     }
 
+    @Bindable
     public List<String> getIdTrigger() {
         return idTrigger;
     }
 
     public void setIdTrigger(List<String> idTrigger) {
         this.idTrigger = idTrigger;
+        notifyPropertyChanged(BR.idTrigger);
     }
 
     public String getUserID() {

@@ -1,9 +1,13 @@
 package uqac.inf872.projet.imok.models;
 
 
+import android.databinding.Bindable;
+
 import com.google.firebase.firestore.GeoPoint;
 
 import java.util.List;
+
+import uqac.inf872.projet.imok.BR;
 
 public class Position extends Model {
 
@@ -41,40 +45,49 @@ public class Position extends Model {
         this.ssid = ssid;
     }
 
+    @Bindable
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+        notifyPropertyChanged(BR.name);
     }
 
+    @Bindable
     public boolean isWifi() {
         return wifi;
     }
 
+    @Bindable
     public GeoPoint getCoordonnees() {
         return coordonnes;
     }
 
     public void setCoordonnees(GeoPoint coordonnes) {
         this.coordonnes = coordonnes;
+        notifyPropertyChanged(BR.coordonnees);
     }
 
+    @Bindable
     public int getRayon() {
         return rayon;
     }
 
     public void setRayon(int rayon) {
         this.rayon = rayon;
+        notifyPropertyChanged(BR.rayon);
     }
 
+    @Bindable
     public List<String> getSsid() {
         return ssid;
     }
 
     public void setSsid(List<String> ssid) {
         this.ssid = ssid;
+        notifyPropertyChanged(BR.ssid);
     }
 
     public String getUserID() {

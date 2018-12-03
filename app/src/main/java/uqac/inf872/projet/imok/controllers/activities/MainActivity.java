@@ -139,8 +139,9 @@ public class MainActivity extends BaseActivity {
             String urlPicture = (Utils.getCurrentUser().getPhotoUrl() != null) ? Utils.getCurrentUser().getPhotoUrl().toString() : null;
             String username = Utils.getCurrentUser().getDisplayName();
             String uid = Utils.getCurrentUser().getUid();
+            String email = Utils.getCurrentUser().getEmail();
 
-            UserHelper.createUser(uid, username, urlPicture).addOnFailureListener(Utils.onFailureListener(getApplicationContext()));
+            UserHelper.createUser(uid, username, email, urlPicture).addOnFailureListener(Utils.onFailureListener(getApplicationContext()));
         }
     }
 

@@ -1,7 +1,11 @@
 package uqac.inf872.projet.imok.controllers.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -17,6 +21,7 @@ import com.google.firebase.firestore.GeoPoint;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import pub.devrel.easypermissions.AfterPermissionGranted;
 import uqac.inf872.projet.imok.R;
 import uqac.inf872.projet.imok.api.PositionHelper;
 import uqac.inf872.projet.imok.base.BaseFragment;
@@ -34,6 +39,8 @@ import static android.app.Activity.RESULT_OK;
  */
 public class PositionGPSFragment extends BaseFragment {
 
+    private static final long PROX_ALERT_EXPIRATION = -1; // It will never expire
+
     // FOR DESIGN
     @BindView(R.id.position_gps_name)
     EditText editTextName;
@@ -50,12 +57,15 @@ public class PositionGPSFragment extends BaseFragment {
     @BindView(R.id.position_gps_btn_delete)
     RobotoButton btnDelete;
 
-    // FOR DATA
-    private Position currentPosition;
+
+    int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
 
     // -------------------
     // CONFIGURATION
     // -------------------
+    // FOR DATA
+    private String idPosition;
+    private Position currentPosition;
 
     @Override
     protected int getFragmentLayout() {
@@ -66,6 +76,10 @@ public class PositionGPSFragment extends BaseFragment {
     protected void configureDesign() {
     }
 
+    // -------------------
+    // ACTIONS
+    // -------------------
+
     @Override
     protected void updateDesign() {
         if ( this.getPositionIdFromBundle() != null ) {
@@ -73,16 +87,10 @@ public class PositionGPSFragment extends BaseFragment {
         }
     }
 
-    // -------------------
-    // ACTIONS
-    // -------------------
-
     @OnClick(R.id.psoition_gps_btn_cancel)
     public void onClickCancel() {
         Utils.openMenu(this.getContext(), Utils.Menu.Position);
     }
-
-    int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
 
     @OnClick(R.id.position_gps_btn_save)
     public void onClickSave(View view) {
@@ -104,12 +112,57 @@ public class PositionGPSFragment extends BaseFragment {
             PositionHelper.updatePosition(currentPosition)
                     .addOnFailureListener(Utils.onFailureListener(view.getContext()));
         } else {
+
+            idPosition = PositionHelper.createPosition();
+
             String userID = Utils.getCurrentUser().getUid();
 
-            PositionHelper.createPositionGPS(name, latitude, longitude, rayon, userID)
+            PositionHelper.createPositionGPS(idPosition, name, latitude, longitude, rayon, userID)
                     .addOnFailureListener(Utils.onFailureListener(view.getContext()));
         }
+
+        Utils.addReceiverForProximityAlert(this.getContext());
+
+        if ( Utils.isGrantedPermission(this, Utils.Permission.ACCESS_FINE_LOCATION) ) {
+
+
+            addProximityAlert();
+        }
+
         Utils.openMenu(this.getContext(), Utils.Menu.Position);
+    }
+
+    // TODO marche pas si recupère de la bd en ligne
+    @AfterPermissionGranted(Utils.PERMISSION_ACCESS_FINE_LOCATION_RC)
+    private void addProximityAlert() {
+        String name = editTextName.getText().toString();
+
+        double latitude = Double.valueOf(editTextLatitude.getText().toString());
+        double longitude = Double.valueOf(editTextLongitude.getText().toString());
+
+        int rayon = Integer.valueOf(editTextRayon.getText().toString());
+
+        addProximityAlert(idPosition, name, latitude, longitude, rayon);
+    }
+
+    @SuppressLint("MissingPermission")
+    public void addProximityAlert(String idPosition, String nom, double latitude, double longitude, int rayon) {
+        LocationManager locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
+
+        Intent intent = new Intent(Utils.PROX_ALERT_INTENT);
+        intent.putExtra(Utils.PROX_ALERT_INTENT_EXTRA_ID, idPosition);
+        intent.putExtra(Utils.PROX_ALERT_INTENT_EXTRA_NAME, nom);
+
+        // TODO changer id pour que sa marche
+        PendingIntent proximityIntent = PendingIntent.getBroadcast(getContext(), 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        locationManager.addProximityAlert(
+                latitude, // the latitude of the central point of the alert region
+                longitude, // the longitude of the central point of the alert region
+                rayon, // the radius of the central point of the alert region, in meters
+                PROX_ALERT_EXPIRATION, // time for this proximity alert, in milliseconds, or -1 to indicate no expiration
+                proximityIntent // will be used to generate an Intent to fire when entry to or exit from the alert region is detected
+        );
     }
 
     @OnClick(R.id.position_gps_btn_choose_adresse)
@@ -171,6 +224,12 @@ public class PositionGPSFragment extends BaseFragment {
         {
             PositionHelper.deletePosition(currentPosition.getId());
             Utils.openMenu(this.getContext(), Utils.Menu.Position);
+
+            PositionHelper.getPositionGPS().get().addOnSuccessListener(task -> {
+                if ( task.isEmpty() ) {
+                    Utils.unregisterReceiverForProximityAlert(this.getContext());
+                }
+            });
         });
         builder.setNegativeButton("NON", (dialog, id) -> dialog.cancel());
 
@@ -196,6 +255,8 @@ public class PositionGPSFragment extends BaseFragment {
                     currentPosition = documentSnapshot.toObject(Position.class);
 
                     if ( currentPosition != null ) {
+                        idPosition = currentPosition.getId();
+
                         editTextName.setText(currentPosition.getName());
                         editTextRayon.setText(String.valueOf(currentPosition.getRayon()));
                         editTextLatitude.setText(String.valueOf(currentPosition.getCoordonnees().getLatitude()));

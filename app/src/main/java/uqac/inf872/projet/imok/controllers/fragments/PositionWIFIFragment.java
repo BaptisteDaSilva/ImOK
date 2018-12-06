@@ -32,7 +32,6 @@ import uqac.inf872.projet.imok.views.RobotoButton;
  */
 public class PositionWIFIFragment extends BaseFragment {
 
-
     // FOR DESIGN
     @BindView(R.id.position_wifi_name)
     EditText editTextName;
@@ -85,6 +84,8 @@ public class PositionWIFIFragment extends BaseFragment {
 
     @OnClick(R.id.position_btn_save)
     public void onClickSave(View view) {
+
+        Utils.addReceiverForWifi(this.getContext());
 
         if ( currentPosition != null ) {
             currentPosition.setName(editTextName.getText().toString());
@@ -146,7 +147,6 @@ public class PositionWIFIFragment extends BaseFragment {
         Utils.openMenu(this.getContext(), Utils.Menu.Position);
     }
 
-
     @OnClick(R.id.position_wifi_btn_delete)
     public void onClickDelete(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
@@ -158,7 +158,14 @@ public class PositionWIFIFragment extends BaseFragment {
         builder.setPositiveButton("OUI", (dialog, id) ->
         {
             PositionHelper.deletePosition(currentPosition.getId());
+
             Utils.openMenu(this.getContext(), Utils.Menu.Position);
+
+            PositionHelper.getPositionWifi().get().addOnSuccessListener(task -> {
+                if ( task.isEmpty() ) {
+                    Utils.unregisterReceiverForWifi(this.getContext());
+                }
+            });
         });
         builder.setNegativeButton("NON", (dialog, id) -> dialog.cancel());
 

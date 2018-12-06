@@ -35,9 +35,11 @@ public class PositionHelper {
 
     // --- CREATE ---
 
-    public static Task<Void> createPositionGPS(String name, double latitude, double longitude, int rayon, String userID) {
-        String id = PositionHelper.getPositionCollection().document().getId();
+    public static String createPosition() {
+        return PositionHelper.getPositionCollection().document().getId();
+    }
 
+    public static Task<Void> createPositionGPS(String id, String name, double latitude, double longitude, int rayon, String userID) {
         // Create Obj
         Position positionToCreate = new Position(id, name, new GeoPoint(latitude, longitude), rayon, userID);
 
@@ -45,7 +47,7 @@ public class PositionHelper {
     }
 
     public static Task<Void> createPositionWifi(String name, List<String> ssid, String userID) {
-        String id = PositionHelper.getPositionCollection().document().getId();
+        String id = createPosition();
 
         // Create Obj
         Position positionToCreate = new Position(id, name, ssid, userID);
@@ -82,6 +84,16 @@ public class PositionHelper {
 
         if ( query != null ) {
             query = query.whereEqualTo("wifi", true);
+        }
+
+        return query;
+    }
+
+    public static Query getPositionWifiWithSSID(String ssid) {
+        Query query = getPositionWifi();
+
+        if ( query != null ) {
+            query = query.whereArrayContains("ssid", ssid);
         }
 
         return query;

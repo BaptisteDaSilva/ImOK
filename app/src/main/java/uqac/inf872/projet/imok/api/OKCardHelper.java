@@ -60,6 +60,16 @@ public class OKCardHelper {
         return OKCardHelper.getOKCardsCollection().document(idCard);
     }
 
+    public static Query getOKCardPosition(String idPosition) {
+        Query query = getOKCard();
+
+        if ( query != null ) {
+            query = query.whereArrayContains("idTrigger", idPosition);
+        }
+
+        return query;
+    }
+
     // --- UPDATE ---
 
     public static Task<Void> updateOKCard(OKCard okCard) {

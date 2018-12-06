@@ -30,15 +30,11 @@ import uqac.inf872.projet.imok.widget.OKCardsWidget;
 
 public class MainActivity extends BaseActivity {
 
-    public static final String PROX_ALERT_INTENT_EXTRA = "uqac.inf872.projet.imok.receiver.ProximityAlert.extra";
     public static final String BUNDLE_KEY_CONNECTION_ASK = "BUNDLE_KEY_CONNECTION_ASK";
-    private static final String PROX_ALERT_INTENT = "uqac.inf872.projet.imok.receiver.ProximityAlert";
     //    @Override
 //    protected void setDataBinding(ViewDataBinding mDataBinding) {
 //
 //    }
-    private static final long POINT_RADIUS = 100; // in Meters
-    private static final long PROX_ALERT_EXPIRATION = -1; // It will never expire
     //FOR DESIGN
     @BindView(R.id.main_activity_coordinator_layout)
     CoordinatorLayout coordinatorLayout;
@@ -51,9 +47,9 @@ public class MainActivity extends BaseActivity {
 
         Utils.askAllPermissions(this);
 
-        if ( Utils.isGrantedPermission(this, Utils.Permission.ACCESS_FINE_LOCATION) ) {
-            addAllProximityAlert();
-        }
+        Utils.addReceiverForAction(this);
+        Utils.addReceiverForWifi(this);
+        Utils.addReceiverForProximityAlert(this);
 
         Bundle extras = getIntent().getExtras();
         if ( extras != null ) {
@@ -61,32 +57,35 @@ public class MainActivity extends BaseActivity {
                 this.startSignInActivity();
             }
         }
+
+        if ( Utils.isGrantedPermission(this, Utils.Permission.ACCESS_FINE_LOCATION) ) {
+            addAllProximityAlert();
+        }
     }
 
     @AfterPermissionGranted(Utils.PERMISSION_ACCESS_FINE_LOCATION_RC)
     private void addAllProximityAlert() {
-        addProximityAlert(48.42630690000001, -71.05366229999998, "Appartement");
-        addProximityAlert(48.420329, -71.05264999999997, "UQAC");
+        addProximityAlert(48.42630690000001, -71.05366229999998, "0iBix0tXbVvLC7vBL9Yw", "Appart");
+//        addProximityAlert(48.420329, -71.05264999999997, "HZ1TRIMGkxcABwvpclDG", "UQAC");
     }
 
     @SuppressLint("MissingPermission")
-    public void addProximityAlert(double latitude, double longitude, String nom) {
+    public void addProximityAlert(double latitude, double longitude, String id, String name) {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-        Intent intent = new Intent(PROX_ALERT_INTENT);
-        intent.putExtra(PROX_ALERT_INTENT_EXTRA, nom);
+        Intent intent = new Intent("uqac.inf872.projet.imok.receiver.ProximityAlert");
+        intent.putExtra(Utils.PROX_ALERT_INTENT_EXTRA_ID, id);
+        intent.putExtra(Utils.PROX_ALERT_INTENT_EXTRA_NAME, name);
 
         PendingIntent proximityIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         locationManager.addProximityAlert(
                 latitude, // the latitude of the central point of the alert region
                 longitude, // the longitude of the central point of the alert region
-                POINT_RADIUS, // the radius of the central point of the alert region, in meters
-                PROX_ALERT_EXPIRATION, // time for this proximity alert, in milliseconds, or -1 to indicate no expiration
+                5, // the radius of the central point of the alert region, in meters
+                -1, // time for this proximity alert, in milliseconds, or -1 to indicate no expiration
                 proximityIntent // will be used to generate an Intent to fire when entry to or exit from the alert region is detected
         );
-
-        locationManager.removeProximityAlert(proximityIntent);
     }
 
     @Override

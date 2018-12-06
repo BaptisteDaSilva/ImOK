@@ -1,57 +1,70 @@
 package uqac.inf872.projet.imok.receiver;
 
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
-import android.os.Build;
-import android.support.v4.app.NotificationCompat;
+
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import uqac.inf872.projet.imok.R;
-import uqac.inf872.projet.imok.controllers.activities.MainActivity;
+import uqac.inf872.projet.imok.api.OKCardHelper;
+import uqac.inf872.projet.imok.controllers.activities.OKCardActivity;
+import uqac.inf872.projet.imok.models.OKCard;
+import uqac.inf872.projet.imok.utils.ButtonNotification;
+import uqac.inf872.projet.imok.utils.Utils;
 
 public class ProximityAlertReceiver extends BroadcastReceiver {
 
-    private final int NOTIFICATION_ID = 005;
-    private final String NOTIFICATION_TAG = "GPS";
-
     @Override
     public void onReceive(Context context, Intent intent) {
-        String keyProximityEntering = LocationManager.KEY_PROXIMITY_ENTERING;
 
-        Boolean entering = intent.getBooleanExtra(keyProximityEntering, false);
-        String name = intent.getStringExtra(MainActivity.PROX_ALERT_INTENT_EXTRA);
+        if ( intent.getBooleanExtra(LocationManager.KEY_PROXIMITY_ENTERING, false) ) {
+            String name = intent.getStringExtra(Utils.PROX_ALERT_INTENT_EXTRA_NAME);
 
-        // Create a Style for the Notification
-        NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
-        inboxStyle.setBigContentTitle("Location alert - " + name);
-        inboxStyle.addLine(entering ? "Entering" : "Exiting " + name);
+            CharSequence channelName = context.getString(R.string.channel_name_position);
 
-        // Create a Channel (Android 8)
-        String channelId = context.getString(R.string.default_notification_channel_id);
+            String description = context.getString(R.string.channel_description_position);
 
-        // Build a Notification object
-        NotificationCompat.Builder notificationBuilder =
-                new NotificationCompat.Builder(context, channelId)
-                        .setSmallIcon(R.drawable.ic_ok)
-                        .setContentTitle(context.getString(R.string.app_name))
-                        .setContentText(context.getString(R.string.notification_title))
-                        .setStyle(inboxStyle);
+            Query query = OKCardHelper.getOKCardPosition(intent.getStringExtra(Utils.PROX_ALERT_INTENT_EXTRA_ID));
 
-        // Add the Notification to the Notification Manager and show it.
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            if ( query != null ) {
+                query.get().addOnCompleteListener(task -> {
+                    if ( task.isSuccessful() ) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            OKCard okCard = document.toObject(OKCard.class);
 
-        // Support Version >= Android 8
-        if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ) {
-            CharSequence channelName = "RecipientList provenant de Firebase";
-            int importance = NotificationManager.IMPORTANCE_HIGH;
-            NotificationChannel mChannel = new NotificationChannel(channelId, channelName, importance);
-            notificationManager.createNotificationChannel(mChannel);
+                            int importance = -1;
+
+                            if ( android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N ) {
+                                importance = NotificationManager.IMPORTANCE_HIGH;
+                            }
+
+                            // Create an Intent that will be shown when user will click on the Notification
+                            Intent intentOKCard = new Intent(context, OKCardActivity.class);
+                            intentOKCard.putExtra(OKCardActivity.BUNDLE_KEY_OK_CARD_ID, okCard.getId());
+                            intentOKCard.putExtra(OKCardActivity.BUNDLE_KEY_OK_CARD_IMAGE_URL, okCard.getUrlPicture());
+                            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intentOKCard, PendingIntent.FLAG_ONE_SHOT);
+
+                            Intent intentSend = new Intent(ActionReceiver.ACTION_SEND);
+                            intentSend.putExtra(OKCardActivity.BUNDLE_KEY_OK_CARD_ID, okCard.getId());
+                            intentSend.putExtra(ActionReceiver.BUNDLE_KEY_TYPE, ActionReceiver.BUNDLE_KEY_TYPE_PROWIMITY_ALERT);
+
+                            PendingIntent pendingIntentSend = PendingIntent.getBroadcast(context, 15, intentSend, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                            ButtonNotification buttonSend = new ButtonNotification(R.drawable.ic_logo, R.string.send, pendingIntentSend); // TODO changer
+
+                            // Show notification after received message
+                            Utils.sendVisualNotification(context, channelName, importance, description, "GPS", "Location alert - Entering " + name, "Localisation " + name, pendingIntent, buttonSend);
+                        }
+                    } else {
+                        Utils.onFailureListener(context, task.getException());
+                    }
+                });
+            }
         }
-
-        // Show notification
-        notificationManager.notify(NOTIFICATION_TAG, NOTIFICATION_ID, notificationBuilder.build());
     }
 }

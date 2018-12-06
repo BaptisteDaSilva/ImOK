@@ -88,28 +88,28 @@
             </intent-filter>
         </service>
 
-        <!-- NOTIFICATION WIFI CHANGGE -->
-        <receiver
-            android:name=".receiver.WifiReceiver"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter>
+        <!--&lt;!&ndash; NOTIFICATION WIFI CHANGGE &ndash;&gt;-->
+        <!--<receiver-->
+        <!--android:name=".receiver.WifiReceiver"-->
+        <!--android:enabled="true"-->
+        <!--android:exported="false">-->
+        <!--<intent-filter>-->
 
-                <!-- protected-broadcast: Special broadcast that only the system can send -->
-                <!-- Corresponds to: android.net.wifi.WifiManager.NETWORK_STATE_CHANGED_ACTION -->
-                <action android:name="android.net.wifi.STATE_CHANGE" />
-            </intent-filter>
-        </receiver>
+        <!--&lt;!&ndash; protected-broadcast: Special broadcast that only the system can send &ndash;&gt;-->
+        <!--&lt;!&ndash; Corresponds to: android.net.wifi.WifiManager.NETWORK_STATE_CHANGED_ACTION &ndash;&gt;-->
+        <!--<action android:name="android.net.wifi.STATE_CHANGE" />-->
+        <!--</intent-filter>-->
+        <!--</receiver>-->
 
-        <!-- NOTIFICATION POSITION ALERT -->
-        <receiver
-            android:name=".receiver.ProximityAlertReceiver"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="uqac.inf872.projet.imok.receiver.ProximityAlert" />
-            </intent-filter>
-        </receiver>
+        <!--&lt;!&ndash; NOTIFICATION POSITION ALERT &ndash;&gt;-->
+        <!--<receiver-->
+        <!--android:name=".receiver.ProximityAlertReceiver"-->
+        <!--android:enabled="true"-->
+        <!--android:exported="false">-->
+        <!--<intent-filter>-->
+        <!--<action android:name="uqac.inf872.projet.imok.receiver.ProximityAlert" />-->
+        <!--</intent-filter>-->
+        <!--</receiver>-->
 
         <!-- WIDGETS -->
         <receiver

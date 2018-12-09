@@ -77,7 +77,7 @@ public class PositionWIFIFragment extends BaseFragment {
     // ACTIONS
     // -------------------
 
-    @OnClick(R.id.psoition_btn_cancel)
+    @OnClick(R.id.position_btn_cancel)
     public void onClickCancel(View view) {
         Utils.openMenu(this.getContext(), Utils.Menu.Position);
     }
@@ -90,7 +90,7 @@ public class PositionWIFIFragment extends BaseFragment {
         if ( currentPosition != null ) {
             currentPosition.setName(editTextName.getText().toString());
 
-//            currentPosition.setSsid((String) spinnerListWifi.getSelectedItem());
+//            currentPosition.setSSID((String) spinnerListWifi.getSelectedItem());
 
             List<String> ssid = new ArrayList<>();
 
@@ -101,26 +101,7 @@ public class PositionWIFIFragment extends BaseFragment {
                 }
             }
 
-            currentPosition.setSsid(ssid);
-
-            ArrayList idSelected = new ArrayList();
-
-            for (long l : listViewWifi.getCheckedItemIds()) {
-                idSelected.add(l);
-            }
-
-            for (int pos = 0; pos < listViewWifi.getAdapter().getCount(); pos++) {
-
-                if ( idSelected.contains(listViewWifi.getAdapter().getItemId(pos)) ) {
-
-                }
-
-                String s = (String) listViewWifi.getAdapter().getItem(pos);
-
-                if ( s.equals(currentPosition.getSsid()) ) {
-                    listViewWifi.setItemChecked(pos, true);
-                }
-            }
+            currentPosition.setSSID(ssid);
 
             PositionHelper.updatePosition(currentPosition)
                     .addOnFailureListener(Utils.onFailureListener(view.getContext()));
@@ -196,17 +177,17 @@ public class PositionWIFIFragment extends BaseFragment {
 //                        for (int pos = 0; pos < spinnerListWifi.getAdapter().getCount(); pos++) {
 //                            String s = (String) spinnerListWifi.getAdapter().getItem(pos);
 //
-//                            if ( s.equals(currentPosition.getSsid()) ) {
+//                            if ( s.equals(currentPosition.getSSID()) ) {
 //                                spinnerListWifi.setSelection(pos);
 //                                return;
 //                            }
 //                        }
 
-                        if ( currentPosition.getSsid() != null ) {
+                        if ( currentPosition.getSSID() != null ) {
                             for (int pos = 0; pos < listViewWifi.getAdapter().getCount(); pos++) {
                                 String s = (String) listViewWifi.getAdapter().getItem(pos);
 
-                                if ( currentPosition.getSsid().contains(s) ) {
+                                if ( currentPosition.getSSID().contains(s) ) {
                                     listViewWifi.setItemChecked(pos, true);
                                 }
                             }

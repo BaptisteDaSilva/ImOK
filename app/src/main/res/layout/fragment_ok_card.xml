@@ -21,7 +21,7 @@
             android:background="@color/colorPrimary"
             android:text="@string/cancel"
             android:textColor="@android:color/white"
-            app:fontName="Roboto_Medium" />
+            app:fontNameButton="Roboto_Medium" />
 
         <uqac.inf872.projet.imok.views.RobotoButton
             android:id="@+id/ok_card_btn_save"
@@ -31,7 +31,7 @@
             android:background="@color/colorPrimary"
             android:text="@string/save"
             android:textColor="@android:color/white"
-            app:fontName="Roboto_Medium" />
+            app:fontNameButton="Roboto_Medium" />
 
     </LinearLayout>
 
@@ -64,7 +64,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
-            android:maxLength="@integer/max_lentgh_message" />
+            android:maxLength="@integer/max_length_message"
+            android:labelFor="@+id/ok_card_recipient_list"/>
 
         <Spinner
             android:id="@+id/ok_card_recipient_list"
@@ -101,7 +102,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ok_card_btn_botoom"
+        android:id="@+id/ok_card_btn_bottom"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_alignParentStart="true"
@@ -118,7 +119,7 @@
             android:background="@color/colorError"
             android:text="@string/delete"
             android:textColor="@android:color/white"
-            app:fontName="Roboto_Medium" />
+            app:fontNameButton="Roboto_Medium" />
 
         <uqac.inf872.projet.imok.views.RobotoButton
             android:id="@+id/ok_card_btn_envoyer"
@@ -128,7 +129,7 @@
             android:background="@color/colorError"
             android:text="@string/send"
             android:textColor="@android:color/white"
-            app:fontName="Roboto_Medium" />
+            app:fontNameButton="Roboto_Medium" />
 
     </LinearLayout>
 

@@ -16,7 +16,10 @@ import uqac.inf872.projet.imok.base.BaseActivity;
 
 public class MapsActivity extends BaseActivity implements OnMapReadyCallback {
 
-    private final float DEFAULT_ZOOM = 15.0F;
+    // TODO gérer default
+    private final static float DEFAULT_ZOOM = 15.0F;
+    private final static int defaultRayon = 10;
+
     private GoogleMap mMap;
     private Circle circleMap;
     private int rayon;
@@ -29,7 +32,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback {
         if ( getIntent().hasExtra("rayon") ) {
             rayon = Integer.parseInt(getIntent().getStringExtra("rayon"));
         } else {
-            rayon = 100;// TODO gerer default
+            rayon = defaultRayon;
         }
 
         String sLatitude = getIntent().getStringExtra("latitude");

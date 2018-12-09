@@ -46,7 +46,7 @@ public class OKCardsWidget extends AppWidgetProvider {
     // La valeur pour défiler vers la droite
     private final static String EXTRA_NEXT = "next";
 
-    // Intitulé de l'extra qui contient l'indice actuel dans le tableau des tutos
+    // Intitulé de l'extra qui contient l'indice actuel dans le tableau
     private final static String EXTRA_INDICE = "extraIndice";
 
     // Action qui indique ce qu'on essaie de faire
@@ -291,6 +291,8 @@ public class OKCardsWidget extends AppWidgetProvider {
         views.setTextViewText(R.id.widget_ok_cards_message, okCard.getMessage());
 
         views.setImageViewResource(R.id.widget_ok_cards_image, R.drawable.ic_logo); // TODO changer
+//        views.setImageViewUri(R.id.widget_ok_cards_image, , );
+//        views.setImageViewBitmap( R.id.widget_ok_cards_image, , );
     }
 
     private static void setRecipientList(RemoteViews views) {

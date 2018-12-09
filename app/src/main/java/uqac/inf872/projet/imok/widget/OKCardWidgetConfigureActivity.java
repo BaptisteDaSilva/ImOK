@@ -40,12 +40,12 @@ public class OKCardWidgetConfigureActivity extends AppCompatActivity {
     private static final String PREFS_NAME = "uqac.inf872.projet.imok.widget.OKCardWidget";
     private static final String PREF_PREFIX_KEY = "appwidget_";
 
-    private static Executor getOKCardExecutor = Executors.newSingleThreadExecutor();
+    private static final Executor getOKCardExecutor = Executors.newSingleThreadExecutor();
     private static ArrayList<OKCard> listOKCard;
     int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 
     @BindView(R.id.appwidget_list_ok_card)
-    Spinner spinnerListOKCrad;
+    Spinner spinnerListOKCard;
 
     @BindView(R.id.appwidget_configuration)
     LinearLayout appwidgetConfiguration;
@@ -147,7 +147,7 @@ public class OKCardWidgetConfigureActivity extends AppCompatActivity {
                     new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, listOKCard);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-            spinnerListOKCrad.setAdapter(adapter);
+            spinnerListOKCard.setAdapter(adapter);
         }
     }
 
@@ -161,7 +161,7 @@ public class OKCardWidgetConfigureActivity extends AppCompatActivity {
         final Context context = OKCardWidgetConfigureActivity.this;
 
         // When the button is clicked, store the string locally
-        OKCard OKCard = (OKCard) spinnerListOKCrad.getSelectedItem();
+        OKCard OKCard = (OKCard) spinnerListOKCard.getSelectedItem();
 
         if ( OKCard != null ) {
             saveIdOKCardPref(context, mAppWidgetId, OKCard.getId());

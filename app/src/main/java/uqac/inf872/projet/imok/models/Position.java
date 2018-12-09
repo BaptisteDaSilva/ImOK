@@ -81,13 +81,13 @@ public class Position extends Model {
     }
 
     @Bindable
-    public List<String> getSsid() {
+    public List<String> getSSID() {
         return ssid;
     }
 
-    public void setSsid(List<String> ssid) {
+    public void setSSID(List<String> ssid) {
         this.ssid = ssid;
-        notifyPropertyChanged(BR.ssid);
+        notifyPropertyChanged(BR.sSID);
     }
 
     public String getUserID() {

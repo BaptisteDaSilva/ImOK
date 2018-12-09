@@ -61,7 +61,7 @@ public class OKCardFragment extends BaseFragment {
     @BindView(R.id.ok_card_list_wifi)
     Spinner spinnerWifi;
 
-    @BindView(R.id.ok_card_btn_botoom)
+    @BindView(R.id.ok_card_btn_bottom)
     LinearLayout linearLayoutBtnBottom;
 
     // FOR DATA
@@ -161,7 +161,7 @@ public class OKCardFragment extends BaseFragment {
     // ACTIONS
     // -------------------
 
-    // TODO gerer bouton retour
+    // TODO gérer bouton retour
 //    public static Dialog cancelOnOKCard(Context context) {
 //        AlertDialog.Builder builder = new AlertDialog.Builder(context);
 //
@@ -171,7 +171,7 @@ public class OKCardFragment extends BaseFragment {
 //
 //        builder.setPositiveButton("ENREGISTRER", (dialog, id) ->
 //        {
-//            // TODO ecrire sauvegade
+//            // TODO écrire sauvegarde
 //        });
 //        builder.setNegativeButton("IGNORER", (dialog, id) -> dialog.cancel());
 //        return builder.create();
@@ -208,7 +208,7 @@ public class OKCardFragment extends BaseFragment {
 
             currentOKCard.setName(name);
             currentOKCard.setMessage(message);
-//            currentOKCard.setUrlPicture(urlPicture); // TODO gerer
+//            currentOKCard.setUrlPicture(urlPicture); // TODO gérer
             currentOKCard.setIdListe(recipientList.getId());
             currentOKCard.setIdTrigger(triggers);
 

@@ -15,7 +15,7 @@ public class ActionReceiver extends BroadcastReceiver {
     public final static String ACTION_SEND = "uqac.inf872.projet.imok.receiver.ActionReceiver.action.ACTION_SEND";
     public static final String BUNDLE_KEY_TYPE = "BUNDLE_KEY_TYPE";
     public static final String BUNDLE_KEY_TYPE_WIFI = "WIFI";
-    public static final String BUNDLE_KEY_TYPE_PROWIMITY_ALERT = "PROXIMITY_ALERT";
+    public static final String BUNDLE_KEY_TYPE_PROXIMITY_ALERT = "PROXIMITY_ALERT";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -29,7 +29,7 @@ public class ActionReceiver extends BroadcastReceiver {
                     case BUNDLE_KEY_TYPE_WIFI:
                         manager.cancel(Utils.NOTIFICATION_TAG_WIFI, Utils.NOTIFICATION_ID_WIFI);
                         break;
-                    case BUNDLE_KEY_TYPE_PROWIMITY_ALERT:
+                    case BUNDLE_KEY_TYPE_PROXIMITY_ALERT:
                         manager.cancel(Utils.NOTIFICATION_TAG_PROXIMITY_ALERT, Utils.NOTIFICATION_ID_PROXIMITY_ALERT);
                         break;
                 }

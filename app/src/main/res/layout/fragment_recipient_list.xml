@@ -21,7 +21,7 @@
             android:background="@color/colorPrimary"
             android:text="@string/cancel"
             android:textColor="@android:color/white"
-            app:fontName="Roboto_Medium" />
+            app:fontNameButton="Roboto_Medium" />
 
         <uqac.inf872.projet.imok.views.RobotoButton
             android:id="@+id/recipient_list_btn_save"
@@ -31,7 +31,7 @@
             android:background="@color/colorPrimary"
             android:text="@string/save"
             android:textColor="@android:color/white"
-            app:fontName="Roboto_Medium" />
+            app:fontNameButton="Roboto_Medium" />
 
     </LinearLayout>
 
@@ -71,6 +71,6 @@
         android:text="@string/delete"
         android:textColor="@android:color/white"
         android:visibility="gone"
-        app:fontName="Roboto_Medium" />
+        app:fontNameButton="Roboto_Medium" />
 
 </RelativeLayout>

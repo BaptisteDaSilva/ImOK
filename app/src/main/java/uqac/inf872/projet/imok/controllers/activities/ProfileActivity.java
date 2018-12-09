@@ -33,7 +33,7 @@ public class ProfileActivity extends BaseActivity {
     private static final int UPDATE_USERNAME = 30;
 
     //FOR DESIGN
-    @BindView(R.id.profile_activity_imageview_profile)
+    @BindView(R.id.profile_activity_image_view_profile)
     ImageView imageViewProfile;
 
     @BindView(R.id.profile_activity_edit_text_username)

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="root_title">
 
     <Preference
@@ -32,7 +32,7 @@
 
         <DropDownPreference
             android:entries="@array/entries_list_preference"
-            android:entryValues="@array/entryvalues_list_preference"
+            android:entryValues="@array/entry_values_list_preference"
             android:key="dropdown_preference"
             android:summary="summary_dropdown_preference"
             android:title="title_dropdown_preference" />
@@ -42,15 +42,15 @@
     <PreferenceCategory android:title="dialog_based_preferences">
 
         <EditTextPreference
-            android:dialogTitle="dialog_title_edittext_preference"
-            android:key="edittext_preference"
-            android:summary="summary_edittext_preference"
-            android:title="title_edittext_preference" />
+            android:dialogTitle="dialog_title_edit_text_preference"
+            android:key="edit_text_preference"
+            android:summary="summary_edit_text_preference"
+            android:title="title_edit_text_preference" />
 
         <ListPreference
             android:dialogTitle="dialog_title_list_preference"
             android:entries="@array/entries_list_preference"
-            android:entryValues="@array/entryvalues_list_preference"
+            android:entryValues="@array/entry_values_list_preference"
             android:key="list_preference"
             android:summary="summary_list_preference"
             android:title="title_list_preference" />
@@ -58,7 +58,7 @@
         <MultiSelectListPreference
             android:dialogTitle="dialog_title_multi_list_preference"
             android:entries="@array/entries_list_preference"
-            android:entryValues="@array/entryvalues_list_preference"
+            android:entryValues="@array/entry_values_list_preference"
             android:key="multi_select_list_preference"
             android:summary="summary_multi_list_preference"
             android:title="title_multi_list_preference" />
@@ -113,4 +113,4 @@
 
     </PreferenceCategory>
 
-</PreferenceScreen>
+</android.support.v7.preference.PreferenceScreen>

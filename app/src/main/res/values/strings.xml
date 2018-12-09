@@ -34,7 +34,7 @@
     <string name="button_update_account">Mettre à jour le nom d\'utilisateur</string>
     <string name="button_delete_account">Supprimer mon compte</string>
     <string name="button_sign_out_account">Déconnexion</string>
-    <string name="info_no_email_found">Auncune adresse email</string>
+    <string name="info_no_email_found">Aucune adresse email</string>
     <string name="info_no_username_found">Aucun nom d\'utilisateur</string>
     <string name="popup_message_confirmation_delete_account">Es-tu sûr(e) de vouloir supprimer ton compte ?</string>
     <string name="popup_message_choice_yes">Oui !</string>
@@ -55,7 +55,7 @@
     <string name="toolbar_title_activity_menu">@string/app_name</string>
     <string name="settings">Paramètres</string>
 
-    <string name="fragment_menu_ok_card_item_image_desciption">Image OKCard</string>
+    <string name="fragment_menu_ok_card_item_image_description">Image OKCard</string>
     <string name="fragment_menu_recipient_list_item_image_list">Logo image liste</string>
     <string name="toolbar_title_activity_ok_card">OK Card</string>
     <string name="toolbar_title_activity_recipient_list">Liste destinataire</string>
@@ -92,24 +92,22 @@
     <string name="rationale_ask_ok">OK</string>
     <string name="rationale_ask_cancel">Annuler</string>
 
-    <!-- PERMISSION - TODO écrire-->
-    <string name="popup_ask_all_permissions">Toutes les autorisations sont nécessaires pour exécuter cette application.</string>
-    <string name="popup_ask_permission_internet">Toutes les autorisations sont nécessaires pour exécuter cette application.</string>
-    <string name="popup_ask_permission_access_fine_location">Toutes les autorisations sont nécessaires pour exécuter cette application.</string>
-    <string name="popup_ask_permission_wifi_state">Toutes les autorisations sont nécessaires pour exécuter cette application.</string>
-    <string name="popup_ask_permission_send_sms">Toutes les autorisations sont nécessaires pour exécuter cette application.</string>
+    <string name="popup_ask_all_permissions">Toutes les autorisations sont nécessaires pour le bon fonctionnement de cette application.</string>
+    <string name="popup_ask_permission_internet">L\'accès à internet est nécessaire afin de pouvoir synchroniser les données de l\'application.</string>
+    <string name="popup_ask_permission_access_fine_location">L\'accès à la géolocalisation est nécessaire afin de pouvoir vous localiser.</string>
+    <string name="popup_ask_permission_wifi_state">L\'accès aux informations WIFI sont nécessaire afin de pouvoir les utiliser.</string>
+    <string name="popup_ask_permission_send_sms">Le droit d\'envoyer des SMS est nécessaire pour le bon fonctionnement de cette application.</string>
 
     <string name="add_widget">Ajouter widget</string>
     <string name="widget_message_not_exist">C\'est OKCard n\'existe pas</string>
     <string name="toolbar_title_activity_configure_widget">Configuration</string>
-    <string name="widget_choose_ok_card">Veuiller choisir une OKCrad :</string>
-    <string name="widget_connection">Veuiller vous connecter pour utiliser ce Widget :</string>
+    <string name="widget_choose_ok_card">Veuillez choisir une OKCard :</string>
+    <string name="widget_connection">Veuillez vous connecter pour utiliser ce Widget :</string>
     <string name="widget_ok_cards_name">OKCards</string>
     <string name="widget_ok_card_name">OKCard</string>
     <string name="connection">Se connecter</string>
     <string name="coordonnee">Coordonnée :</string>
     <string name="find_adresse">Rechercher</string>
-    <string name="name">Nom :</string>
     <string name="channel_name_firebase_messaging_service">Information</string>
     <string name="channel_description_firebase_messaging_service">Notification information</string>
     <string name="channel_name_position">Position</string>

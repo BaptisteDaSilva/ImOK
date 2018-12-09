@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_margin="2dp"
-            android:contentDescription="@string/fragment_menu_ok_card_item_image_desciption"
+            android:contentDescription="@string/fragment_menu_ok_card_item_image_description"
             android:scaleType="centerCrop"
             android:transitionName="@string/animation_main_to_detail" />
 
@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            app:fontName="Roboto_Medium" />
+            app:fontNameTextView="Roboto_Medium" />
 
     </LinearLayout>
 

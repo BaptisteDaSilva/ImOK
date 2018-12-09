@@ -47,9 +47,9 @@ public class Utils {
     public static final int PERMISSION_ACCESS_FINE_LOCATION_RC = 2;
     public static final int PERMISSION_ACCESS_WIFI_STATE_RC = 3;
     public static final int PERMISSION_SEND_SMS_RC = 4;
-    public static final String PROX_ALERT_INTENT = "uqac.inf872.projet.imok.receiver.ProximityAlert";
-    public static final String PROX_ALERT_INTENT_EXTRA_ID = "uqac.inf872.projet.imok.receiver.ProximityAlert.extra.id";
-    public static final String PROX_ALERT_INTENT_EXTRA_NAME = "uqac.inf872.projet.imok.receiver.ProximityAlert.extra.name";
+    public static final String PROXIMITY_ALERT_INTENT = "uqac.inf872.projet.imok.receiver.ProximityAlert";
+    public static final String PROXIMITY_ALERT_INTENT_EXTRA_ID = "uqac.inf872.projet.imok.receiver.ProximityAlert.extra.id";
+    public static final String PROXIMITY_ALERT_INTENT_EXTRA_NAME = "uqac.inf872.projet.imok.receiver.ProximityAlert.extra.name";
 
     // NOTIFICATION TAG AND ID
     public static final int NOTIFICATION_ID_FIREBASE_MESSAGING = 1;
@@ -274,7 +274,7 @@ public class Utils {
         if ( proximityAlertReceiver == null ) {
             proximityAlertReceiver = new ProximityAlertReceiver();
 
-            IntentFilter filter = new IntentFilter(PROX_ALERT_INTENT);
+            IntentFilter filter = new IntentFilter(PROXIMITY_ALERT_INTENT);
             context.registerReceiver(proximityAlertReceiver, filter);
         }
     }

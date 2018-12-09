@@ -1,5 +1,6 @@
 package uqac.inf872.projet.imok.utils;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -30,7 +31,7 @@ public class ItemClickSupport {
     private RecyclerView.OnChildAttachStateChangeListener mAttachListener
             = new RecyclerView.OnChildAttachStateChangeListener() {
         @Override
-        public void onChildViewAttachedToWindow(View view) {
+        public void onChildViewAttachedToWindow(@NonNull View view) {
             if ( mOnItemClickListener != null ) {
                 view.setOnClickListener(mOnClickListener);
             }
@@ -40,7 +41,7 @@ public class ItemClickSupport {
         }
 
         @Override
-        public void onChildViewDetachedFromWindow(View view) {
+        public void onChildViewDetachedFromWindow(@NonNull View view) {
 
         }
     };

@@ -21,10 +21,10 @@ public class MenuViewPagerActivity extends BaseActivity implements ChoiceTypePos
     //    private static final String[] TITLE = new String[] {"OK Card", "Destinataire", "Position"};
     private static final int[] TITLE_ICON = new int[]{R.drawable.ic_ok, R.drawable.ic_list_alt_white, R.drawable.ic_location_white};
 
-    @BindView(R.id.activity_menu_wiew_pager)
+    @BindView(R.id.activity_menu_view_pager)
     ViewPager pager;
 
-    @BindView(R.id.activity_menu_wiew_pager_tabs)
+    @BindView(R.id.activity_menu_view_pager_tabs)
     TabLayout tabs;
 
     @Override

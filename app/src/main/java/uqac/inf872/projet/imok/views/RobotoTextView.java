@@ -23,8 +23,8 @@ public class RobotoTextView extends AppCompatTextView {
     // ---
 
     private void applyStyle(Context context, AttributeSet attrs) {
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Roboto);
-        int cf = a.getInteger(R.styleable.Roboto_fontName, 0);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RobotoTextView);
+        int cf = a.getInteger(R.styleable.RobotoTextView_fontNameTextView, 0);
         int fontName;
         switch (cf) {
             case 1:

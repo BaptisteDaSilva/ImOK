@@ -59,7 +59,7 @@
             android:name=".controllers.activities.OKCardActivity"
             android:label="@string/toolbar_title_activity_ok_card"
             android:parentActivityName=".controllers.activities.MenuViewPagerActivity" />
-        <!-- RECIPIENTLIST ACTIVITY -->
+        <!-- RECIPIENT LIST ACTIVITY -->
         <activity
             android:name=".controllers.activities.RecipientListActivity"
             android:label="@string/toolbar_title_activity_recipient_list"
@@ -88,7 +88,7 @@
             </intent-filter>
         </service>
 
-        <!--&lt;!&ndash; NOTIFICATION WIFI CHANGGE &ndash;&gt;-->
+        <!--&lt;!&ndash; NOTIFICATION WIFI CHANGE &ndash;&gt;-->
         <!--<receiver-->
         <!--android:name=".receiver.WifiReceiver"-->
         <!--android:enabled="true"-->

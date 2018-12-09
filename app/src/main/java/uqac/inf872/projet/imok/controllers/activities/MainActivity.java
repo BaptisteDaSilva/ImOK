@@ -1,12 +1,8 @@
 package uqac.inf872.projet.imok.controllers.activities;
 
-import android.annotation.SuppressLint;
-import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
@@ -21,7 +17,6 @@ import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import pub.devrel.easypermissions.AfterPermissionGranted;
 import uqac.inf872.projet.imok.R;
 import uqac.inf872.projet.imok.api.UserHelper;
 import uqac.inf872.projet.imok.base.BaseActivity;
@@ -57,35 +52,6 @@ public class MainActivity extends BaseActivity {
                 this.startSignInActivity();
             }
         }
-
-        if ( Utils.isGrantedPermission(this, Utils.Permission.ACCESS_FINE_LOCATION) ) {
-            addAllProximityAlert();
-        }
-    }
-
-    @AfterPermissionGranted(Utils.PERMISSION_ACCESS_FINE_LOCATION_RC)
-    private void addAllProximityAlert() {
-        addProximityAlert(48.42630690000001, -71.05366229999998, "0iBix0tXbVvLC7vBL9Yw", "Appart");
-//        addProximityAlert(48.420329, -71.05264999999997, "HZ1TRIMGkxcABwvpclDG", "UQAC");
-    }
-
-    @SuppressLint("MissingPermission")
-    public void addProximityAlert(double latitude, double longitude, String id, String name) {
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-        Intent intent = new Intent("uqac.inf872.projet.imok.receiver.ProximityAlert");
-        intent.putExtra(Utils.PROX_ALERT_INTENT_EXTRA_ID, id);
-        intent.putExtra(Utils.PROX_ALERT_INTENT_EXTRA_NAME, name);
-
-        PendingIntent proximityIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        locationManager.addProximityAlert(
-                latitude, // the latitude of the central point of the alert region
-                longitude, // the longitude of the central point of the alert region
-                5, // the radius of the central point of the alert region, in meters
-                -1, // time for this proximity alert, in milliseconds, or -1 to indicate no expiration
-                proximityIntent // will be used to generate an Intent to fire when entry to or exit from the alert region is detected
-        );
     }
 
     @Override

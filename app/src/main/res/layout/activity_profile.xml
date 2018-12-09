@@ -5,7 +5,6 @@
     tools:context=".controllers.activities.ProfileActivity">
 
     <data>
-
         <variable
             name="user"
             type="uqac.inf872.projet.imok.models.User" />
@@ -32,7 +31,7 @@
 
             <!-- PROFILE IMAGE -->
             <ImageView
-                android:id="@+id/profile_activity_imageview_profile"
+                android:id="@+id/profile_activity_image_view_profile"
                 android:layout_width="@dimen/image_profile_size"
                 android:layout_height="@dimen/image_profile_size"
                 android:layout_margin="@dimen/default_large_margin"
@@ -63,22 +62,24 @@
                 android:layout_margin="@dimen/default_margin"
                 android:orientation="horizontal">
 
-                <TextView
+                <uqac.inf872.projet.imok.views.RobotoTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/text_view_email"
                     android:textSize="@dimen/default_text_size"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    app:fontNameTextView="Roboto_Medium" />
 
                 <!-- PROFILE EMAIL -->
-                <TextView
+                <uqac.inf872.projet.imok.views.RobotoTextView
                     android:id="@+id/profile_activity_text_view_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/default_margin"
                     android:paddingEnd="@dimen/default_margin"
                     android:text="@{user.email}"
-                    android:textSize="@dimen/default_text_size" />
+                    android:textSize="@dimen/default_text_size"
+                    app:fontNameTextView="Roboto_Medium" />
 
             </LinearLayout>
 
@@ -105,7 +106,7 @@
                 android:text="@string/button_update_account"
                 android:textColor="#fff"
                 android:textSize="@dimen/default_text_size"
-                app:fontName="Roboto_Medium" />
+                app:fontNameButton="Roboto_Medium" />
 
             <!-- BUTTON SIGN OUT -->
             <uqac.inf872.projet.imok.views.RobotoButton
@@ -119,7 +120,7 @@
                 android:text="@string/button_sign_out_account"
                 android:textColor="#fff"
                 android:textSize="@dimen/default_text_size"
-                app:fontName="Roboto_Medium" />
+                app:fontNameButton="Roboto_Medium" />
 
             <!-- BUTTON DELETE ACCOUNT -->
             <uqac.inf872.projet.imok.views.RobotoButton
@@ -133,7 +134,7 @@
                 android:text="@string/button_delete_account"
                 android:textColor="#fff"
                 android:textSize="@dimen/default_text_size"
-                app:fontName="Roboto_Medium" />
+                app:fontNameButton="Roboto_Medium" />
 
         </LinearLayout>
 

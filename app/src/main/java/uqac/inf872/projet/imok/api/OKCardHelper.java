@@ -74,15 +74,15 @@ public class OKCardHelper {
 
     public static Task<Void> updateOKCard(OKCard okCard) {
 
-        Map<String, Object> okCardPropertie = new HashMap<>();
+        Map<String, Object> okCardProperty = new HashMap<>();
 
-        okCardPropertie.put("name", okCard.getName());
-        okCardPropertie.put("message", okCard.getMessage());
-        okCardPropertie.put("urlPicture", okCard.getUrlPicture());
-        okCardPropertie.put("idListe", okCard.getIdListe());
-        okCardPropertie.put("idTrigger", okCard.getIdTrigger());
+        okCardProperty.put("name", okCard.getName());
+        okCardProperty.put("message", okCard.getMessage());
+        okCardProperty.put("urlPicture", okCard.getUrlPicture());
+        okCardProperty.put("idListe", okCard.getIdListe());
+        okCardProperty.put("idTrigger", okCard.getIdTrigger());
 
-        return OKCardHelper.getOKCardsCollection().document(okCard.getId()).update(okCardPropertie);
+        return OKCardHelper.getOKCardsCollection().document(okCard.getId()).update(okCardProperty);
     }
 
     // --- DELETE ---

@@ -72,10 +72,10 @@ public class WifiReceiver extends BroadcastReceiver {
 
                                             PendingIntent pendingIntentSend = PendingIntent.getBroadcast(context, 10, intentSend, PendingIntent.FLAG_UPDATE_CURRENT);
 
-                                            ButtonNotification buttonSend = new ButtonNotification(R.drawable.ic_logo, R.string.send, pendingIntentSend); // TODO changer
+                                            ButtonNotification buttonSend = new ButtonNotification(R.drawable.ic_send_black, R.string.send, pendingIntentSend);
 
                                             // Show notification after received message
-                                            Utils.sendVisualNotification(context, channelName, importance, description, "WIFI", "Connexion au wifi " + positionWifi.getName() + " detecté !!!", "Wifi SSID = " + ssid, pendingIntent, buttonSend);
+                                            Utils.sendVisualNotification(context, channelName, importance, description, "WIFI", "Connexion au wifi " + positionWifi.getName() + " détecté !!!", "Wifi SSID = " + ssid, pendingIntent, buttonSend);
                                         }
                                     } else {
                                         Utils.onFailureListener(context, taskOKCard.getException());

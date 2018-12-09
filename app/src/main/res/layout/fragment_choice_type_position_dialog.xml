@@ -16,7 +16,7 @@
         android:text="@string/dialog_choice_type_title"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="24sp"
-        app:fontName="Roboto_Bold" />
+        app:fontNameTextView="Roboto_Bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,7 +34,7 @@
             android:text="@string/gps"
             android:textColor="#fff"
             android:textSize="18sp"
-            app:fontName="Roboto_Bold" />
+            app:fontNameButton="Roboto_Bold" />
 
         <uqac.inf872.projet.imok.views.RobotoButton
             android:id="@+id/dialog_choice_type_btn_wifi"
@@ -46,6 +46,6 @@
             android:text="@string/wifi"
             android:textColor="#fff"
             android:textSize="18sp"
-            app:fontName="Roboto_Bold" />
+            app:fontNameButton="Roboto_Bold" />
     </LinearLayout>
 </RelativeLayout>

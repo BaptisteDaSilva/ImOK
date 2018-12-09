@@ -14,14 +14,14 @@
         android:orientation="horizontal">
 
         <uqac.inf872.projet.imok.views.RobotoButton
-            android:id="@+id/psoition_btn_cancel"
+            android:id="@+id/position_btn_cancel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/colorPrimary"
             android:text="@string/cancel"
             android:textColor="@android:color/white"
-            app:fontName="Roboto_Medium" />
+            app:fontNameButton="Roboto_Medium" />
 
         <uqac.inf872.projet.imok.views.RobotoButton
             android:id="@+id/position_btn_save"
@@ -31,7 +31,7 @@
             android:background="@color/colorPrimary"
             android:text="@string/save"
             android:textColor="@android:color/white"
-            app:fontName="Roboto_Medium" />
+            app:fontNameButton="Roboto_Medium" />
 
     </LinearLayout>
 
@@ -89,6 +89,6 @@
         android:text="@string/delete"
         android:textColor="@android:color/white"
         android:visibility="gone"
-        app:fontName="Roboto_Medium" />
+        app:fontNameButton="Roboto_Medium" />
 
 </RelativeLayout>

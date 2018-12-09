@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_layout_widget">
@@ -31,7 +32,7 @@
                 android:tint="@color/colorPrimary"
                 android:visibility="gone" />
 
-            <TextView
+            <uqac.inf872.projet.imok.views.RobotoTextView
                 android:id="@+id/widget_ok_cards_name"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
@@ -40,7 +41,8 @@
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:fontNameTextView="Roboto_Medium" />
 
             <ImageButton
                 android:id="@+id/widget_ok_cards_btn_right"
@@ -62,10 +64,10 @@
             android:layout_below="@+id/widget_ok_cards_header"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:contentDescription="TODO"
+            android:contentDescription="@string/ok_card_image_description"
             android:src="@drawable/ic_logo" />
 
-        <TextView
+        <uqac.inf872.projet.imok.views.RobotoTextView
             android:id="@+id/widget_ok_cards_recipient_list_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -73,10 +75,10 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="20dp"
+            android:textSize="14sp"
+            app:fontNameTextView="Roboto_Medium" />
 
-            android:textSize="14sp" />
-
-        <TextView
+        <uqac.inf872.projet.imok.views.RobotoTextView
             android:id="@+id/widget_ok_cards_recipient_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -87,9 +89,10 @@
             android:layout_marginEnd="30dp"
             android:layout_marginBottom="20dp"
             android:scrollbars="vertical"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            app:fontNameTextView="Roboto_Medium" />
 
-        <TextView
+        <uqac.inf872.projet.imok.views.RobotoTextView
             android:id="@+id/widget_ok_cards_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -99,14 +102,16 @@
             android:layout_marginEnd="20dp"
             android:maxHeight="100dp"
             android:scrollbars="vertical"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            app:fontNameTextView="Roboto_Medium" />
 
         <LinearLayout
             android:id="@+id/widget_ok_cards_position"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/widget_ok_cards_send"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:baselineAligned="false">
 
             <LinearLayout
                 android:id="@+id/widget_ok_cards_gps"
@@ -124,11 +129,12 @@
                     android:src="@drawable/ic_location_white_large"
                     android:tint="@color/colorAccent" />
 
-                <TextView
+                <uqac.inf872.projet.imok.views.RobotoTextView
                     android:id="@+id/widget_ok_cards_gps_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    app:fontNameTextView="Roboto_Medium" />
             </LinearLayout>
 
             <LinearLayout
@@ -147,15 +153,16 @@
                     android:src="@drawable/ic_wifi_white_large"
                     android:tint="@color/colorAccent" />
 
-                <TextView
+                <uqac.inf872.projet.imok.views.RobotoTextView
                     android:id="@+id/widget_ok_cards_wifi_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    app:fontNameTextView="Roboto_Medium" />
             </LinearLayout>
         </LinearLayout>
 
-        <Button
+        <uqac.inf872.projet.imok.views.RobotoButton
             android:id="@+id/widget_ok_cards_send"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -165,7 +172,8 @@
             android:padding="10dp"
             android:text="@string/send"
             android:textColor="@android:color/white"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            app:fontNameButton="Roboto_Medium" />
 
     </RelativeLayout>
 
@@ -176,7 +184,7 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <TextView
+        <uqac.inf872.projet.imok.views.RobotoTextView
             android:id="@+id/widget_ok_cards_app_name"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -189,7 +197,8 @@
             android:textAlignment="center"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:fontNameTextView="Roboto_Medium" />
 
         <ImageView
             android:id="@+id/widget_ok_cards_logo"
@@ -201,7 +210,7 @@
             android:contentDescription="@string/content_description_logo"
             android:src="@drawable/ic_logo" />
 
-        <TextView
+        <uqac.inf872.projet.imok.views.RobotoTextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/widget_ok_cards_create"
@@ -212,9 +221,10 @@
             android:maxHeight="100dp"
             android:scrollbars="vertical"
             android:text="@string/widget_error_no_ok_card"
-            android:textSize="50sp" />
+            android:textSize="50sp"
+            app:fontNameTextView="Roboto_Medium" />
 
-        <Button
+        <uqac.inf872.projet.imok.views.RobotoButton
             android:id="@+id/widget_ok_cards_create"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -225,9 +235,10 @@
             android:text="@string/create_new_ok_card"
             android:textColor="@android:color/white"
             android:textSize="24sp"
-            android:visibility="gone" />
+            android:visibility="gone"
+            app:fontNameButton="Roboto_Medium" />
 
-        <Button
+        <uqac.inf872.projet.imok.views.RobotoButton
             android:id="@+id/widget_ok_cards_connection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -237,7 +248,8 @@
             android:padding="10dp"
             android:text="@string/connection"
             android:textColor="@android:color/white"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            app:fontNameButton="Roboto_Medium" />
 
     </RelativeLayout>
 
@@ -248,7 +260,7 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <TextView
+        <uqac.inf872.projet.imok.views.RobotoTextView
             android:id="@+id/widget_ok_cards_message_sync"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -258,7 +270,8 @@
             android:gravity="center"
             android:scrollbars="vertical"
             android:text="@string/widget_message_sync"
-            android:textSize="40sp" />
+            android:textSize="40sp"
+            app:fontNameTextView="Roboto_Medium" />
 
         <ProgressBar
             style="?android:attr/progressBarStyleLarge"

@@ -65,12 +65,12 @@ public class RecipientListHelper {
 
     public static Task<Void> updateRecipientList(RecipientList recipientList) {
 
-        Map<String, Object> recpientListPropertie = new HashMap<>();
+        Map<String, Object> recipientListProperty = new HashMap<>();
 
-        recpientListPropertie.put("name", recipientList.getName());
-        recpientListPropertie.put("recipients", recipientList.getRecipients());
+        recipientListProperty.put("name", recipientList.getName());
+        recipientListProperty.put("recipients", recipientList.getRecipients());
 
-        return RecipientListHelper.getRecipientListsCollection().document(recipientList.getId()).update(recpientListPropertie);
+        return RecipientListHelper.getRecipientListsCollection().document(recipientList.getId()).update(recipientListProperty);
     }
 
     // --- DELETE ---

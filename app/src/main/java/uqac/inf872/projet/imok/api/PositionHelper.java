@@ -106,13 +106,13 @@ public class PositionHelper {
     // --- UPDATE ---
 
     public static Task<Void> updatePosition(Position position) {
-        Map<String, Object> positionPropertie = new HashMap<>();
+        Map<String, Object> positionProperty = new HashMap<>();
 
-        positionPropertie.put("ssid", position.getSsid());
-        positionPropertie.put("coordonnees", position.getCoordonnees());
-        positionPropertie.put("rayon", position.getRayon());
+        positionProperty.put("ssid", position.getSSID());
+        positionProperty.put("coordonnees", position.getCoordonnees());
+        positionProperty.put("rayon", position.getRayon());
 
-        return PositionHelper.getPositionCollection().document(position.getId()).update(positionPropertie);
+        return PositionHelper.getPositionCollection().document(position.getId()).update(positionProperty);
     }
 
     // --- DELETE ---

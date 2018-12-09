@@ -52,8 +52,8 @@ public class OKCardWidget extends AppWidgetProvider {
     private static ListenerRegistration registrationRecipientList;
 
     // Executor
-    private static Executor setDataExecutor = Executors.newSingleThreadExecutor();
-    private static Executor initExecutor = Executors.newSingleThreadExecutor();
+    private static final Executor setDataExecutor = Executors.newSingleThreadExecutor();
+    private static final Executor initExecutor = Executors.newSingleThreadExecutor();
 
     static void getData(Context context, int appWidgetId) {
 

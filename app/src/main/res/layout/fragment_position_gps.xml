@@ -14,14 +14,14 @@
         android:orientation="horizontal">
 
         <uqac.inf872.projet.imok.views.RobotoButton
-            android:id="@+id/psoition_gps_btn_cancel"
+            android:id="@+id/position_gps_btn_cancel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/colorPrimary"
             android:text="@string/cancel"
             android:textColor="@android:color/white"
-            app:fontName="Roboto_Medium" />
+            app:fontNameButton="Roboto_Medium" />
 
         <uqac.inf872.projet.imok.views.RobotoButton
             android:id="@+id/position_gps_btn_save"
@@ -31,7 +31,7 @@
             android:background="@color/colorPrimary"
             android:text="@string/save"
             android:textColor="@android:color/white"
-            app:fontName="Roboto_Medium" />
+            app:fontNameButton="Roboto_Medium" />
 
     </LinearLayout>
 
@@ -63,14 +63,15 @@
             android:layout_below="@+id/position_gps_image"
             android:inputType="textShortMessage" />
 
-        <TextView
+        <uqac.inf872.projet.imok.views.RobotoTextView
             android:id="@+id/position_gps_coordonnee"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/position_gps_name"
             android:layout_marginStart="5dp"
             android:layout_marginTop="20dp"
-            android:text="@string/coordonnee" />
+            android:text="@string/coordonnee"
+            app:fontNameTextView="Roboto_Medium" />
 
         <RelativeLayout
             android:id="@+id/position_gps_coordonnee_value"
@@ -81,13 +82,14 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp">
 
-            <TextView
+            <uqac.inf872.projet.imok.views.RobotoTextView
                 android:id="@+id/position_gps_latitude"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@+id/position_gps_latitude_value"
                 android:labelFor="@+id/position_gps_latitude_value"
-                android:text="@string/latitude" />
+                android:text="@string/latitude"
+                app:fontNameTextView="Roboto_Medium" />
 
             <EditText
                 android:id="@+id/position_gps_latitude_value"
@@ -97,13 +99,14 @@
                 android:layout_toEndOf="@id/position_gps_latitude"
                 android:inputType="numberDecimal" />
 
-            <TextView
+            <uqac.inf872.projet.imok.views.RobotoTextView
                 android:id="@+id/position_gps_longitude"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@+id/position_gps_longitude_value"
                 android:labelFor="@+id/position_gps_longitude_value"
-                android:text="@string/longitude" />
+                android:text="@string/longitude"
+                app:fontNameTextView="Roboto_Medium" />
 
             <EditText
                 android:id="@+id/position_gps_longitude_value"
@@ -125,16 +128,17 @@
                 android:text="@string/find_adresse"
                 android:textColor="#fff"
                 android:textSize="@dimen/default_text_size"
-                app:fontName="Roboto_Medium" />
+                app:fontNameButton="Roboto_Medium" />
         </RelativeLayout>
 
-        <TextView
+        <uqac.inf872.projet.imok.views.RobotoTextView
             android:id="@+id/position_gps_rayon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/position_gps_rayon_edit"
             android:layout_margin="5dp"
-            android:text="@string/position_gps_rayon" />
+            android:text="@string/position_gps_rayon"
+            app:fontNameTextView="Roboto_Medium" />
 
         <EditText
             android:id="@+id/position_gps_rayon_edit"
@@ -157,7 +161,7 @@
             android:text="@string/open_map"
             android:textColor="#fff"
             android:textSize="@dimen/default_text_size"
-            app:fontName="Roboto_Medium" />
+            app:fontNameButton="Roboto_Medium" />
     </RelativeLayout>
 
     <uqac.inf872.projet.imok.views.RobotoButton
@@ -170,6 +174,6 @@
         android:text="@string/delete"
         android:textColor="@android:color/white"
         android:visibility="gone"
-        app:fontName="Roboto_Medium" />
+        app:fontNameButton="Roboto_Medium" />
 
 </RelativeLayout>

@@ -20,7 +20,7 @@
             android:id="@+id/fragment_menu_position_item_image"
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:contentDescription="@string/fragment_menu_ok_card_item_image_desciption"
+            android:contentDescription="@string/fragment_menu_ok_card_item_image_description"
             android:padding="4dp"
             android:scaleType="centerCrop"
             android:tint="@color/colorAccent" />
@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            app:fontName="Roboto_Medium" />
+            app:fontNameTextView="Roboto_Medium" />
 
     </LinearLayout>
 

@@ -39,7 +39,7 @@ import static android.app.Activity.RESULT_OK;
  */
 public class PositionGPSFragment extends BaseFragment {
 
-    private static final long PROX_ALERT_EXPIRATION = -1; // It will never expire
+    private static final long PROXIMITY_ALERT_EXPIRATION = -1; // It will never expire
 
     // FOR DESIGN
     @BindView(R.id.position_gps_name)
@@ -87,7 +87,7 @@ public class PositionGPSFragment extends BaseFragment {
         }
     }
 
-    @OnClick(R.id.psoition_gps_btn_cancel)
+    @OnClick(R.id.position_gps_btn_cancel)
     public void onClickCancel() {
         Utils.openMenu(this.getContext(), Utils.Menu.Position);
     }
@@ -132,7 +132,7 @@ public class PositionGPSFragment extends BaseFragment {
         Utils.openMenu(this.getContext(), Utils.Menu.Position);
     }
 
-    // TODO marche pas si recupère de la bd en ligne
+    // TODO marche pas si récupère de la bd en ligne
     @AfterPermissionGranted(Utils.PERMISSION_ACCESS_FINE_LOCATION_RC)
     private void addProximityAlert() {
         String name = editTextName.getText().toString();
@@ -145,28 +145,29 @@ public class PositionGPSFragment extends BaseFragment {
         addProximityAlert(idPosition, name, latitude, longitude, rayon);
     }
 
+    private int requestCodeProximityAlert = 100;
+
     @SuppressLint("MissingPermission")
     public void addProximityAlert(String idPosition, String nom, double latitude, double longitude, int rayon) {
         LocationManager locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
 
-        Intent intent = new Intent(Utils.PROX_ALERT_INTENT);
-        intent.putExtra(Utils.PROX_ALERT_INTENT_EXTRA_ID, idPosition);
-        intent.putExtra(Utils.PROX_ALERT_INTENT_EXTRA_NAME, nom);
+        Intent intent = new Intent(Utils.PROXIMITY_ALERT_INTENT);
+        intent.putExtra(Utils.PROXIMITY_ALERT_INTENT_EXTRA_ID, idPosition);
+        intent.putExtra(Utils.PROXIMITY_ALERT_INTENT_EXTRA_NAME, nom);
 
-        // TODO changer id pour que sa marche
-        PendingIntent proximityIntent = PendingIntent.getBroadcast(getContext(), 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent proximityIntent = PendingIntent.getBroadcast(getContext(), requestCodeProximityAlert++, intent, PendingIntent.FLAG_ONE_SHOT);
 
         locationManager.addProximityAlert(
                 latitude, // the latitude of the central point of the alert region
                 longitude, // the longitude of the central point of the alert region
                 rayon, // the radius of the central point of the alert region, in meters
-                PROX_ALERT_EXPIRATION, // time for this proximity alert, in milliseconds, or -1 to indicate no expiration
+                PROXIMITY_ALERT_EXPIRATION, // time for this proximity alert, in milliseconds, or -1 to indicate no expiration
                 proximityIntent // will be used to generate an Intent to fire when entry to or exit from the alert region is detected
         );
     }
 
     @OnClick(R.id.position_gps_btn_choose_adresse)
-    public void onClickChooseAdress(View view) {
+    public void onClickChooseAddress(View view) {
         try {
             Intent intent =
                     new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
@@ -196,7 +197,7 @@ public class PositionGPSFragment extends BaseFragment {
                 Log.i(Utils.TAG, status.getStatusMessage());
 
             } else if ( resultCode == RESULT_CANCELED ) {
-                // The user canceled the operation.
+                // TODO - The user canceled the operation.
             }
         }
     }

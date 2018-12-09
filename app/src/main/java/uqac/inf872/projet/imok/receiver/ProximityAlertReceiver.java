@@ -23,13 +23,13 @@ public class ProximityAlertReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         if ( intent.getBooleanExtra(LocationManager.KEY_PROXIMITY_ENTERING, false) ) {
-            String name = intent.getStringExtra(Utils.PROX_ALERT_INTENT_EXTRA_NAME);
+            String name = intent.getStringExtra(Utils.PROXIMITY_ALERT_INTENT_EXTRA_NAME);
 
             CharSequence channelName = context.getString(R.string.channel_name_position);
 
             String description = context.getString(R.string.channel_description_position);
 
-            Query query = OKCardHelper.getOKCardPosition(intent.getStringExtra(Utils.PROX_ALERT_INTENT_EXTRA_ID));
+            Query query = OKCardHelper.getOKCardPosition(intent.getStringExtra(Utils.PROXIMITY_ALERT_INTENT_EXTRA_ID));
 
             if ( query != null ) {
                 query.get().addOnCompleteListener(task -> {
@@ -49,13 +49,14 @@ public class ProximityAlertReceiver extends BroadcastReceiver {
                             intentOKCard.putExtra(OKCardActivity.BUNDLE_KEY_OK_CARD_IMAGE_URL, okCard.getUrlPicture());
                             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intentOKCard, PendingIntent.FLAG_ONE_SHOT);
 
+                            // TODO inutile pour les tablettes sans SMS
                             Intent intentSend = new Intent(ActionReceiver.ACTION_SEND);
                             intentSend.putExtra(OKCardActivity.BUNDLE_KEY_OK_CARD_ID, okCard.getId());
-                            intentSend.putExtra(ActionReceiver.BUNDLE_KEY_TYPE, ActionReceiver.BUNDLE_KEY_TYPE_PROWIMITY_ALERT);
+                            intentSend.putExtra(ActionReceiver.BUNDLE_KEY_TYPE, ActionReceiver.BUNDLE_KEY_TYPE_PROXIMITY_ALERT);
 
                             PendingIntent pendingIntentSend = PendingIntent.getBroadcast(context, 15, intentSend, PendingIntent.FLAG_UPDATE_CURRENT);
 
-                            ButtonNotification buttonSend = new ButtonNotification(R.drawable.ic_logo, R.string.send, pendingIntentSend); // TODO changer
+                            ButtonNotification buttonSend = new ButtonNotification(R.drawable.ic_send_black, R.string.send, pendingIntentSend);
 
                             // Show notification after received message
                             Utils.sendVisualNotification(context, channelName, importance, description, "GPS", "Location alert - Entering " + name, "Localisation " + name, pendingIntent, buttonSend);

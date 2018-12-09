@@ -112,5 +112,11 @@
     <string name="channel_description_firebase_messaging_service">Notification information</string>
     <string name="channel_name_position">Position</string>
     <string name="channel_description_position">Notification de position</string>
+    <string name="hint_enter_message">Ecrire un message</string>
+    <string name="hint_enter_name">Entrer un nom</string>
+    <string name="hint_latitude_tour_eiffel">48.8558986</string>
+    <string name="hint_longitude_tour_eiffel">2.2980875</string>
+    <string name="position_gps_rayon_default">50</string>
+    <string name="hint_recipient_list">+33 892 70 12 39</string>
 
 </resources>

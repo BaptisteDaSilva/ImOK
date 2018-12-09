@@ -57,6 +57,7 @@
             android:id="@+id/ok_card_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/hint_enter_name"
             android:inputType="textShortMessage" />
 
         <EditText
@@ -65,7 +66,8 @@
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
             android:maxLength="@integer/max_length_message"
-            android:labelFor="@+id/ok_card_recipient_list"/>
+            android:hint="@string/hint_enter_message"
+            android:labelFor="@+id/ok_card_recipient_list" />
 
         <Spinner
             android:id="@+id/ok_card_recipient_list"

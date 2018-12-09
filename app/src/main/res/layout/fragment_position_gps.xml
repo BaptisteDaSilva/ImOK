@@ -61,7 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/position_gps_image"
-            android:inputType="textShortMessage" />
+            android:hint="@string/hint_enter_name" />
 
         <uqac.inf872.projet.imok.views.RobotoTextView
             android:id="@+id/position_gps_coordonnee"
@@ -97,6 +97,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/position_gps_longitude_value"
                 android:layout_toEndOf="@id/position_gps_latitude"
+                android:hint="@string/hint_latitude_tour_eiffel"
                 android:inputType="numberDecimal" />
 
             <uqac.inf872.projet.imok.views.RobotoTextView
@@ -115,6 +116,7 @@
                 android:layout_below="@+id/position_gps_latitude"
                 android:layout_marginTop="10dp"
                 android:layout_toEndOf="@id/position_gps_longitude"
+                android:hint="@string/hint_longitude_tour_eiffel"
                 android:inputType="numberDecimal" />
 
             <uqac.inf872.projet.imok.views.RobotoButton
@@ -148,7 +150,8 @@
             android:layout_margin="5dp"
             android:layout_toEndOf="@id/position_gps_rayon"
             android:inputType="number"
-            android:labelFor="@+id/position_gps_coordonnee" />
+            android:labelFor="@+id/position_gps_coordonnee"
+            android:text="@string/position_gps_rayon_default" />
 
         <uqac.inf872.projet.imok.views.RobotoButton
             android:id="@+id/position_gps_btn_open_map"

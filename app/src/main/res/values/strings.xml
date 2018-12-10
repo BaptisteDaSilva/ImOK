@@ -117,6 +117,6 @@
     <string name="hint_latitude_tour_eiffel">48.8558986</string>
     <string name="hint_longitude_tour_eiffel">2.2980875</string>
     <string name="position_gps_rayon_default">50</string>
-    <string name="hint_recipient_list">+33 892 70 12 39</string>
+    <string name="hint_recipient_list">+33 892 70 12 39\n+33 176 41 04 64\n+33 153 92 82 82</string>
 
 </resources>
